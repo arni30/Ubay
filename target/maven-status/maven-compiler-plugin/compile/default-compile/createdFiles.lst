@@ -1,0 +1,6 @@
+world/ucode/utils/HibernateSessionFactoryUtil.class
+world/ucode/models/Lot.class
+world/ucode/controller/ModelController.class
+world/ucode/dao/UserDao.class
+world/ucode/services/UserService.class
+world/ucode/models/User.class
