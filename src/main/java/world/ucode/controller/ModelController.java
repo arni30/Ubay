@@ -1,8 +1,8 @@
 package world.ucode.controller;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +25,8 @@ public class ModelController {
     }
 
     private void database() {
-        UserService userService = new UserService();
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        UserService userService = context.getBean("userService", UserService.class);
 
         User user = new User("tro", "qwerty", 0);
         userService.saveUser(user);
@@ -37,5 +38,6 @@ public class ModelController {
         ford.setSeller(user);
         user.addLot(ford);
         userService.updateUser(user);
+        context.close();
     }
 }
