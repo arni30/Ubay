@@ -20,32 +20,22 @@ public class ModelController {
     public String developer(@RequestParam int id, ModelMap model) {
         model.addAttribute("id", id);
         System.out.println(id);
-//        database();
+        database();
         return "/id";
     }
 
-//    private void database() {
-//        UserService userService = new UserService();
-//
-//        User user = new User("tro", "qwerty", 0);
-//        userService.saveUser(user);
-//
-//        Lot ferrari = new Lot("Ferrari", 12000);
-//        ferrari.setSeller(user);
-//        user.addLot(ferrari);
-//        Lot ford = new Lot("Ford", 600);
-//        ford.setSeller(user);
-//        user.addLot(ford);
-//        userService.updateUser(user);
-//    }
-//    @RequestMapping(value = "/addDeveloper", method = RequestMethod.POST)
-//    public String addStudent(@ModelAttribute("mvc-dispatcher") Developer developer,
-//                             ModelMap model) {
-//        model.addAttribute("id", developer.getId());
-//        model.addAttribute("name", developer.getName());
-//        model.addAttribute("specilaty", developer.getSpecialty());
-//        model.addAttribute("experience", developer.getExperience());
-//
-//        return "result";
-//    }
+    private void database() {
+        UserService userService = new UserService();
+
+        User user = new User("tro", "qwerty", 0);
+        userService.saveUser(user);
+
+        Lot ferrari = new Lot("Ferrari", 12000);
+        ferrari.setSeller(user);
+        user.addLot(ferrari);
+        Lot ford = new Lot("Ford", 600);
+        ford.setSeller(user);
+        user.addLot(ford);
+        userService.updateUser(user);
+    }
 }
