@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="th" uri="http://www.thymeleaf.org" %>
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="ubay">
@@ -38,22 +40,22 @@
                 </div>
             </form>
 
-            <form class="form-signup" action="/signin" method="POST" name="form">
-                <label for="username">Username</label>
-                <input class="form-styling" type="text" name="username" placeholder=""/>
+            <form:form class="form-signup" th:action="@{/signup}" th:object="${form}" method="POST" name="form" modelAttribute="form">
+                <form:label for="username" path="email">Username</form:label>
+                <form:input th:field="*{username}" class="form-styling" type="text" name="username" placeholder="" path="username"/>
 <%--                <label for="role">Role</label>--%>
 <%--                <select id="select" class="form-styling" name="role">--%>
 <%--                    <option>Seller</option>--%>
 <%--                    <option>Bidder</option>--%>
 <%--                </select>--%>
-                <label for="email">Email</label>
-                <input class="form-styling" type="text" name="email" placeholder=""/>
-                <label for="password">Password</label>
-                <input class="form-styling" type="text" name="password" placeholder=""/>
-                <label for="confirmpassword">Confirm password</label>
-                <input class="form-styling" type="text" name="confirmpassword" placeholder=""/>
+                <form:label for="email" path="email">Email</form:label>
+                <form:input th:field="*{email}" class="form-styling" type="text" name="email" placeholder="" path="email"/>
+                <form:label for="password" path="password">Password</form:label>
+                <form:input th:field="*{password}" class="form-styling" type="text" name="password" placeholder="" path="password"/>
+                <form:label th:field="*{confirmpassword}" for="confirmpassword" path="confirmpassword">Confirm password</form:label>
+                <form:input class="form-styling" type="text" name="confirmpassword" placeholder="" path="confirmpassword"/>
                 <a ng-click="checked = !checked" class="btn-signup" onclick="signup()">Sign Up</a>
-            </form>
+            </form:form>
 
             <div class="success">
                 <svg width="270" height="270" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

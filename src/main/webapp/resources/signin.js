@@ -56,7 +56,7 @@ async function send(address) {
     // request.open("POST", 'http://localhost:8080/ubay/servlet');
     // request.send(formData);
 
-    let response = await fetch('http://localhost:8080/ubay/servlet',{
+    let response = await fetch('http://localhost:8080/ubay/signin',{
         method: 'POST',
         body: formData,
         enctype: 'multipart/form-data'

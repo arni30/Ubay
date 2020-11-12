@@ -2,15 +2,17 @@ package world.ucode.controller;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.services.UserService;
 
 @Controller
+@ControllerAdvice
 public class ModelController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
@@ -27,9 +29,19 @@ public class ModelController {
 
 // -----------------------
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
-    public String signin() {
+    public String signin(ModelMap model) {
+        model.addAttribute("form", new Usr("1", "2", "3", "4", "5"));
         return "/signin";
     }
+
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    public void signup_post(@ModelAttribute("form") Usr usr, final BindingResult bindingResult,
+                            final Model model) {
+
+        System.out.println(usr.getPassword());
+        System.out.println("hallo");
+    }
+
 
     
 // -----------------------
