@@ -16,6 +16,7 @@ public class ModelController {
     public String index() {
         return "/index";
     }
+
     @RequestMapping(value="/hallo{id}",  produces = "text/plain;charset=UTF-8", method = RequestMethod.GET)
     public String developer(@RequestParam int id, ModelMap model) {
         model.addAttribute("id", id);
@@ -23,6 +24,24 @@ public class ModelController {
         database();
         return "/id";
     }
+
+// -----------------------
+    @RequestMapping(value = "/signin", method = RequestMethod.GET)
+    public String signin() {
+        return "/signin";
+    }
+
+    
+// -----------------------
+    @RequestMapping(value = "/errors/404", method = RequestMethod.GET)
+    public String error404() {
+        return "/errors/404";
+    }
+    @RequestMapping(value = "/errors/error", method = RequestMethod.GET)
+    public String exceptions() {
+        return "/errors/error";
+    }
+
 
     private void database() {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
