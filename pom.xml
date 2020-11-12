@@ -80,7 +80,7 @@
           <version>2.2</version>
           <configuration>
             <uriEncoding>${project.build.sourceEncoding}</uriEncoding>
-            <port>8080</port>
+            <port>8060</port>
             <!--<update>true</update>-->
 <!--            <path>/</path>-->
           </configuration>

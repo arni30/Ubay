@@ -10,13 +10,6 @@ public class Usr {
     public String password;
     public String confirmpassword;
     public String email;
-    public Usr(String type, String username, String password, String confirmpassword, String email) {
-        this.type = type;
-        this.username = username;
-        this.password = password;
-        this.confirmpassword = confirmpassword;
-        this.email = email;
-    }
     public void setConfirmpassword(String confirmpassword) {
         this.confirmpassword = confirmpassword;
     }

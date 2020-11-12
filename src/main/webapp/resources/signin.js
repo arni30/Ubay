@@ -46,11 +46,11 @@ async function send(address) {
 
     let formData = new FormData();
     let reqForm = 'form' + address + ' input[name=';
-    formData.set('type', address.substring(6));
-    formData.set('username', document.querySelector(reqForm+'username]').value);
-    formData.set('password', document.querySelector(reqForm+'password]').value);
-    formData.set('confirmpassword', document.querySelector(reqForm+'confirmpassword]').value);
-    formData.set('email', document.querySelector(reqForm+'email]').value);
+    // formData.set('type', address.substring(6));
+    // formData.set('username', document.querySelector(reqForm+'username]').value);
+    // formData.set('password', document.querySelector(reqForm+'password]').value);
+    // formData.set('confirmpassword', document.querySelector(reqForm+'confirmpassword]').value);
+    // formData.set('email', document.querySelector(reqForm+'email]').value);
 
     // let request = new XMLHttpRequest();
     // request.open("POST", 'http://localhost:8080/ubay/servlet');
@@ -58,8 +58,17 @@ async function send(address) {
 
     let response = await fetch('http://localhost:8080/ubay/signin',{
         method: 'POST',
-        body: formData,
-        enctype: 'multipart/form-data'
+        enctype: 'multipart/form-data',
+        body: JSON.stringify({
+            'foo': 'bar'
+        }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        // body: JSON.stringify(formData),
+        // headers: {
+        //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        // },
     });
     if (response.ok) {
         // let blob = await response.blob();
