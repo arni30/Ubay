@@ -13,4 +13,15 @@
   <servlet-name>mvc-dispatcher</servlet-name>
   <url-pattern>/</url-pattern>
 </servlet-mapping>
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/errors/404</location>
+  </error-page>
+
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/errors/error</location>
+  </error-page>
+
 </web-app>
