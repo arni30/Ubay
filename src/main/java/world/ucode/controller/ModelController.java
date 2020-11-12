@@ -30,6 +30,12 @@ public class ModelController {
     public String signin() {
         return "/signin";
     }
+    // -----------------------
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    public String signup_post() {
+        System.out.println("hello");
+        return "/signin";
+    }
 
     
 // -----------------------
