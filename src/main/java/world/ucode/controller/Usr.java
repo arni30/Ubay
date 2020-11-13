@@ -5,17 +5,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.Serializable;
 
 public class Usr {
-    public String type;
-    public String username;
-    public String password;
-    public String confirmpassword;
-    public String email;
-    public Usr(String type, String username, String password, String confirmpassword, String email) {
-        this.type = type;
-        this.username = username;
-        this.password = password;
-        this.confirmpassword = confirmpassword;
-        this.email = email;
+    private String type;
+    private String username;
+    private String password;
+    private String confirmpassword;
+    private String email;
+    private String balance;
+    private String role;
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    public void setBalance(String balance) {
+        this.balance = balance;
     }
     public void setConfirmpassword(String confirmpassword) {
         this.confirmpassword = confirmpassword;
@@ -51,5 +53,17 @@ public class Usr {
 
     public String getConfirmpassword() {
         return this.confirmpassword;
+    }
+
+    public String getRole() {
+        return this.role;
+    }
+
+    public String getBalance() {
+        return this.balance;
+    }
+
+    public String getType() {
+        return type;
     }
 }

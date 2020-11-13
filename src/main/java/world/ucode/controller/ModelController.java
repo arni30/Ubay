@@ -3,29 +3,27 @@ package world.ucode.controller;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.DefaultSessionAttributeStore;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.WebRequest;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.services.UserService;
 
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
-
-@MultipartConfig
 @Controller
+@ControllerAdvice
 public class ModelController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "/index";
     }
 
-    @RequestMapping(value="/hallo{id}",  produces = "text/plain;charset=UTF-8", method = RequestMethod.GET)
+    @RequestMapping(value = "/hallo{id}", produces = "text/plain;charset=UTF-8", method = RequestMethod.GET)
     public String developer(@RequestParam int id, ModelMap model) {
         model.addAttribute("id", id);
         System.out.println(id);
@@ -33,45 +31,30 @@ public class ModelController {
         return "/id";
     }
 
-// -----------------------
+    // -----------------------
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
-    public String signin() {
+    public String signin(ModelMap model) {
+        model.addAttribute("form", new Usr());
         return "/signin";
     }
 
-    @RequestMapping(value = "/signin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String signinPost(HttpServletRequest req) {
-
-        Map<String, String[]> parameterMap = req.getParameterMap();
-
-//        System.out.println(
-//            req.getParameter("type") + ' ' +
-//            req.getParameter("username") + ' ' +
-//            req.getParameter("password") + ' ' //+
-////            req.getParameter("email") + ' ' +
-////            req.getParameter("confirmpassword") + ';'
-//        );
-
-        return "/signin";
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
+    public void signup_post(@ModelAttribute("form") Usr usr, ModelMap model) {
+//        System.out.println(usr.getType());
+        System.out.println(usr.getPassword());
+        System.out.println(usr.getConfirmpassword());
+        System.out.println(usr.getEmail());
+        System.out.println(usr.getUsername());
+        System.out.println("hallo");
     }
 
-//    @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = { "multipart/form-data" })
-//    public void upload(@RequestPart("user") @Valid User user,
-//                       @RequestPart("file") @Valid @NotNull @NotBlank MultipartFile file) {
-//        System.out.println(user);
-//        System.out.println("Uploaded File: ");
-//        System.out.println("Name : " + file.getName());
-//        System.out.println("Type : " + file.getContentType());
-//        System.out.println("Name : " + file.getOriginalFilename());
-//        System.out.println("Size : " + file.getSize());
-//    }
 
-    
-// -----------------------
+    // -----------------------
     @RequestMapping(value = "/errors/404", method = RequestMethod.GET)
     public String error404() {
         return "/errors/404";
     }
+
     @RequestMapping(value = "/errors/error", method = RequestMethod.GET)
     public String exceptions() {
         return "/errors/error";
