@@ -63,7 +63,6 @@ function signup() {
     let password = document.querySelector('#password').value;
     let cpassword = document.querySelector('#confirmpassword').value;
     let email = document.querySelector('#email').value;
-
     if (!username || !password || !cpassword || !email) {
         alert('All fields have to be filled!');
     } else if (balance < 1 || balance > 50000) {
@@ -92,8 +91,17 @@ async function send(formData) {
 
     let response = await fetch('http://localhost:8080/ubay/signin',{
         method: 'POST',
-        body: formData,
-        enctype: 'multipart/form-data'
+        enctype: 'multipart/form-data',
+        body: JSON.stringify({
+            'foo': 'bar'
+        }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        // body: JSON.stringify(formData),
+        // headers: {
+        //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        // },
     });
     // if (response.ok) {
     //     // let blob = await response.blob();

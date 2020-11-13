@@ -54,7 +54,6 @@ public class Usr {
     public String getConfirmpassword() {
         return this.confirmpassword;
     }
-
     public String getRole() {
         return this.role;
     }
@@ -62,7 +61,6 @@ public class Usr {
     public String getBalance() {
         return this.balance;
     }
-
     public String getType() {
         return type;
     }

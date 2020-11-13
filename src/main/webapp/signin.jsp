@@ -60,7 +60,6 @@
                 <form:input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""
                        autocomplete="on" path="confirmpassword"/>
                 <form:button class="btn-signup" type="submit">send</form:button>
-<%--                <a ng-click="checked = !checked" class="btn-signup" onclick="signup()">Sign Up</a>--%>
             </form:form>
 
             <div class="success">

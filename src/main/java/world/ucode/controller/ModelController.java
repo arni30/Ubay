@@ -41,13 +41,13 @@ public class ModelController {
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public void signup_post(@ModelAttribute("form") Usr usr, ModelMap model) {
 //        System.out.println(usr.getType());
+        System.out.println(usr.getType());
         System.out.println(usr.getPassword());
         System.out.println(usr.getConfirmpassword());
         System.out.println(usr.getEmail());
         System.out.println(usr.getUsername());
         System.out.println("hallo");
     }
-
 
     // -----------------------
     @RequestMapping(value = "/errors/404", method = RequestMethod.GET)
