@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="th" uri="http://www.thymeleaf.org" %>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="ubay">
@@ -9,8 +7,8 @@
 <%--    <meta name="author" content="Tetiana Rohalska">--%>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Login</title>
-    <link rel="shortcut icon" href="http://localhost:8080/ubay/favicon.ico" type="image/x-icon"/>
-    <link rel="icon" href="http://localhost:8080/ubay/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="resources/favicon.ico" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -28,10 +26,11 @@
         </div>
         <div ng-app ng-init="checked = false">
             <form class="form-signin" action="/signin" method="POST" name="form">
-                <label for="username">Username</label>
-                <input class="form-styling" type="text" name="username" placeholder=""/>
-                <label for="password">Password</label>
-                <input class="form-styling" type="text" name="password" placeholder=""/>
+                <label for="loginUsername">Username</label>
+                <input id="loginUsername" class="form-styling" type="text" name="username" placeholder=""/>
+                <label for="loginPassword">Password</label>
+                <input id="loginPassword" class="form-styling" type="password" autocomplete="on"
+                       name="password" placeholder=""/>
 
 <%--                <input type="checkbox" id="checkbox"/>--%>
 <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
@@ -40,22 +39,30 @@
                 </div>
             </form>
 
-            <form:form class="form-signup" th:action="@{/signup}" th:object="${form}" method="POST" name="form" modelAttribute="form">
-                <form:label for="username" path="email">Username</form:label>
-                <form:input th:field="*{username}" class="form-styling" type="text" name="username" placeholder="" path="username"/>
-<%--                <label for="role">Role</label>--%>
-<%--                <select id="select" class="form-styling" name="role">--%>
-<%--                    <option>Seller</option>--%>
-<%--                    <option>Bidder</option>--%>
-<%--                </select>--%>
-                <form:label for="email" path="email">Email</form:label>
-                <form:input th:field="*{email}" class="form-styling" type="text" name="email" placeholder="" path="email"/>
-                <form:label for="password" path="password">Password</form:label>
-                <form:input th:field="*{password}" class="form-styling" type="text" name="password" placeholder="" path="password"/>
-                <form:label th:field="*{confirmpassword}" for="confirmpassword" path="confirmpassword">Confirm password</form:label>
-                <form:input class="form-styling" type="text" name="confirmpassword" placeholder="" path="confirmpassword"/>
+            <form class="form-signup" action="/signin" method="POST" name="form">
+                <label for="role">Role</label>
+                <select id="role" class="form-styling" name="role">
+                    <option>seller</option>
+                    <option>bidder</option>
+                </select>
+                <label for="balance">Balance</label>
+                <input id="balance" class="form-styling" type="number" name="balance"
+                       step="10" min="100" max="50000" value="100" size="5"/>
+                <label for="username">Username</label>
+                <input id="username" class="form-styling" type="text" name="username" placeholder="" required/>
+                <label for="email">Email</label>
+                <input id="email" class="form-styling" type="email" name="email" placeholder=""/>
+                <label for="password">Password</label>
+                <input id="password" class="form-styling" type="password" name="password" autocomplete="on"
+<%--                       minlength="6"--%>
+<%--                       pattern="[0-9a-fA-F]{6,30}"--%>
+<%--                       title="Enter password consisting of more than 6 symbols"--%>
+                       placeholder=""/>
+                <label for="confirmpassword">Confirm password</label>
+                <input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""
+                       autocomplete="on"/>
                 <a ng-click="checked = !checked" class="btn-signup" onclick="signup()">Sign Up</a>
-            </form:form>
+            </form>
 
             <div class="success">
                 <svg width="270" height="270" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -74,7 +81,7 @@
                 <a href="#"></a>
             </div>
 
-            <div>
+            <div class="welcome-block">
                 <div class="cover-photo"></div>
                 <div class="profile-photo"></div>
                 <h1 class="welcome">Welcome!</h1>

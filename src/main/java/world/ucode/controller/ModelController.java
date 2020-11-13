@@ -1,18 +1,24 @@
 package world.ucode.controller;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.services.UserService;
 
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
+@MultipartConfig
 @Controller
-@ControllerAdvice
 public class ModelController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
@@ -29,19 +35,36 @@ public class ModelController {
 
 // -----------------------
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
-    public String signin(ModelMap model) {
-        model.addAttribute("form", new Usr("1", "2", "3", "4", "5"));
+    public String signin() {
         return "/signin";
     }
 
-    @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public void signup_post(@ModelAttribute("form") Usr usr, final BindingResult bindingResult,
-                            final Model model) {
+    @RequestMapping(value = "/signin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String signinPost(HttpServletRequest req) {
 
-        System.out.println(usr.getPassword());
-        System.out.println("hallo");
+        Map<String, String[]> parameterMap = req.getParameterMap();
+
+//        System.out.println(
+//            req.getParameter("type") + ' ' +
+//            req.getParameter("username") + ' ' +
+//            req.getParameter("password") + ' ' //+
+////            req.getParameter("email") + ' ' +
+////            req.getParameter("confirmpassword") + ';'
+//        );
+
+        return "/signin";
     }
 
+//    @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+//    public void upload(@RequestPart("user") @Valid User user,
+//                       @RequestPart("file") @Valid @NotNull @NotBlank MultipartFile file) {
+//        System.out.println(user);
+//        System.out.println("Uploaded File: ");
+//        System.out.println("Name : " + file.getName());
+//        System.out.println("Type : " + file.getContentType());
+//        System.out.println("Name : " + file.getOriginalFilename());
+//        System.out.println("Size : " + file.getSize());
+//    }
 
     
 // -----------------------
