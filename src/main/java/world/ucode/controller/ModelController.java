@@ -39,14 +39,13 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public String signup_post(@ModelAttribute("form") Usr usr, ModelMap model) {
-            System.out.println(usr.getPassword());
-            System.out.println(usr.getConfirmpassword());
-            System.out.println(usr.getEmail());
-            System.out.println(usr.getUsername());
-            System.out.println("hallo");
-
-
+    public void signup_post(@ModelAttribute("form") Usr usr, ModelMap model) {
+        System.out.println(usr.getType());
+        System.out.println(usr.getPassword());
+        System.out.println(usr.getConfirmpassword());
+        System.out.println(usr.getEmail());
+        System.out.println(usr.getUsername());
+        System.out.println("hallo");
     }
 
     

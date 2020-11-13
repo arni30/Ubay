@@ -40,21 +40,16 @@
             </form>
 
             <form:form class="form-signup" method="POST" name="form" modelAttribute="form">
+                <form:input class="form-styling" cssStyle="display: none" type="text" name="username" placeholder="" path="type" value="signup"/>
                 <form:label for="username" path="email">Username</form:label>
                 <form:input class="form-styling" type="text" name="username" placeholder="" path="username"/>
-<%--                <label for="role">Role</label>--%>
-<%--                <select id="select" class="form-styling" name="role">--%>
-<%--                    <option>Seller</option>--%>
-<%--                    <option>Bidder</option>--%>
-<%--                </select>--%>
                 <form:label for="email" path="email">Email</form:label>
                 <form:input class="form-styling" type="text" name="email" placeholder="" path="email"/>
                 <form:label for="password" path="password">Password</form:label>
                 <form:input class="form-styling" type="text" name="password" placeholder="" path="password"/>
                 <form:label for="confirmpassword" path="confirmpassword">Confirm password</form:label>
                 <form:input class="form-styling" type="text" name="confirmpassword" placeholder="" path="confirmpassword"/>
-<%--                <a ng-click="checked = !checked" class="btn-signup" onclick="signup()">Sign Up</a>--%>
-                <form:button type="submit">send</form:button>
+                <form:button class="btn-signup" type="submit">send</form:button>
             </form:form>
 
             <div class="success">

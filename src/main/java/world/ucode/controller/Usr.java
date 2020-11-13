@@ -45,4 +45,8 @@ public class Usr {
     public String getConfirmpassword() {
         return this.confirmpassword;
     }
+
+    public String getType() {
+        return type;
+    }
 }
