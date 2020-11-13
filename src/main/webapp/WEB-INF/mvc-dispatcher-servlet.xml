@@ -17,7 +17,8 @@
         <property name="prefix" value="/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-    <bean id="userService" class="world.ucode.services.UserService">
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="31457280"/>
     </bean>
 
     <mvc:annotation-driven />

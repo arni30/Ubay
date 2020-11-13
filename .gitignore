@@ -3,10 +3,9 @@
 ._.DS_Store
 *.o
 *.out
-
+/lib
 *tmp*
 *build*
 
 .idea
 /target
-/lib

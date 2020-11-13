@@ -7,5 +7,15 @@
 
     <bean id="userService" class="world.ucode.services.UserService">
     </bean>
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+<!--        <property name="maxUploadSize" value="10000000"/>-->
+<!--    </bean>-->
+
+
 
 </beans>
