@@ -13,19 +13,24 @@ public class User {
     private int id;
 
     @Column(name = "login")
-    private String name;
-
+    private String login;
+    @Column(name = "password")
     private String password;
-    private int userRole;
+    @Column(name = "userRole")
+    private String userRole;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "balance")
+    private double balance;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lot> lots;
 
     public User() {}
-    public User(String name, String password, int role) {
-        this.name = name;
+    public User(String login, String password) {
+        System.out.println("CONSTRUCTOR");
+        this.login = login;
         this.password = password;
-        this.userRole = role;
         lots = new ArrayList<>();
     }
 
@@ -47,11 +52,11 @@ public class User {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -61,21 +66,23 @@ public class User {
         this.password = password;
     }
 
-    public int getRole() {
-        return userRole;
-    }
-    public void setRole(int role) {
-        this.userRole = role;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getUserRole() { return userRole; }
+    public void setUserRole(String userRole) { this.userRole = userRole; }
+
+    public double getBalance() { return balance; }
+    public void setBalance(double balance) { this.balance = balance; }
 
     @Override
     public String toString() {
         String res = "models.User{ " +
                 "id=" + id +
-                ", login='" + name + '\'' +
+                ", login='" + login + '\'' +
                 ", password=" + password +
                 ", role=";
-        if (userRole == 0) {
+        if (userRole.equals("seller")) {
             res += "seller";
         } else {
             res += "bitter";

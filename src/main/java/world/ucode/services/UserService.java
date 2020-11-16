@@ -12,6 +12,13 @@ public class UserService {
     public UserService() {
     }
 
+    public User validateUser(User user) throws Exception {
+        User newUser = usersDao.findByLogin(user.getLogin());
+        if (newUser.getPassword().equals(user.getPassword()))
+            return newUser;
+        else
+            throw new Exception("Unknown user");
+    }
     public User findUser(int id) {
         return usersDao.findById(id);
     }

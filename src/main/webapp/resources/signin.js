@@ -57,30 +57,30 @@ function checkEmail() {
 // });
 
 function signup() {
-    let role = document.querySelector('#role').value;
-    let balance = document.querySelector('#balance').value;
-    let username = document.querySelector('#username').value;
-    let password = document.querySelector('#password').value;
-    let cpassword = document.querySelector('#confirmpassword').value;
-    let email = document.querySelector('#email').value;
-    if (!username || !password || !cpassword || !email) {
-        alert('All fields have to be filled!');
-    } else if (balance < 1 || balance > 50000) {
-        alert('Balance should be in range 1-50000!');
-    } else if (password !== cpassword) {
-        alert('Passwords are different!');
-    } else {
-        checkEmail();
-        let formData = new FormData();
-        formData.set('type', 'signup');
-        formData.set('role', role);
-        formData.set('balance', balance);
-        formData.set('username', username);
-        formData.set('password', password);
-        formData.set('confirmpassword', cpassword);
-        formData.set('email', email);
-        send(formData);
-    }
+    // let role = document.querySelector('#role').value;
+    // let balance = document.querySelector('#balance').value;
+    // let username = document.querySelector('#username').value;
+    // let password = document.querySelector('#password').value;
+    // let cpassword = document.querySelector('#confirmpassword').value;
+    // let email = document.querySelector('#email').value;
+    // if (!username || !password || !cpassword || !email) {
+    //     alert('All fields have to be filled!');
+    // } else if (balance < 1 || balance > 50000) {
+    //     alert('Balance should be in range 1-50000!');
+    // } else if (password !== cpassword) {
+    //     alert('Passwords are different!');
+    // } else {
+    //     checkEmail();
+    //     let formData = new FormData();
+    //     formData.set('type', 'signup');
+    //     formData.set('role', role);
+    //     formData.set('balance', balance);
+    //     formData.set('username', username);
+    //     formData.set('password', password);
+    //     formData.set('confirmpassword', cpassword);
+    //     formData.set('email', email);
+    //     send(formData);
+    // }
 }
 
 async function send(formData) {

@@ -18,6 +18,8 @@ import world.ucode.services.UserService;
 @Controller
 @ControllerAdvice
 public class ModelController {
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    UserService userService = context.getBean("userService", UserService.class);
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "/index";
@@ -27,26 +29,43 @@ public class ModelController {
     public String developer(@RequestParam int id, ModelMap model) {
         model.addAttribute("id", id);
         System.out.println(id);
-        database();
         return "/id";
     }
 
     // -----------------------
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
     public String signin(ModelMap model) {
-        model.addAttribute("form", new Usr());
+//        model.addAttribute("form", new User());
         return "/signin";
     }
 
-    @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public void signup_post(@ModelAttribute("form") Usr usr, ModelMap model) {
+    @RequestMapping(value = "/signin/signup", method = RequestMethod.POST)
+    public String signup_post(User user, ModelMap model) {
 //        System.out.println(usr.getType());
-        System.out.println(usr.getType());
-        System.out.println(usr.getPassword());
-        System.out.println(usr.getConfirmpassword());
-        System.out.println(usr.getEmail());
-        System.out.println(usr.getUsername());
+        System.out.println(user.getUserRole());
+        System.out.println(user.getPassword());
+        System.out.println(user.getEmail());
+        System.out.println(user.getLogin());
         System.out.println("hallo");
+        model.addAttribute("user",user);
+        userService.saveUser(user);
+        return "about";
+    }
+    @RequestMapping(value = "/signin/signin", method = RequestMethod.POST)
+    public String signin_post(User user, ModelMap model) {
+        System.out.println(user.getPassword());
+        System.out.println(user.getLogin());
+        System.out.println("hallo");
+        try {
+            User newUser = userService.validateUser(user);
+            System.out.println(newUser.getEmail());
+            model.addAttribute("user",newUser);
+            return "/about";
+        }
+        catch (Exception e){
+            System.out.println("EXCEPTION VALIDATION");
+        }
+        return "/signin";
     }
 
     // -----------------------
@@ -60,21 +79,24 @@ public class ModelController {
         return "/errors/error";
     }
 
-
-    private void database() {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        UserService userService = context.getBean("userService", UserService.class);
-
-        User user = new User("tro", "qwerty", 0);
-        userService.saveUser(user);
-
-        Lot ferrari = new Lot("Ferrari", 12000);
-        ferrari.setSeller(user);
-        user.addLot(ferrari);
-        Lot ford = new Lot("Ford", 600);
-        ford.setSeller(user);
-        user.addLot(ford);
+    private void databaseClose(User user) {
         userService.updateUser(user);
         context.close();
     }
+//    private void database() {
+//        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+//        UserService userService = context.getBean("userService", UserService.class);
+//
+//        User user = new User("tro", "qwerty", "seller");
+//        userService.saveUser(user);
+//
+//        Lot ferrari = new Lot("Ferrari", 12000);
+//        ferrari.setSeller(user);
+//        user.addLot(ferrari);
+//        Lot ford = new Lot("Ford", 600);
+//        ford.setSeller(user);
+//        user.addLot(ford);
+//        userService.updateUser(user);
+//        context.close();
+//    }
 }

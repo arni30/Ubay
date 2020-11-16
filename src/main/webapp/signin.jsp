@@ -26,41 +26,39 @@
             </ul>
         </div>
         <div ng-app ng-init="checked = false">
-            <form class="form-signin" action="/signin" method="POST" name="form">
-                <label for="loginUsername">Username</label>
-                <input id="loginUsername" class="form-styling" type="text" name="username" placeholder=""/>
-                <label for="loginPassword">Password</label>
-                <input id="loginPassword" class="form-styling" type="password" autocomplete="on"
+            <form class="form-signin" action="signin/signin" method="POST" name="form">
+                <label for="login">Username</label>
+                <input id="login" class="form-styling" type="text" name="login" placeholder=""/>
+                <label for="password">Password</label>
+                <input id="password" class="form-styling" type="password" autocomplete="on"
                        name="password" placeholder=""/>
 
 <%--                <input type="checkbox" id="checkbox"/>--%>
 <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
-                <div class="btn-animate">
-                    <a class="btn-signin" onclick="signin()">Sign in</a>
-                </div>
+                    <input class="btn-signin" type="submit" placeholder="Sign in">
+<%--                    <a class="btn-signin" onclick="signin()">Sign in</a>--%>
             </form>
-
-            <form:form class="form-signup" method="POST" name="form" modelAttribute="form">
-                <form:input class="form-styling" cssStyle="display: none" type="text" name="username" placeholder="" path="type" value="signup"/>
-                <label for="role">Role</label>
-                <form:select id="role" class="form-styling" name="role" path="role">
+            <form class="form-signup" id="formSignUp" action="signin/signup" method="POST" name="form">
+<%--                <input class="form-styling" style="display: none" type="text" name="username" placeholder="" value="signup"/>&ndash;%&gt;--%>
+                <label for="userRole">Role</label>
+                <select id="userRole" class="form-styling" name="userRole">
                     <option>seller</option>
                     <option>bidder</option>
-                </form:select>
+                </select>
                 <label for="balance">Balance</label>
-                <form:input id="balance" class="form-styling" type="number" name="balance"
-                       step="10" min="100" max="50000" value="100" size="5" path="balance"/>
-                <label for="username">Username</label>
-                <form:input id="username" class="form-styling" type="text" name="username" placeholder="" path="username"/>
+                <input id="balance" class="form-styling" type="number" name="balance"
+                            step="10" min="100" max="50000" value="100" size="5" />
+                <label for="login">Username</label>
+                <input id="login" class="form-styling" type="text" name="login" placeholder="" />
                 <label for="email">Email</label>
-                <form:input id="email" class="form-styling" type="email" name="email" placeholder="" path="email"/>
+                <input id="email" class="form-styling" type="email" name="email" placeholder=""/>
                 <label for="password">Password</label>
-                <form:input id="password" class="form-styling" type="password" name="password" autocomplete="on" placeholder="" path="password"/>
+                <input id="password" class="form-styling" type="password" name="password" autocomplete="on" placeholder=""/>
                 <label for="confirmpassword">Confirm password</label>
-                <form:input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""
-                       autocomplete="on" path="confirmpassword"/>
-                <form:button class="btn-signup" type="submit">send</form:button>
-            </form:form>
+                <input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""
+                            autocomplete="on" />
+                <input class="btn-signup" type="submit" placeholder="Sign up">
+            </form>
 
             <div class="success">
                 <svg width="270" height="270" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
