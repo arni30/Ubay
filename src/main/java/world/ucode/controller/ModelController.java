@@ -1,26 +1,12 @@
 package world.ucode.controller;
 
-import com.sun.istack.NotNull;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.DefaultSessionAttributeStore;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import world.ucode.models.Lot;
+import org.springframework.web.servlet.view.RedirectView;
 import world.ucode.models.User;
 import world.ucode.services.UserService;
-
-import java.util.Map;
 
 @Controller
 @ControllerAdvice
@@ -41,10 +27,10 @@ public class ModelController {
     }
 
     // -----------------------
-    @RequestMapping(value = "/signin", method = RequestMethod.GET)
+    @RequestMapping(value = "/authorization", method = RequestMethod.GET)
     public String signin(ModelMap model) {
 //        model.addAttribute("form", new User());
-        return "/signin";
+        return "/authorization";
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
@@ -61,33 +47,46 @@ public class ModelController {
     }
 
 
-    @RequestMapping(value = "/signin/signup", method = RequestMethod.POST)
-    public String signup_post(User user, ModelMap model) {
-//        System.out.println(usr.getType());
-        System.out.println(user.getUserRole());
-        System.out.println(user.getPassword());
-        System.out.println(user.getEmail());
-        System.out.println(user.getLogin());
-        System.out.println("hallo");
-        model.addAttribute("user",user);
-        userService.saveUser(user);
-        return "about";
-    }
-    @RequestMapping(value = "/signin/signin", method = RequestMethod.POST)
+//    @RequestMapping(value = "/authorization/signin", method = RequestMethod.POST)
+//    public String signup_post(User user, ModelMap model) {
+////        System.out.println(usr.getType());
+//        System.out.println(user.getUserRole());
+//        System.out.println(user.getPassword());
+//        System.out.println(user.getEmail());
+//        System.out.println(user.getLogin());
+//        System.out.println("hallo");
+//        model.addAttribute("user",user);
+//        userService.saveUser(user);
+//        return "/main";
+//
+//    }
+    @RequestMapping(value = "/authorization", method = RequestMethod.POST)
     public String signin_post(User user, ModelMap model) {
-        System.out.println(user.getPassword());
-        System.out.println(user.getLogin());
-        System.out.println("hallo");
-        try {
-            User newUser = userService.validateUser(user);
-            System.out.println(newUser.getEmail());
-            model.addAttribute("user",newUser);
-            return "/about";
+        System.out.println(user.getType());
+        if (user.getType().equals("signin")) {
+            System.out.println(user.getPassword());
+            System.out.println(user.getLogin());
+            System.out.println("hallo");
+            try {
+                User newUser = userService.validateUser(user);
+                System.out.println(newUser.getEmail());
+                model.addAttribute("user", newUser);
+                return "/main";
+            } catch (Exception e) {
+                System.out.println("EXCEPTION VALIDATION");
+            }
         }
-        catch (Exception e){
-            System.out.println("EXCEPTION VALIDATION");
+        else {
+            System.out.println(user.getUserRole());
+            System.out.println(user.getPassword());
+            System.out.println(user.getEmail());
+            System.out.println(user.getLogin());
+            System.out.println("hallo");
+            model.addAttribute("user",user);
+            userService.saveUser(user);
+            return "/main";
         }
-        return "/signin";
+        return "/authorization";
     }
 
     // -----------------------

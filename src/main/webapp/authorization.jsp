@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="resources/signin.css">
+    <link rel="stylesheet" href="resources/authorization.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
@@ -28,14 +28,15 @@
             </ul>
         </div>
         <div ng-app ng-init="checked = false">
-            <form class="form-signin" action="signin/signin" method="POST" name="form">
-                <label for="login">Username</label>
-                <input id="login" class="form-styling" type="text" name="login" placeholder=""/>
-                <label for="password">Password</label>
+            <form class="form-signin" action="authorization" method="POST" name="form">
+                <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signin"/>
+                <label for="loginLogin">Username</label>
+                <input id="loginLogin" class="form-styling" type="text" name="login" placeholder=""/>
+                <label for="passwordLogin">Password</label>
                 <div>
-                <input id="password" class="form-styling" type="password" autocomplete="on"
+                <input id="passwordLogin" class="form-styling" type="password" autocomplete="on"
                        name="password" placeholder=""/>
-                    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    <span toggle="#passwordLogin" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
 
 
@@ -44,8 +45,8 @@
                     <input class="btn-signin" type="submit" placeholder="Sign in">
 <%--                    <a class="btn-signin" onclick="signin()">Sign in</a>--%>
             </form>
-            <form class="form-signup" id="formSignUp" action="signin/signup" method="POST" name="form">
-<%--                <input class="form-styling" style="display: none" type="text" name="username" placeholder="" value="signup"/>&ndash;%&gt;--%>
+            <form class="form-signup" id="formSignUp" action="authorization" method="POST" name="form">
+                <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signup"/>
                 <label for="userRole">Role</label>
                 <select id="userRole" class="form-styling" name="userRole">
                     <option>seller</option>
@@ -54,12 +55,12 @@
                 <label for="balance">Balance</label>
                 <input id="balance" class="form-styling" type="number" name="balance"
                             step="10" min="100" max="50000" value="100" size="5" />
-                <label for="login">Username</label>
-                <input id="login" class="form-styling" type="text" name="login" placeholder="" />
+                <label for="loginSignUp">Username</label>
+                <input id="loginSignUp" class="form-styling" type="text" name="login" placeholder="" />
                 <label for="email">Email</label>
                 <input id="email" class="form-styling" type="email" name="email" placeholder=""/>
-                <label for="password">Password</label>
-                <input id="password" class="form-styling" type="password" name="password" autocomplete="on" placeholder=""/>
+                <label for="passwordSignUp">Password</label>
+                <input id="passwordSignUp" class="form-styling" type="password" name="password" autocomplete="on" placeholder=""/>
                 <label for="confirmpassword">Confirm password</label>
                 <input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""
                             autocomplete="on" />
@@ -108,7 +109,7 @@
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
 
-<script src="resources/signin.js"></script>
+<script src="resources/authorization.js"></script>
 
 </body>
 </html>

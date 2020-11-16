@@ -45,7 +45,7 @@
                 <!--            autocomplete="off" data-ajax-src="/suggest/">-->
                 <!--        <button class="login-button" onclick="gotoSignIn()">Sign in</button>-->
                 <!--        <button class="login-button" onclick="gotoProfile">Profile</button>-->
-                <a class="abutton" href="http://localhost:8080/ubay/signin">Sign in</a>
+                <a class="abutton" href="http://localhost:8080/ubay/authorization">Sign in</a>
                 <a class="abutton" href="http://localhost:8080/ubay/profile">Profile</a>
             </form>
         </div>

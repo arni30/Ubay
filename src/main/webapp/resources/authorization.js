@@ -14,7 +14,7 @@ $(".toggle-password").click(function() {
 
     $(this).toggleClass("fa-eye fa-eye-slash");
     let input = $($(this).attr("toggle"));
-    if (input.attr("type") == "password") {
+    if (input.attr("type") === "password") {
         input.attr("type", "text");
     } else {
         input.attr("type", "password");
@@ -117,10 +117,10 @@ function signup() {
 async function send(formData) {
 
     // let request = new XMLHttpRequest();
-    // request.open("POST", 'http://localhost:8080/ubay/signin');
+    // request.open("POST", 'http://localhost:8080/ubay/authorization');
     // request.send(formData);
 
-    fetch('http://localhost:8080/ubay/signin', {
+    fetch('http://localhost:8080/ubay/authorization', {
         method: 'POST',
         enctype: 'multipart/form-data',
         body: JSON.stringify({

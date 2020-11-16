@@ -7,6 +7,15 @@ import java.util.List;
 @Entity
 @Table (name = "users")
 public class User {
+    private String type;
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

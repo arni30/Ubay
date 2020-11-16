@@ -88,7 +88,7 @@ let init = () => {
 window.onload = init;
 
 // function gotoSignIn() {
-//   location.load("http://localhost:8080/ubay/signin");
+//   location.load("http://localhost:8080/ubay/authorization");
 // }
 // function gotoProfile() {
 //   location.load("http://localhost:8080/ubay/profile");
