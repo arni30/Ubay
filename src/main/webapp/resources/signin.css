@@ -1,4 +1,7 @@
-html, body * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+html, body * {
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
 
 body {
   background:
@@ -111,6 +114,21 @@ li {
   text-decoration: none;
   -webkit-transition: all .25s ease;
   transition: all .25s ease;
+}
+
+.field-icon {
+  color: #ffffff;
+  float: right;
+  margin-right: 15px;
+  margin-top: -45px;
+  /*display: block;*/
+  position: relative;
+  /*z-index: 2;*/
+}
+
+.container{
+  padding-top:50px;
+  margin: auto;
 }
 
 .form-signin {

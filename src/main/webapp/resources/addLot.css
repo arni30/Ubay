@@ -1,0 +1,96 @@
+#body {
+  background:
+          -webkit-linear-gradient(
+                  rgba(246,247,249,0.8),
+                  rgba(246,247,249,0.8)),
+          url(lead-bg.jpg) no-repeat center center fixed;
+  background:
+          linear-gradient(
+                  rgba(246,247,249,0.8),
+                  rgba(246,247,249,0.8)),
+          url(lead-bg.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* -------------------------------------------------------- *
+ * ----------------------- ADD LOT ------------------------ *
+ * -------------------------------------------------------- */
+#window {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  right: 20%;
+  max-width: 600px;
+  min-height: 20vh;
+  margin: 10vh auto;
+  padding: 40px;
+  background: white;
+  z-index: 2;
+}
+.addLot-header {
+  padding-bottom: 30px;
+  border-bottom: 1px solid #d7dce6;
+}
+
+/*// ----------------*/
+/*.cart-item {*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  margin: 20px 0;*/
+/*}*/
+/*.cart-qty {*/
+/*  display: flex;*/
+/*  align-content: center;*/
+/*}*/
+/*.cart-qty > * {*/
+/*  box-sizing: border-box;*/
+/*}*/
+/*.qty-count {*/
+/*  display: inline-block;*/
+/*  outline: none;*/
+/*  border: none;*/
+/*}*/
+/*.item-qty {*/
+/*  padding: 5px 0;*/
+/*  width: 30px;*/
+/*  height: 30px;*/
+/*  text-align: center;*/
+/*}*/
+/*.cart-remove {*/
+/*  font-size: 1.7em;*/
+/*  font-weight: 300;*/
+/*  transform: rotate(45deg);*/
+/*  color: #d7dce6;*/
+/*}*/
+/*.cart-button-decrease,*/
+/*.cart-button-increase {*/
+/*  font-size: 1.6em;*/
+/*  font-weight: 100;*/
+/*  border: 1px solid #d7dce6;*/
+/*  color: #d7dce6;*/
+/*}*/
+/*.cart-subtotal {*/
+/*  margin: 10px 0;;*/
+/*}*/
+/*.cart-total {*/
+/*  margin-bottom: 20px;*/
+/*  text-align: right;*/
+/*}*/
+/*// ----------------*/
+
+.addLot-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  padding: 20px 0;
+  border-top: 1px solid #d7dce6;
+}
+.addLot-controls a {
+  font-size: .8em;
+  color: #74808a;
+}
+.addLot-controls > .button {
+  padding: 5px 30px;
+  border-radius: 4px;
+}

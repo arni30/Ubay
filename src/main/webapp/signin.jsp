@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="resources/signin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
@@ -26,12 +28,15 @@
             </ul>
         </div>
         <div ng-app ng-init="checked = false">
-            <form class="form-signin" action="/signin" method="POST" name="form">
+            <form class="form-signin" action="signin" method="POST" name="form">
                 <label for="loginUsername">Username</label>
                 <input id="loginUsername" class="form-styling" type="text" name="username" placeholder=""/>
                 <label for="loginPassword">Password</label>
-                <input id="loginPassword" class="form-styling" type="password" autocomplete="on"
-                       name="password" placeholder=""/>
+                <div>
+                    <input id="loginPassword" class="form-styling" type="password" autocomplete="on"
+                           name="password" placeholder=""/>
+                    <span toggle="#loginPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
 
 <%--                <input type="checkbox" id="checkbox"/>--%>
 <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
@@ -40,27 +45,58 @@
                 </div>
             </form>
 
-            <form:form class="form-signup" method="POST" name="form" modelAttribute="form">
-                <form:input class="form-styling" cssStyle="display: none" type="text" name="username" placeholder="" path="type" value="signup"/>
+<%--            <form:form class="form-signup" method="POST" name="form" modelAttribute="form">--%>
+<%--                <form:input class="form-styling" cssStyle="display: none" type="text" name="username" placeholder="" path="type" value="signup"/>--%>
+<%--                <label for="role">Role</label>--%>
+<%--                <form:select id="role" class="form-styling" name="role" path="role">--%>
+<%--                    <option>seller</option>--%>
+<%--                    <option>bidder</option>--%>
+<%--                </form:select>--%>
+<%--                <label for="balance">Balance</label>--%>
+<%--                <form:input id="balance" class="form-styling" type="number" name="balance"--%>
+<%--                       step="10" min="100" max="50000" value="100" size="5" path="balance"/>--%>
+<%--                <label for="username">Username</label>--%>
+<%--                <form:input id="username" class="form-styling" type="text" name="username" placeholder="" path="username"/>--%>
+<%--                <label for="email">Email</label>--%>
+<%--                <form:input id="email" class="form-styling" type="email" name="email" placeholder="" path="email"/>--%>
+<%--                <label for="password">Password</label>--%>
+<%--                <form:input id="password" class="form-styling" type="password" name="password" autocomplete="on" placeholder="" path="password"/>--%>
+<%--                <label for="confirmpassword">Confirm password</label>--%>
+<%--                <form:input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""--%>
+<%--                       autocomplete="on" path="confirmpassword"/>--%>
+<%--&lt;%&ndash;                <a ng-click="checked = !checked" class="btn-signup" onclick="signup()">Sign Up</a>&ndash;%&gt;--%>
+<%--                <form:button class="btn-signup" type="submit">send</form:button>--%>
+<%--            </form:form>--%>
+
+            <form class="form-signup" enctype="multipart/form-data" method="POST" name="form" >
+<%--                <input class="form-styling" cssStyle="display: none" type="text" name="username" placeholder="" path="type" value="signup"/>--%>
                 <label for="role">Role</label>
-                <form:select id="role" class="form-styling" name="role" path="role">
+                <select id="role" class="form-styling" name="role" path="role">
                     <option>seller</option>
                     <option>bidder</option>
-                </form:select>
+                </select>
                 <label for="balance">Balance</label>
-                <form:input id="balance" class="form-styling" type="number" name="balance"
-                       step="10" min="100" max="50000" value="100" size="5" path="balance"/>
+                <input id="balance" class="form-styling" type="number" name="balance"
+                            step="10" min="100" max="50000" value="100" size="5" path="balance"/>
                 <label for="username">Username</label>
-                <form:input id="username" class="form-styling" type="text" name="username" placeholder="" path="username"/>
+                <input id="username" class="form-styling" type="text" name="username" placeholder="" path="username"/>
                 <label for="email">Email</label>
-                <form:input id="email" class="form-styling" type="email" name="email" placeholder="" path="email"/>
+                <input id="email" class="form-styling" type="email" name="email" placeholder="" path="email"/>
                 <label for="password">Password</label>
-                <form:input id="password" class="form-styling" type="password" name="password" autocomplete="on" placeholder="" path="password"/>
+                <div>
+                    <input id="password" class="form-styling" type="password" name="password" placeholder="" path="password"/>
+                    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
                 <label for="confirmpassword">Confirm password</label>
-                <form:input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""
-                       autocomplete="on" path="confirmpassword"/>
-                <form:button class="btn-signup" type="submit">send</form:button>
-            </form:form>
+                <div>
+                    <input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""
+                            path="confirmpassword"/>
+                    <span toggle="#confirmpassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+
+                <a ng-click="checked = !checked" class="btn-signup" onclick="signup(); return false;">Sign Up</a>
+                <%--                <form:button class="btn-signup" type="submit">send</form:button>--%>
+            </form>
 
             <div class="success">
                 <svg width="270" height="270" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
