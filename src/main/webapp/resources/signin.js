@@ -10,6 +10,17 @@ $(function() {
 	});
 });
 
+$(".toggle-password").click(function() {
+
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    let input = $($(this).attr("toggle"));
+    if (input.attr("type") == "password") {
+        input.attr("type", "text");
+    } else {
+        input.attr("type", "password");
+    }
+});
+
 // $(function () {
 // 	$(".btn-signin").click(function() {
 //         $(".btn-animate").toggleClass("btn-animate-grow");
@@ -57,31 +68,51 @@ function checkEmail() {
 // });
 
 function signup() {
-    // let role = document.querySelector('#role').value;
-    // let balance = document.querySelector('#balance').value;
-    // let username = document.querySelector('#username').value;
-    // let password = document.querySelector('#password').value;
-    // let cpassword = document.querySelector('#confirmpassword').value;
-    // let email = document.querySelector('#email').value;
-    // if (!username || !password || !cpassword || !email) {
-    //     alert('All fields have to be filled!');
-    // } else if (balance < 1 || balance > 50000) {
-    //     alert('Balance should be in range 1-50000!');
-    // } else if (password !== cpassword) {
-    //     alert('Passwords are different!');
-    // } else {
-    //     checkEmail();
-    //     let formData = new FormData();
-    //     formData.set('type', 'signup');
-    //     formData.set('role', role);
-    //     formData.set('balance', balance);
-    //     formData.set('username', username);
-    //     formData.set('password', password);
-    //     formData.set('confirmpassword', cpassword);
-    //     formData.set('email', email);
-    //     send(formData);
-    // }
+    let role = document.querySelector('#role').value;
+    let balance = document.querySelector('#balance').value;
+    let username = document.querySelector('#username').value;
+    let password = document.querySelector('#password').value;
+    let cpassword = document.querySelector('#confirmpassword').value;
+    let email = document.querySelector('#email').value;
+    if (!username || !password || !cpassword || !email) {
+        alert('All fields have to be filled!');
+    } else if (balance < 1 || balance > 50000) {
+        alert('Balance should be in range 1-50000!');
+    } else if (password !== cpassword) {
+        alert('Passwords are different!');
+    } else {
+        checkEmail();
+        // let formData = new FormData();
+        // formData.set('type', 'signup');
+        // formData.set('role', role);
+        // formData.set('balance', balance);
+        // formData.set('username', username);
+        // formData.set('password', password);
+        // formData.set('confirmpassword', cpassword);
+        // formData.set('email', email);
+
+        formData.append('form', new Blob([JSON.stringify({
+            "type": "signup",
+            "role": role,
+            "balance": balance,
+            "username": username,
+            "password": password,
+            "confirmpassword": cpassword,
+            "email": email
+        })]
+            , {
+            type: "application/json"
+        }
+        ));
+
+        send(formData);
+
+        // document.querySelector('#username').value = '';
+
+
+    }
 }
+
 
 async function send(formData) {
 
@@ -89,7 +120,7 @@ async function send(formData) {
     // request.open("POST", 'http://localhost:8080/ubay/signin');
     // request.send(formData);
 
-    let response = await fetch('http://localhost:8080/ubay/signin',{
+    fetch('http://localhost:8080/ubay/signin', {
         method: 'POST',
         enctype: 'multipart/form-data',
         body: JSON.stringify({
@@ -100,8 +131,17 @@ async function send(formData) {
         },
         // body: JSON.stringify(formData),
         // headers: {
-        //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        //   'Content-type': 'application/json'
         // },
+        body: formData
+    }).then(function (response) {
+        if (response.status !== 200) {
+            alert("There was an error! Response != 200");
+        } else {
+            // alert("Request successful");
+        }
+    }).catch(function (err) {
+        alert("There was an error!");
     });
     // if (response.ok) {
     //     // let blob = await response.blob();
@@ -129,7 +169,7 @@ function onSubmit() {
     })], {
         type: "application/json"
     }));
-    var boundary = Math.random().toString().substr(2);
+
     fetch('/upload', {
         method: 'post',
         body: formData

@@ -1,5 +1,8 @@
 package world.ucode.controller;
 
+import com.sun.istack.NotNull;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -7,13 +10,17 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.DefaultSessionAttributeStore;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartResolver;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.services.UserService;
+
+import java.util.Map;
 
 @Controller
 @ControllerAdvice
@@ -29,6 +36,7 @@ public class ModelController {
     public String developer(@RequestParam int id, ModelMap model) {
         model.addAttribute("id", id);
         System.out.println(id);
+//        database();
         return "/id";
     }
 
@@ -38,6 +46,20 @@ public class ModelController {
 //        model.addAttribute("form", new User());
         return "/signin";
     }
+
+    @RequestMapping(value = "/main", method = RequestMethod.GET)
+    public String main(ModelMap model) {
+        return "/main";
+    }
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String profile(ModelMap model) {
+        return "/profile";
+    }
+    @RequestMapping(value = "/addLot", method = RequestMethod.GET)
+    public String addLot(ModelMap model) {
+        return "/addLot";
+    }
+
 
     @RequestMapping(value = "/signin/signup", method = RequestMethod.POST)
     public String signup_post(User user, ModelMap model) {

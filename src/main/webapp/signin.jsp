@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="resources/signin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
@@ -30,8 +32,12 @@
                 <label for="login">Username</label>
                 <input id="login" class="form-styling" type="text" name="login" placeholder=""/>
                 <label for="password">Password</label>
+                <div>
                 <input id="password" class="form-styling" type="password" autocomplete="on"
                        name="password" placeholder=""/>
+                    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+
 
 <%--                <input type="checkbox" id="checkbox"/>--%>
 <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
