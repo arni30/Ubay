@@ -93,6 +93,7 @@ body {
   margin: 0 auto;
   padding-right: 20px;
   padding-left: 20px;
+  min-width: 560px;
   max-width: 1240px;
 }
 .page-header {
@@ -206,6 +207,14 @@ body {
   color: #8458B3;
   padding: 0 10px;
 }
+
+.header-menu {
+  min-width: 300px;
+}
+.header-features,
+.header-login {
+  min-width: 180px;
+}
 .header-menu a:focus,
 .header-menu a:hover {
   border-bottom: 1px solid #8458B3;
@@ -271,7 +280,7 @@ body {
   border-bottom: 12px solid transparent;
   border-left: 12px solid #e5eaf5;
   position: absolute;
-  right: -12px;
+  right: -10px;
   top: 0;
 }
 .crumbs a::before {
@@ -338,7 +347,7 @@ main.page {
   flex: 1;
 } */
 aside {
-  /*margin-right: 30px;*/
+  min-width: 180px;
   padding: 25px 10px;
 }
 .sort-select{
@@ -500,13 +509,22 @@ aside {
 /* -------------------------------------------------------- *
  * ----------------------- FOOTER ------------------------- *
  * -------------------------------------------------------- */
-
+html, body {
+  height: 100%;
+  width: 100%;
+}
+.help_footer {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+}
 footer {
   /* position: absolute;
   bottom: 0;
   left: 0;
   right: 0; */
-  margin-top: auto;
+  height: 40px;
+  margin-top: -50px;
   padding: 5px 0;
   background: #e5eaf5;
 

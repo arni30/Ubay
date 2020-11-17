@@ -105,7 +105,7 @@
     <!-- <div id="main-overlay"></div> -->
     <aside>
         <h3 class="personal-section__heading">Auctions</h3>
-        <a class="abutton" href="#">Add auction</a>
+        <a class="abutton" href="http://localhost:8080/ubay/addLot">Add auction</a>
     </aside>
 
     <div class="container"></div>
