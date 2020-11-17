@@ -11,7 +11,6 @@ $(function() {
 });
 
 $(".toggle-password").click(function() {
-
     $(this).toggleClass("fa-eye fa-eye-slash");
     let input = $($(this).attr("toggle"));
     if (input.attr("type") === "password") {
@@ -35,17 +34,17 @@ $(".toggle-password").click(function() {
 // });
 
 function signin() {
-    let loginUsername = document.querySelector('#loginUsername').value;
-    let loginPassword = document.querySelector('#loginPassword').value;
+    let loginUsername = document.querySelector('#loginLogin').value;
+    let loginPassword = document.querySelector('#passwordLogin').value;
 
     if (!loginUsername || !loginPassword) {
         alert('All fields have to be filled!');
     } else {
-        let formData = new FormData();
-        formData.set('type', 'signin');
-        formData.set('username', loginUsername);
-        formData.set('password', loginPassword);
-        send(formData);
+        // let formData = new FormData();
+        // formData.set('type', 'signin');
+        // formData.set('username', loginUsername);
+        // formData.set('password', loginPassword);
+        // send(formData);
     }
 }
 
@@ -55,7 +54,6 @@ function checkEmail() {
         .setAttribute('class', 'form-signup-left form-signup-down');
     document.querySelector('.success').setAttribute('class', 'success success-left');
     document.querySelector('.frame').setAttribute('class', 'frame frame-short');
-
 }
 
 // $(function() {
@@ -68,10 +66,10 @@ function checkEmail() {
 // });
 
 function signup() {
-    let role = document.querySelector('#role').value;
+    let role = document.querySelector('#userRole').value;
     let balance = document.querySelector('#balance').value;
-    let username = document.querySelector('#username').value;
-    let password = document.querySelector('#password').value;
+    let username = document.querySelector('#loginSignUp').value;
+    let password = document.querySelector('#passwordSignUp').value;
     let cpassword = document.querySelector('#confirmpassword').value;
     let email = document.querySelector('#email').value;
     if (!username || !password || !cpassword || !email) {
@@ -81,7 +79,7 @@ function signup() {
     } else if (password !== cpassword) {
         alert('Passwords are different!');
     } else {
-        checkEmail();
+        // checkEmail();
         // let formData = new FormData();
         // formData.set('type', 'signup');
         // formData.set('role', role);
@@ -91,25 +89,21 @@ function signup() {
         // formData.set('confirmpassword', cpassword);
         // formData.set('email', email);
 
-        formData.append('form', new Blob([JSON.stringify({
-            "type": "signup",
-            "role": role,
-            "balance": balance,
-            "username": username,
-            "password": password,
-            "confirmpassword": cpassword,
-            "email": email
-        })]
-            , {
-            type: "application/json"
-        }
-        ));
-
-        send(formData);
-
-        // document.querySelector('#username').value = '';
-
-
+        // formData.append('form', new Blob([JSON.stringify({
+        //     "type": "signup",
+        //     "role": role,
+        //     "balance": balance,
+        //     "username": username,
+        //     "password": password,
+        //     "confirmpassword": cpassword,
+        //     "email": email
+        // })]
+        //     , {
+        //     type: "application/json"
+        // }
+        // ));
+        //
+        // send(formData);
     }
 }
 
@@ -158,28 +152,28 @@ async function send(formData) {
 
 
 
-function onSubmit() {
-
-    let formData = new FormData();
-
-    formData.append("file", document.forms["userForm"].file.files[0]);
-    formData.append('user', new Blob([JSON.stringify({
-        "firstName": document.getElementById("firstName").value,
-        "lastName": document.getElementById("lastName").value
-    })], {
-        type: "application/json"
-    }));
-
-    fetch('/upload', {
-        method: 'post',
-        body: formData
-    }).then(function (response) {
-        if (response.status !== 200) {
-            alert("There was an error!");
-        } else {
-            alert("Request successful");
-        }
-    }).catch(function (err) {
-        alert("There was an error!");
-    });;
-}
+// function onSubmit() {
+//
+//     let formData = new FormData();
+//
+//     formData.append("file", document.forms["userForm"].file.files[0]);
+//     formData.append('user', new Blob([JSON.stringify({
+//         "firstName": document.getElementById("firstName").value,
+//         "lastName": document.getElementById("lastName").value
+//     })], {
+//         type: "application/json"
+//     }));
+//
+//     fetch('/upload', {
+//         method: 'post',
+//         body: formData
+//     }).then(function (response) {
+//         if (response.status !== 200) {
+//             alert("There was an error!");
+//         } else {
+//             alert("Request successful");
+//         }
+//     }).catch(function (err) {
+//         alert("There was an error!");
+//     });;
+// }

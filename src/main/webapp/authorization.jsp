@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,15 +34,13 @@
                 <input id="loginLogin" class="form-styling" type="text" name="login" placeholder=""/>
                 <label for="passwordLogin">Password</label>
                 <div>
-                <input id="passwordLogin" class="form-styling" type="password" autocomplete="on"
+                    <input id="passwordLogin" class="form-styling" type="password" autocomplete="on"
                        name="password" placeholder=""/>
                     <span toggle="#passwordLogin" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
-
-
 <%--                <input type="checkbox" id="checkbox"/>--%>
 <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
-                    <input class="btn-signin" type="submit" placeholder="Sign in">
+                <input class="btn-signin" type="submit" onclick="signin()" placeholder="Sign in">
 <%--                    <a class="btn-signin" onclick="signin()">Sign in</a>--%>
             </form>
             <form class="form-signup" id="formSignUp" action="authorization" method="POST" name="form">
@@ -60,11 +58,17 @@
                 <label for="email">Email</label>
                 <input id="email" class="form-styling" type="email" name="email" placeholder=""/>
                 <label for="passwordSignUp">Password</label>
-                <input id="passwordSignUp" class="form-styling" type="password" name="password" autocomplete="on" placeholder=""/>
-                <label for="confirmpassword">Confirm password</label>
-                <input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""
-                            autocomplete="on" />
-                <input class="btn-signup" type="submit" placeholder="Sign up">
+                <div>
+                    <input id="passwordSignUp" class="form-styling" type="password" name="password" autocomplete="on" placeholder=""/>
+                    <span toggle="#passwordSignUp" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+                <div>
+                    <label for="confirmpassword">Confirm password</label>
+                    <input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""
+                           autocomplete="on" />
+                    <span toggle="#confirmpassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+                <input class="btn-signup" type="submit" onclick="signup()" placeholder="Sign up">
             </form>
 
             <div class="success">
