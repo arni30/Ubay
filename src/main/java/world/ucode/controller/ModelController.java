@@ -1,12 +1,15 @@
 package world.ucode.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import world.ucode.models.User;
 import world.ucode.services.UserService;
+import org.json.simple.JSONObject;
 
 @Controller
 @ControllerAdvice
@@ -60,20 +63,62 @@ public class ModelController {
 //        return "/main";
 //
 //    }
+//    @RequestMapping(value = "/authorization", method = RequestMethod.POST)
+//    public String signin_post(User user, ModelMap model) {
+//        System.out.println(user.getType());
+//        if (user.getType().equals("signin")) {
+//            ModelAndView mav = new ModelAndView();
+//            System.out.println(user.getPassword());
+//            System.out.println(user.getLogin());
+//            System.out.println("hallo");
+//            try {
+//                User newUser = userService.validateUser(user);
+//                System.out.println(newUser.getEmail());
+////                JSONObject jsonObj = new JsonObject();
+////                mav.addObject("userSettingsJSON", mapper.writeValueAsString(userSet));
+//                return "/main";
+//            } catch (Exception e) {
+//                System.out.println("EXCEPTION VALIDATION");
+//            }
+//        }
+//        else {
+//            System.out.println(user.getUserRole());
+//            System.out.println(user.getPassword());
+//            System.out.println(user.getEmail());
+//            System.out.println(user.getLogin());
+//            System.out.println("hallo");
+//            model.addAttribute("user",user);
+//            userService.saveUser(user);
+//            return "/main";
+//        }
+//        return "/authorization";
+//    }
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)
-    public String signin_post(User user, ModelMap model) {
+    public ModelAndView signin_post(User user, ModelMap model) {
         System.out.println(user.getType());
+        ModelAndView mav = new ModelAndView();
         if (user.getType().equals("signin")) {
             System.out.println(user.getPassword());
             System.out.println(user.getLogin());
             System.out.println("hallo");
             try {
+                ObjectMapper mapper = new ObjectMapper();
                 User newUser = userService.validateUser(user);
-                System.out.println(newUser.getEmail());
-                model.addAttribute("user", newUser);
-                return "/main";
+                String json = mapper.writeValueAsString(newUser);
+//                System.out.println(newUser.getEmail());
+//                JSONObject obj = new JSONObject();
+//                obj.put("userRole", newUser.getUserRole());
+//                obj.put("login", newUser.getLogin());
+//                obj.put("email", newUser.getEmail());
+//                obj.put("balance", newUser.getBalance());
+                mav.addObject("user", json);
+                mav.setViewName("/profile");
+//                System.out.println(obj);
+                return mav;
             } catch (Exception e) {
                 System.out.println("EXCEPTION VALIDATION");
+                mav.setViewName("/authorization");
+                return mav;
             }
         }
         else {
@@ -84,10 +129,11 @@ public class ModelController {
             System.out.println("hallo");
             model.addAttribute("user",user);
             userService.saveUser(user);
-            return "/main";
+            mav.setViewName("/main");
+            return mav;
         }
-        return "/authorization";
     }
+
 
     // -----------------------
     @RequestMapping(value = "/errors/404", method = RequestMethod.GET)

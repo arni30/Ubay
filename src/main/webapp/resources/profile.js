@@ -6,25 +6,25 @@ let personalInfo = {
   ],
   changes: false,
 
-  showInfo: function () {
-    let elem, p;
-    elem = document.querySelectorAll('.personal-data__item');
-
-    for (let i = 0; elem[i]; ++i) {
-      p = document.createElement('p');
-      p.className = 'personal-data__value';
-      if (i === 0) {
-        p.innerHTML = this.info[0].role;
-      } else if (i === 1) {
-        p.innerHTML = this.info[0].username;
-      } else if (i === 2) {
-        p.innerHTML = this.info[0].email;
-      } else {
-        p.innerHTML = this.info[0].balance;
-      }
-      elem[i].appendChild(p);
-    }
-  },
+  // showInfo: function () {
+  //   let elem, p;
+  //   elem = document.querySelectorAll('.personal-data__item');
+  //
+  //   for (let i = 0; elem[i]; ++i) {
+  //     p = document.createElement('p');
+  //     p.className = 'personal-data__value';
+  //     if (i === 0) {
+  //       p.innerHTML = '${user.userRole}';
+  //     } else if (i === 1) {
+  //       p.innerHTML = '${user.login}';
+  //     } else if (i === 2) {
+  //       p.innerHTML = '${user.email}';
+  //     } else {
+  //       p.innerHTML = '${user.balance}';
+  //     }
+  //     elem[i].appendChild(p);
+  //   }
+  // },
   changeInfo: function () {
     let elem, p;
 
@@ -246,7 +246,7 @@ function signOut() {
 }
 
 let init = () => {
-  personalInfo.showInfo();
+  showInfo();
   products.showItems();
 }
 
