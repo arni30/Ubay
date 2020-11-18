@@ -83,7 +83,16 @@
           <artifactId>json-simple</artifactId>
           <version>1.1</version>
       </dependency>
-
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>5.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.5.4</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -103,43 +112,6 @@
 <!--            <path>/</path>-->
           </configuration>
         </plugin>
-
-        <!--        <plugin>-->
-        <!--            <groupId>org.codehaus.cargo</groupId>-->
-        <!--            <artifactId>cargo-maven2-plugin</artifactId>-->
-        <!--            <version>1.7.6</version>-->
-        <!--            <configuration>-->
-        <!--                <container>-->
-        <!--                    <containerId>tomcat9x</containerId>-->
-        <!--                    <type>embedded</type>-->
-        <!--                </container>-->
-        <!--                <configuration>-->
-        <!--                  <properties>-->
-        <!--                      <cargo.servlet.port>8080</cargo.servlet.port>-->
-        <!--                      <cargo.tomcat.manager.url>http://localhost:8080</cargo.tomcat.manager.url>-->
-        <!--                  </properties>-->
-        <!--                </configuration>-->
-        <!--                <deployables>-->
-        <!--                    <deployable>-->
-        <!--                        <groupId>org.example</groupId>-->
-        <!--                        <artifactId>ubay</artifactId>-->
-        <!--                        <type>war</type>-->
-        <!--                        <properties>-->
-        <!--                            <context>/</context>-->
-        <!--                        </properties>-->
-        <!--                    </deployable>-->
-        <!--                </deployables>-->
-        <!--            </configuration>-->
-        <!--            <executions>-->
-        <!--                <execution>-->
-        <!--                    <phase>package</phase>-->
-        <!--                    <goals>-->
-        <!--                        <goal>run</goal>-->
-        <!--                    </goals>-->
-        <!--                </execution>-->
-        <!--            </executions>-->
-        <!--        </plugin>-->
-
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
