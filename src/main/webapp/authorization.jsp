@@ -40,7 +40,8 @@
                 </div>
 <%--                <input type="checkbox" id="checkbox"/>--%>
 <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
-                <input class="btn-signin" type="submit" onclick="signin()" placeholder="Sign in">
+                <input class="btn-signin" type="submit" value="Sign in">
+<%--                onclick="signin()"--%>
 <%--                    <a class="btn-signin" onclick="signin()">Sign in</a>--%>
             </form>
             <form class="form-signup" id="formSignUp" action="authorization" method="POST" name="form">
@@ -68,7 +69,8 @@
                            autocomplete="on" />
                     <span toggle="#confirmpassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
-                <input class="btn-signup" type="submit" onclick="signup()" placeholder="Sign up">
+                <input class="btn-signup" type="submit" value="Sign up">
+<%--                onclick="signup()"--%>
             </form>
 
             <div class="success">

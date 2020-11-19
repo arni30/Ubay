@@ -13,5 +13,25 @@
 <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
 <!--        <property name="maxUploadSize" value="31457280"/>-->
 <!--    </bean>-->
+    <context:property-placeholder location="classpath:gmail.com.properties"
+                                  ignore-unresolvable="true" />
 
+    <!-- Класс для отправки писем. -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtps.auth">${mail.smtps.auth}</prop>
+            </props>
+        </property>
+        <property name="host" value="${mail.host}" />
+        <property name="port" value="${mail.port}" />
+        <property name="username" value="${mail.username}" />
+        <property name="password" value="${mail.password}" />
+        <property name="protocol" value="${mail.protocol}" />
+
+    </bean>
+    <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="${mail.from}" />
+        <property name="subject" value="Mail subject" />
+    </bean>
 </beans>

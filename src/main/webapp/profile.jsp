@@ -80,19 +80,19 @@
                 <ul class="personal-data__list">
                     <li class="personal-data__item">
                         <label class="personal-data__label form__label" id="role"> Role </label>
-                        <!---->
+<%--                        ${user.userRole}--%>
                     </li>
                     <li class="personal-data__item">
                         <label class="personal-data__label form__label" id="username"> Username </label>
-                        <!---->
+<%--                        ${user.login}--%>
                     </li>
                     <li class="personal-data__item">
                         <label class="personal-data__label form__label" id="email"> Email </label>
-                        <!---->
+<%--                        ${user.email}--%>
                     </li>
                     <li class="personal-data__item">
                         <label  class="personal-data__label form__label" id="balance"> Balance </label>
-                        <!---->
+<%--                        ${user.balance}--%>
                     </li>
                 </ul>
                 <!---->
@@ -125,6 +125,30 @@
 </footer>
 
 </body>
+<script type="text/javascript">
+    function showInfo() {
+        let response= ${user};
+        console.log(response);
+        let jsonString = JSON.parse(JSON.stringify(response));
+        console.log(jsonString);
+        let elem, p;
+        elem = document.querySelectorAll('.personal-data__item');
+        for (let i = 0; elem[i]; ++i) {
+            p = document.createElement('p');
+            p.className = 'personal-data__value';
+            if (i === 0) {
+                p.innerHTML = jsonString.userRole;
+            } else if (i === 1) {
+                p.innerHTML = jsonString.login;
+            } else if (i === 2) {
+                p.innerHTML = jsonString.email;
+            } else {
+                p.innerHTML = jsonString.balance;
+            }
+            elem[i].appendChild(p);
+        }
+    }
+</script>
 
 </html>
 
