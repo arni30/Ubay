@@ -3,7 +3,6 @@ package world.ucode.models;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
 @Entity
 @Table (name = "users")
 public class User {
@@ -31,6 +30,10 @@ public class User {
     private String email;
     @Column(name = "balance")
     private double balance;
+    @Column(name = "token")
+    private String token;
+    @Column(name = "verification")
+    private String verification;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lot> lots;
@@ -83,6 +86,20 @@ public class User {
 
     public double getBalance() { return balance; }
     public void setBalance(double balance) { this.balance = balance; }
+
+    public String getVerification() {
+        return verification;
+    }
+    public void setVerification(String verification) {
+        this.verification = verification;
+    }
+
+    public String getToken() {
+        return token;
+    }
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     @Override
     public String toString() {

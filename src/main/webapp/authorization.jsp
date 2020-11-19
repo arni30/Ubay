@@ -46,6 +46,7 @@
             </form>
             <form class="form-signup" id="formSignUp" action="authorization" method="POST" name="form">
                 <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signup"/>
+                <input class="form-styling" style="display: none" type="text" name="verification" placeholder="" value="not verificated"/>
                 <label for="userRole">Role</label>
                 <select id="userRole" class="form-styling" name="userRole">
                     <option>seller</option>

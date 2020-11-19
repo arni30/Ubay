@@ -1,23 +1,28 @@
 package world.ucode.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 import world.ucode.models.User;
 import world.ucode.services.UserService;
-import org.json.simple.JSONObject;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
-import java.util.Properties;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @ControllerAdvice
@@ -56,8 +61,8 @@ public class ModelController {
     public String addLot(ModelMap model) {
         return "/addLot";
     }
-
-    public void sendMail(String email) {
+    @Async
+    public void sendMail(User user) throws UnknownHostException {
         try (GenericXmlApplicationContext context = new GenericXmlApplicationContext()) {
             context.load("classpath:applicationContext.xml");
             context.refresh();
@@ -67,10 +72,10 @@ public class ModelController {
             // Создаём потокобезопасную копию шаблона.
             SimpleMailMessage mailMessage = new SimpleMailMessage(templateMessage);
 
-            mailMessage.setTo(email);
+            mailMessage.setTo(user.getEmail());
             mailMessage.setSubject("Registration confirmation");
-
-            mailMessage.setText("Сообщение Ubay");
+            mailMessage.setText("To confirm your account, please click here : "
+                    + "http://"+ "192.168.0.106" + ":8080/ubay/confirmation/?token=" + user.getToken());
             try {
                 mailSender.send(mailMessage);
                 System.out.println("Mail sended");
@@ -123,8 +128,17 @@ public class ModelController {
 //        }
 //        return "/authorization";
 //    }
+    @RequestMapping(value = "confirmation{token}", method = RequestMethod.GET)
+    public ModelAndView confirmation(@RequestParam("token") String token){
+        ModelAndView modelAndView = new ModelAndView();
+        User user = userService.validateToken(token);
+        user.setVerification("verificated");
+        userService.updateUser(user);
+        modelAndView.setViewName("redirect:/");
+        return modelAndView;
+    }
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)
-    public ModelAndView signin_post(User user, ModelMap model) {
+    public ModelAndView signin_post(User user, ModelMap model) throws UnknownHostException {
         System.out.println(user.getType());
         ModelAndView mav = new ModelAndView();
         if (user.getType().equals("signin")) {
@@ -143,6 +157,7 @@ public class ModelController {
 //                obj.put("balance", newUser.getBalance());
                 mav.addObject("user", json);
                 mav.setViewName("/profile");
+
 //                System.out.println(obj);
                 return mav;
             } catch (Exception e) {
@@ -152,7 +167,8 @@ public class ModelController {
             }
         }
         else {
-            sendMail(user.getEmail());
+            user.setToken(getJWTToken(user.getLogin()));
+            sendMail(user);
             System.out.println(user.getUserRole());
             System.out.println(user.getPassword());
             System.out.println(user.getEmail());
@@ -197,4 +213,22 @@ public class ModelController {
 //        userService.updateUser(user);
 //        context.close();
 //    }
+private String getJWTToken(String username) {
+    String secretKey = "mySecretKey";
+    List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+            .commaSeparatedStringToAuthorityList("ROLE_USER");
+
+    return Jwts
+            .builder()
+            .setId("softtekJWT")
+            .setSubject(username)
+            .claim("authorities",
+                    grantedAuthorities.stream()
+                            .map(GrantedAuthority::getAuthority)
+                            .collect(Collectors.toList()))
+            .setIssuedAt(new Date(System.currentTimeMillis()))
+            .setExpiration(new Date(System.currentTimeMillis() + 600000))
+            .signWith(SignatureAlgorithm.HS512,
+                    secretKey.getBytes()).compact();
+    }
 }

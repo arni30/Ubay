@@ -20,7 +20,16 @@ public class UserDao {
     public User findByLogin(String login) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Query query =  session.createQuery("SELECT user FROM User user WHERE user.login = :login").setParameter("login", login);
-        return (User) query.uniqueResult();
+        User user = (User) query.uniqueResult();
+        session.close();
+        return user;
+    }
+    public User findByToken(String token) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Query query =  session.createQuery("SELECT user FROM User user WHERE user.token = :token").setParameter("token", token);
+        User user = (User) query.uniqueResult();
+        session.close();
+        return user;
     }
 
     public void save(User user) {
