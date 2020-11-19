@@ -90,7 +90,7 @@ body {
 }
 .page {
   box-sizing: border-box;
-  margin: 0 auto;
+  margin: 0 auto 50px auto;
   padding-right: 20px;
   padding-left: 20px;
   min-width: 560px;
@@ -334,11 +334,8 @@ main {
   overflow: hidden; */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
   min-height: 40vh;
-}
-main.page {
-  margin-bottom: 50px;
 }
 /* -------------------------------------------------------- *
  * ----------------------- FILTERS ------------------------ *
@@ -424,6 +421,7 @@ aside {
 .shelfItem {
   /* display: flex;
   flex-direction: column; */
+  position: relative;
   border: 1px solid #efefef;
   padding: 20px;
   background: white;
@@ -450,6 +448,11 @@ aside {
   display: block;
   margin: 0 auto;
   padding-bottom: 10px;
+}
+.closed-item {
+  position: absolute;
+  top: 60px;
+  left: 60px;
 }
 .shelfDescribe {
   display: flex;

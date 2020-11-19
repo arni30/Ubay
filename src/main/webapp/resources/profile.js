@@ -1,30 +1,34 @@
 'use strict';
 
 let personalInfo = {
-  info: [
-    {role: 'seller', username: 'user1234', email: 'trololo@gmail.com', balance: 170}
-  ],
+  info:
+    { userRole: 'seller', login: 'user1234',
+      email: 'trololo@gmail.com', balance: 170, rate: 4.5},
   changes: false,
 
-  // showInfo: function () {
-  //   let elem, p;
-  //   elem = document.querySelectorAll('.personal-data__item');
-  //
-  //   for (let i = 0; elem[i]; ++i) {
-  //     p = document.createElement('p');
-  //     p.className = 'personal-data__value';
-  //     if (i === 0) {
-  //       p.innerHTML = '${user.userRole}';
-  //     } else if (i === 1) {
-  //       p.innerHTML = '${user.login}';
-  //     } else if (i === 2) {
-  //       p.innerHTML = '${user.email}';
-  //     } else {
-  //       p.innerHTML = '${user.balance}';
-  //     }
-  //     elem[i].appendChild(p);
-  //   }
-  // },
+  showInfo: function () {
+    let elem, p;
+
+    elem = document.querySelectorAll('.personal-data__item');
+
+    for (let i = 0; elem[i]; ++i) {
+      p = document.createElement('p');
+      p.setAttribute('class', 'personal-data__value');
+      if (i === 0) {
+        p.innerHTML = this.info.userRole;
+        if (this.info.userRole === 'seller') {
+          sellerFeatures.addSellersFeatures(p, this.info.rate);
+        }
+      } else if (i === 1) {
+        p.innerHTML = this.info.login;
+      } else if (i === 2) {
+        p.innerHTML = this.info.email;
+      } else {
+        p.innerHTML = this.info.balance;
+      }
+      elem[i].appendChild(p);
+    }
+  },
   changeInfo: function () {
     let elem, p;
 
@@ -87,7 +91,7 @@ let personalInfo = {
       let header = document.createElement('div');
       header.className = 'personal-section__header';
         let h3 = document.createElement('h3');
-        h3.className = 'personal-s    ection__heading';
+        h3.className = 'personal-section__heading';
         h3.innerHTML = '';
       header.appendChild(h3);
         let buttons = document.createElement('div');
@@ -109,7 +113,34 @@ let personalInfo = {
   }
 }
 
+let sellerFeatures = {
+  addSellersFeatures: function (item, rating) {
+    this.addStar(item, rating);
+    this.addButtonFeatures();
+  },
+  addStar: function(item, rating) {
+    item.innerHTML += '&emsp;';
 
+    let span = document.createElement('span');
+    span.setAttribute('class', 'seller-rating fa fa-fw fa-star field-icon');
+    item.appendChild(span)
+
+    span = document.createElement('span');
+    span.setAttribute('class', 'seller-rating');
+    span.innerHTML = rating;
+    item.appendChild(span);
+  },
+  addButtonFeatures: function() {
+    let item = document.querySelector('#profile-buttons');
+
+    let a = document.createElement('a');
+    a.setAttribute('class', 'button');
+    a.setAttribute('href', 'http://localhost:8080/ubay/feedbacks');
+    a.innerHTML = 'Bitters feedbacks';
+
+    item.appendChild(a);
+  }
+}
 
 
 //   success: function (response) {
@@ -122,99 +153,51 @@ let personalInfo = {
 //     $('#load').attr("style", "visibility: visible");
 //     $('#newImgDiv').attr("style", "display: initial");
 
-let products = {
-  items: [
+let lots = {
+  active: [
     { code: 14,name: 'Jam',brand: 'J\'ELITE',taste: 'orange rum',sizeG: 220,
-      price: 8.99,amountAvailable: 1,description: 'Ukrainian candied.',
+      price: 8.99,active: 1,description: 'Ukrainian candied.',
       image: 'https://i.postimg.cc/dtpZxL0L/14.png'
     },
     { code: 15,name: 'Jam',brand: 'J\'ELITE',taste: 'strawberry basil tomato',sizeG: 220,
-      price: 8.99,amountAvailable: 2,description: 'Ukrainian candied.',
+      price: 8.99,active: 1,description: 'Ukrainian candied.',
       image: 'https://i.postimg.cc/wjNR8gtF/15.png'
-    },
+    }
+  ],
+  closed: [
     { code: 1,name: 'Jam',brand: 'St.Dalfout',taste: 'blueberry',sizeG: 284,
-      price: 9.99,amountAvailable: 0,description: 'Very tasty jam.',
+      price: 9.99,active: 0,description: 'Very tasty jam.',
       image: 'https://i.postimg.cc/13SBjCXg/1.jpg'
     },
     { code: 2,name: 'Jam',brand: 'St.Dalfout',taste: 'fig',sizeG: 284,
-      price: 9.99,amountAvailable: 2,description: 'Very tasty jam.',
+      price: 9.99,active: 0,description: 'Very tasty jam.',
       image: 'https://i.postimg.cc/4Ndp0DbF/2.jpg'
     },
     { code: 3, name: 'Jam', brand: 'St.Dalfout', taste: 'raspberry', sizeG: 284,
-      price: 9.99, amountAvailable: 10, description: 'Very tasty jam.',
+      price: 9.99, active: 0, description: 'Very tasty jam.',
       image: 'https://i.postimg.cc/J42jCpp7/3.jpg'
     }
   ],
-  showItems: function() {
-    let elem = document.querySelector('.container');
+  showActive: function() {
+    let elem = document.querySelector('.active-lots');
 
     if (elem.firstChild)
       while (elem.firstChild)
         elem.removeChild(elem.lastChild);
 
-    for (let i in this.items)
-      this.showItem(elem, this.items[i]);
+    for (let i in this.active)
+      products.showItem(elem, this.active[i]);
   },
+  showClosed: function() {
+    let elem = document.querySelector('.closed-lots');
 
+    if (elem.firstChild)
+      while (elem.firstChild)
+        elem.removeChild(elem.lastChild);
 
-  showItem: function(elem, item) {
-    let node, shelf, p, p1;
-
-    node = document.createElement('div');
-    node.className = 'one-third column';
-    shelf = document.createElement('div');
-    shelf.className = 'shelfItem';
-
-    p = document.createElement('img');
-    p.className = 'item_thumb';
-    p.setAttribute('src', item.image);
-    shelf.appendChild(p);
-
-    p = document.createElement('h5');
-    p.className = 'item_name';
-    p.innerHTML = item.name + ' ' + item.brand + ' ' + item.taste + ', ' + item.sizeG + 'g';
-    shelf.appendChild(p);
-
-    p = document.createElement('p');
-    p.className = 'item_description';
-    p.innerHTML = item.description;
-    shelf.appendChild(p);
-
-    p = document.createElement('div');
-    p.className = 'shelfDescribe';
-      p1 = document.createElement('span');
-      p1.className = 'item_price';
-      p1.innerHTML = '\$' + item.price;
-      p.appendChild(p1);
-
-      p1 = document.createElement('input');
-      p1.setAttribute('code', item.code);
-      p1.setAttribute('value', 'Make offer');
-      if (item.amountAvailable !== 0) {
-        p1.setAttribute('type', 'button');
-        p1.className = 'item_add button';
-      }
-      else
-        p1.className = 'button-empty';
-      p.appendChild(p1);
-
-    shelf.appendChild(p);
-
-    p = document.createElement('span');
-    if (item.amountAvailable === 0) {
-      p.className = 'notavlb';
-      p.innerHTML = 'not available';
-    } else {
-      p.className = 'avlb';
-      p.innerHTML = 'available';
-      if (item.amountAvailable <= 3)
-        p.innerHTML = 'last ' + item.amountAvailable + ' available';
-    }
-    shelf.appendChild(p);
-
-    node.appendChild(shelf);
-    elem.appendChild(node);
-  }
+    for (let i in this.closed)
+      products.showItem(elem, this.closed[i]);
+  },
 }
 
 function changeInfo() {
@@ -246,8 +229,9 @@ function signOut() {
 }
 
 let init = () => {
-  showInfo();
-  products.showItems();
+  // personalInfo.showInfo();
+  lots.showActive();
+  lots.showClosed();
 }
 
 window.onload = init;
