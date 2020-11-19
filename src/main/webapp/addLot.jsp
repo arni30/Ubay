@@ -1,6 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<!--<%@ page contentType="text/html;charset=UTF-8" language="java" %>-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,8 +15,7 @@
     <link rel="stylesheet" href="resources/reset.css"/>
     <link rel="stylesheet" href="resources/main.css"/>
     <link rel="stylesheet" href="resources/addLot.css"/>
-    <!-- <link rel="stylesheet" href="css/exp.css"/> -->
-    <!--  <script src="resources/main.js"></script>-->
+    <script src="resources/addLot.js"></script>
     <!--  <script src="resources/main_show.js"></script>-->
 </head>
 
@@ -27,19 +24,37 @@
 <div class="addLot">
     <div id="window" class="shadow-large">
         <div class="page-header addLot-header">Add lot</div>
+        <form class="addLot-form" action="addLot" method="POST" name="form">
 
+<%--            <label for="photo">Photo</label>--%>
+<%--            <input id="photo" class="button" type="file" name="photo" value="photo"/>--%>
 
+            <label for="title">Title</label>
+            <input id="title" class="button" type="text" name="title" required/>
 
-        <div class="addLot-controls">
-            <div>
-                <a class="abutton"href="http://localhost:8080/ubay/profile">Return</a>
-                <a class="abutton"href="http://localhost:8080/ubay/main">Main page</a>
+            <label for="price">Price</label>
+            <input id="price" class="button" type="number" name="price" required
+                   min=".01" step=".01"/>
+
+            <label for="description">Description</label>
+            <textarea id="description" class="button" type="text" name="description"
+                      rows="4" maxlength="200" placeholder="200 symbols"></textarea>
+
+            <label for="duration">Duration - <span id="durationNumber">1 day</span></label>
+            <input id="duration" type="range" name="duration" min="1" max="7" value="1"/>
+
+            <div class="addLot-controls">
+                <input class="button" type="submit" value="Add lot">
+                <div>
+                    <a class="abutton"href="http://localhost:8080/ubay/profile">profile</a>
+                    <a class="abutton"href="http://localhost:8080/ubay/main">main</a>
+                </div>
             </div>
-            <div data-location="/checkout" class="button">Add lot</div>
-        </div>
+        </form>
     </div>
 </div>
 
 </body>
 
 </html>
+

@@ -38,16 +38,8 @@
             </ul>
         </div>
         <div class="header-login">
-            <form class="input-wrap search-wrap" action="#" method="get"
-                  itemprop="potentialAction" tabindex="0">
-                <!--          <input itemprop="query-input" tabindex="1" id="search-input"-->
-                <!--            type="search" name="q" placeholder="change search" class="input"-->
-                <!--            autocomplete="off" data-ajax-src="/suggest/">-->
-                <!--        <button class="login-button" onclick="gotoSignIn()">Sign in</button>-->
-                <!--        <button class="login-button" onclick="gotoProfile">Profile</button>-->
-                <a class="abutton" href="http://localhost:8080/ubay/authorization">Sign in</a>
-                <a class="abutton" href="http://localhost:8080/ubay/profile">Profile</a>
-            </form>
+            <a class="abutton" href="http://localhost:8080/ubay/authorization">Sign in</a>
+            <a class="abutton" href="http://localhost:8080/ubay/profile">Profile</a>
         </div>
     </div>
 

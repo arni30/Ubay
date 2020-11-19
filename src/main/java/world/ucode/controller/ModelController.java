@@ -57,6 +57,10 @@ public class ModelController {
     public String profile(ModelMap model) {
         return "/profile";
     }
+    @RequestMapping(value = "/feedbacks", method = RequestMethod.GET)
+    public String feedbacks(ModelMap model) {
+        return "/feedbacks";
+    }
     @RequestMapping(value = "/addLot", method = RequestMethod.GET)
     public String addLot(ModelMap model) {
         return "/addLot";

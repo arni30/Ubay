@@ -90,9 +90,10 @@ body {
 }
 .page {
   box-sizing: border-box;
-  margin: 0 auto;
+  margin: 0 auto 50px auto;
   padding-right: 20px;
   padding-left: 20px;
+  min-width: 560px;
   max-width: 1240px;
 }
 .page-header {
@@ -206,6 +207,14 @@ body {
   color: #8458B3;
   padding: 0 10px;
 }
+
+.header-menu {
+  min-width: 300px;
+}
+.header-features,
+.header-login {
+  min-width: 180px;
+}
 .header-menu a:focus,
 .header-menu a:hover {
   border-bottom: 1px solid #8458B3;
@@ -271,7 +280,7 @@ body {
   border-bottom: 12px solid transparent;
   border-left: 12px solid #e5eaf5;
   position: absolute;
-  right: -12px;
+  right: -10px;
   top: 0;
 }
 .crumbs a::before {
@@ -325,11 +334,8 @@ main {
   overflow: hidden; */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
   min-height: 40vh;
-}
-main.page {
-  margin-bottom: 50px;
 }
 /* -------------------------------------------------------- *
  * ----------------------- FILTERS ------------------------ *
@@ -338,7 +344,7 @@ main.page {
   flex: 1;
 } */
 aside {
-  /*margin-right: 30px;*/
+  min-width: 180px;
   padding: 25px 10px;
 }
 .sort-select{
@@ -415,6 +421,7 @@ aside {
 .shelfItem {
   /* display: flex;
   flex-direction: column; */
+  position: relative;
   border: 1px solid #efefef;
   padding: 20px;
   background: white;
@@ -441,6 +448,11 @@ aside {
   display: block;
   margin: 0 auto;
   padding-bottom: 10px;
+}
+.closed-item {
+  position: absolute;
+  top: 60px;
+  left: 60px;
 }
 .shelfDescribe {
   display: flex;
@@ -500,13 +512,22 @@ aside {
 /* -------------------------------------------------------- *
  * ----------------------- FOOTER ------------------------- *
  * -------------------------------------------------------- */
-
+html, body {
+  height: 100%;
+  width: 100%;
+}
+.help_footer {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+}
 footer {
   /* position: absolute;
   bottom: 0;
   left: 0;
   right: 0; */
-  margin-top: auto;
+  height: 40px;
+  margin-top: -50px;
   padding: 5px 0;
   background: #e5eaf5;
 

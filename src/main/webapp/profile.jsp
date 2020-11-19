@@ -16,54 +16,51 @@
     <link rel="stylesheet" href="resources/reset.css"/>
     <link rel="stylesheet" href="resources/main.css"/>
     <link rel="stylesheet" href="resources/profile.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="resources/profile.js"></script>
+    <script src="resources/main_show.js"></script>
 </head>
 
 <body>
-<header class="header">
-    <div class="header-top-back"></div>
+<div class="help_footer">
+    <header class="header">
+        <div class="header-top-back"></div>
 
-    <div class="header-top page">
-        <div class="header-features">
+        <div class="header-top page">
+            <div class="header-features">
         <span data-text="We deliver free of charge throughout Ukraine.">
         <span>Free delivery in Ukraine!</span>
         </span>
-        </div>
-        <div class="header-menu">
-            <ul>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Service</a></li>
-                <li><a href="#">Contacts</a></li>
-            </ul>
-        </div>
-        <div class="header-login">
-            <form class="input-wrap search-wrap" action="#" method="get"
-                  itemprop="potentialAction" tabindex="0">
-                <!--          <input itemprop="query-input" tabindex="1" id="search-input"-->
-                <!--            type="search" name="q" placeholder="change search" class="input"-->
-                <!--            autocomplete="off" data-ajax-src="/suggest/">-->
+            </div>
+            <div class="header-menu">
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Service</a></li>
+                    <li><a href="#">Contacts</a></li>
+                </ul>
+            </div>
+            <div class="header-login">
                 <a class="abutton" href="#" onclick="signOut()">Sign out</a>
-            </form>
+            </div>
         </div>
-    </div>
 
-    <div class="header-middle page">
-        <div class="header-contact">
-            <!--        <span>(044) 044 04 04</span>-->
+        <div class="header-middle page">
+            <div class="header-contact">
+                <!--        <span>(044) 044 04 04</span>-->
+            </div>
+            <div title="internet shop" class="logo">UBAY</div>
+            <div class="header-basket">
+                <!--         <a>cart<span class="front-cart">(0)</span></a>-->
+            </div>
         </div>
-        <div title="internet shop" class="logo">UBAY</div>
-        <div class="header-basket">
-            <!--         <a>cart<span class="front-cart">(0)</span></a>-->
-        </div>
-    </div>
-</header>
+    </header>
 
-<nav class="breadcrumps">
-    <ul class="page crumbs">
-        <li><a class="abutton" href="http://localhost:8080/ubay/main">Home</a></li>
-        <li><a href="">Profile</a></li>
-    </ul>
-</nav>
+    <nav class="breadcrumps">
+        <ul class="page crumbs">
+            <li><a class="abutton" href="http://localhost:8080/ubay/main">Home</a></li>
+            <li><a href="">Profile</a></li>
+        </ul>
+    </nav>
 
 <div class="contact-info page">
     <section class="personal-section">
@@ -101,16 +98,27 @@
     </section>
 </div>
 
-<main class="page">
-    <!-- <div id="main-overlay"></div> -->
-    <aside>
-        <h3 class="personal-section__heading">Auctions</h3>
-        <a class="abutton" href="#">Add auction</a>
-    </aside>
+    <div id="profile-buttons" class="page personal-section__header">
+        <a class="button" href="http://localhost:8080/ubay/addLot">Add auction</a>
+        <!--js: add feedback button-->
+    </div>
 
-    <div class="container"></div>
+    <main class="page">
+        <!-- <div id="main-overlay"></div> -->
+        <aside>
+            <h3 class="personal-section__heading">Active auctions</h3>
+        </aside>
+        <div class="container active-lots"></div>
+    </main>
 
-</main>
+    <main class="page">
+        <aside>
+            <h3 class="personal-section__heading">Closed auctions</h3>
+        </aside>
+        <div class="container closed-lots"></div>
+    </main>
+
+</div>
 
 <footer>
     <div class="footer-back"></div>
@@ -126,9 +134,12 @@
 
 </body>
 <script type="text/javascript">
+
     function showInfo() {
-        let response= ${user};
-        console.log(response);
+        <%--let response = ${user};--%>
+        let response = personalInfo.info;
+
+        // console.log(response);
         let jsonString = JSON.parse(JSON.stringify(response));
         console.log(jsonString);
         let elem, p;
@@ -138,6 +149,9 @@
             p.className = 'personal-data__value';
             if (i === 0) {
                 p.innerHTML = jsonString.userRole;
+                if (jsonString.userRole === 'seller') {
+                    sellerFeatures.addSellersFeatures(p, jsonString.rate);
+                }
             } else if (i === 1) {
                 p.innerHTML = jsonString.login;
             } else if (i === 2) {
@@ -148,6 +162,7 @@
             elem[i].appendChild(p);
         }
     }
+    showInfo();
 </script>
 
 </html>

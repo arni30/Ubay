@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="description" content="ubay">
     <meta name="keywords" content="HTML, CSS, JavaScript, java, ucode, unitfactory, cbl, cblworld, ubay">
-<%--    <meta name="author" content="Tetiana Rohalska">--%>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Login</title>
     <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon"/>
@@ -27,15 +26,15 @@
                 <li class="signup-inactive"><a class="btn">Sign up</a></li>
             </ul>
         </div>
-        <div ng-app ng-init="checked = false">
+        <div>
             <form class="form-signin" action="authorization" method="POST" name="form">
-                <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signin"/>
+                <input class="form-styling" style="display: none" type="text" name="type" value="signin"/>
                 <label for="loginLogin">Username</label>
-                <input id="loginLogin" class="form-styling" type="text" name="login" placeholder=""/>
+                <input id="loginLogin" class="form-styling" type="text" name="login" required/>
                 <label for="passwordLogin">Password</label>
                 <div>
                     <input id="passwordLogin" class="form-styling" type="password" autocomplete="on"
-                       name="password" placeholder=""/>
+                       name="password" required/>
                     <span toggle="#passwordLogin" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
 <%--                <input type="checkbox" id="checkbox"/>--%>
@@ -54,19 +53,19 @@
                 </select>
                 <label for="balance">Balance</label>
                 <input id="balance" class="form-styling" type="number" name="balance"
-                            step="10" min="100" max="50000" value="100" size="5" />
+                            step="1" min="100" max="50000" value="100" size="5" required/>
                 <label for="loginSignUp">Username</label>
-                <input id="loginSignUp" class="form-styling" type="text" name="login" placeholder="" />
+                <input id="loginSignUp" class="form-styling" type="text" name="login" required/>
                 <label for="email">Email</label>
-                <input id="email" class="form-styling" type="email" name="email" placeholder=""/>
+                <input id="email" class="form-styling" type="email" name="email" required/>
                 <label for="passwordSignUp">Password</label>
                 <div>
-                    <input id="passwordSignUp" class="form-styling" type="password" name="password" autocomplete="on" placeholder=""/>
+                    <input id="passwordSignUp" class="form-styling" type="password" name="password" autocomplete="on" required/>
                     <span toggle="#passwordSignUp" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
                 <div>
                     <label for="confirmpassword">Confirm password</label>
-                    <input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""
+                    <input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" required
                            autocomplete="on" />
                     <span toggle="#confirmpassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
