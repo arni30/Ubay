@@ -132,12 +132,12 @@ let products = {
     p1 = document.createElement('input');
     p1.setAttribute('code', item.code);
     p1.setAttribute('value', 'show details');
-    if (item.active !== 0) {
+    // if (item.active !== 0) {
       p1.setAttribute('type', 'button');
       p1.className = 'item_add button';
-    }
-    else
-      p1.className = 'button-empty';
+    // }
+    // else
+    //   p1.className = 'button-empty';
     p.appendChild(p1);
 
     shelf.appendChild(p);
