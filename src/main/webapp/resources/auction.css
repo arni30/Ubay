@@ -1,0 +1,42 @@
+.height > div {
+    height: auto;
+    min-height: 360px;
+    padding: 20px;
+}
+.height {
+    align-items: stretch;
+    margin-bottom: 100px;
+}
+
+.lot-img {
+    width: 360px;
+    min-width: 200px;
+}
+.lot-img img {
+    width: 100%;
+}
+
+.lot-description {
+    width: 850px;
+    min-width: 500px;
+    margin-left: 30px;
+}
+
+main span {
+    font-weight: bold;
+}
+.lot-description > p {
+    padding: .5em 0;
+}
+
+#description {
+    text-align: justify;
+    padding-bottom: 1em;
+}
+#price {
+    font-size: 1.2em;
+    color: #8458B3;
+}
+/*.addFeedback label {*/
+/*    display: block;*/
+/*}*/
