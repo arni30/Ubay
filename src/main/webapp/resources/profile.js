@@ -127,7 +127,11 @@ let sellerFeatures = {
 
     span = document.createElement('span');
     span.setAttribute('class', 'seller-rating');
-    span.innerHTML = rating;
+    if (rating !== 0) {
+      span.innerHTML = rating;
+    } else {
+      span.innerHTML = '-';
+    }
     item.appendChild(span);
   },
   addButtonFeatures: function() {
@@ -135,7 +139,8 @@ let sellerFeatures = {
 
     let a = document.createElement('a');
     a.setAttribute('class', 'button');
-    a.setAttribute('href', 'http://localhost:8080/ubay/feedbacks');
+    a.setAttribute('href', '#');
+    a.setAttribute('onclick', 'goto(\'feedbacks\')');
     a.innerHTML = 'Bidders feedbacks';
 
     item.appendChild(a);
@@ -225,7 +230,7 @@ function submitChanges() {
  * */
 function signOut() {
   console.log('Log out');
-  location.replace("http://localhost:8080/ubay/main");
+  goto('main');
 }
 
 let init = () => {

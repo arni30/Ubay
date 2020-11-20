@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="resources/reset.css"/>
     <link rel="stylesheet" href="resources/main.css"/>
     <link rel="stylesheet" href="resources/addLot.css"/>
+    <script src="resources/references.js"></script>
     <script src="resources/addLot.js"></script>
-    <!--  <script src="resources/main_show.js"></script>-->
 </head>
 
 <body id="body">
@@ -46,8 +46,8 @@
             <div class="addLot-controls">
                 <input class="button" type="submit" value="Add lot">
                 <div>
-                    <a class="abutton"href="http://localhost:8080/ubay/profile">profile</a>
-                    <a class="abutton"href="http://localhost:8080/ubay/main">main</a>
+                    <a class="abutton" href="#" onclick="window.history.back()">back</a>
+                    <a class="abutton" href="#" onclick="goto('main')">main</a>
                 </div>
             </div>
         </form>

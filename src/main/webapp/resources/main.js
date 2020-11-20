@@ -77,19 +77,9 @@ let view = {
 
 let init = () => {
   products.showItems();
-
   document.querySelector('.sort-select').onchange = view.sort;
-  // document.querySelectorAll('.item_add')
-  //         .forEach(item => item.addEventListener('click', view.addToBasket));
   document.querySelectorAll('.check-brand')
           .forEach(item => item.addEventListener('change', view.filters));
 }
 
 window.onload = init;
-
-// function gotoSignIn() {
-//   location.load("http://localhost:8080/ubay/authorization");
-// }
-// function gotoProfile() {
-//   location.load("http://localhost:8080/ubay/profile");
-// }

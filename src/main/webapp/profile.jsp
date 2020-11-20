@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="resources/main.css"/>
     <link rel="stylesheet" href="resources/profile.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="resources/references.js"></script>
     <script src="resources/profile.js"></script>
     <script src="resources/main_show.js"></script>
 </head>
@@ -57,8 +58,8 @@
 
     <nav class="breadcrumps">
         <ul class="page crumbs">
-            <li><a class="abutton" href="http://localhost:8080/ubay/main">Home</a></li>
-            <li><a href="">Profile</a></li>
+            <li><a class="abutton" href="#" onclick="goto('main')">Home</a></li>
+            <li><a href="#">Profile</a></li>
         </ul>
     </nav>
 
@@ -99,7 +100,7 @@
 </div>
 
     <div id="profile-buttons" class="page personal-section__header">
-        <a class="button" href="http://localhost:8080/ubay/addLot">Add auction</a>
+        <a class="button" href="#" onclick="goto('addLot')">Add auction</a>
         <!--js: add feedback button-->
     </div>
 
@@ -136,10 +137,10 @@
 <script type="text/javascript">
 
     function showInfo() {
-        <%--let response = ${user};--%>
-        let response = personalInfo.info;
+        let response = ${user};
+        // let response = personalInfo.info;
 
-        // console.log(response);
+        console.log(response);
         let jsonString = JSON.parse(JSON.stringify(response));
         console.log(jsonString);
         let elem, p;

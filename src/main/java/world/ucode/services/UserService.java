@@ -33,6 +33,10 @@ public class UserService {
         return usersDao.findById(id);
     }
 
+    public User findUser(String login) {
+        return usersDao.findByLogin(login);
+    }
+
     public void saveUser(User user) {
         usersDao.save(user);
     }
