@@ -12,8 +12,6 @@ function durationNumber() {
 
 let init = () => {
   durationNumber();
-  // personalInfo.showInfo();
-  // products.showItems();
 }
 
 window.onload = init;

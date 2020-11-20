@@ -136,7 +136,7 @@ let sellerFeatures = {
     let a = document.createElement('a');
     a.setAttribute('class', 'button');
     a.setAttribute('href', 'http://localhost:8080/ubay/feedbacks');
-    a.innerHTML = 'Bitters feedbacks';
+    a.innerHTML = 'Bidders feedbacks';
 
     item.appendChild(a);
   }
