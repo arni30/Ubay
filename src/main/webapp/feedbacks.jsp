@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="resources/main.css"/>
     <link rel="stylesheet" href="resources/profile.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="resources/references.js"></script>
     <script src="resources/feedbacks.js"></script>
 </head>
 
@@ -39,7 +40,7 @@
                 </ul>
             </div>
             <div class="header-login">
-                <a class="abutton" href="http://localhost:8080/ubay/profile">Profile</a>
+                <a class="abutton" href="#" onclick="goto('profile')">Profile</a>
             </div>
         </div>
 
@@ -56,7 +57,7 @@
 
     <nav class="breadcrumps">
         <ul class="page crumbs">
-            <li><a class="abutton" href="http://localhost:8080/ubay/main">Home</a></li>
+            <li><a class="abutton" href="#" onclick="goto('main')">Home</a></li>
             <li><a href="#" onclick="gotoSeller()">Seller</a></li>
             <li><a href="#">Feedbacks</a></li>
         </ul>

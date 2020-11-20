@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="resources/profile.css"/>
     <link rel="stylesheet" href="resources/auction.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="resources/references.js"></script>
     <script src="resources/auction.js"></script>
 </head>
 
@@ -41,8 +42,8 @@
                 </ul>
             </div>
             <div class="header-login">
-                <a class="abutton" href="http://localhost:8080/ubay/signin">Sign in</a>
-                <a class="abutton" href="http://localhost:8080/ubay/profile">Profile</a>
+                <a class="abutton" href="#" onclick="goto('authorization')">Sign in</a>
+                <a class="abutton" href="#" onclick="goto('profile')">Profile</a>
             </div>
         </div>
 
@@ -59,7 +60,7 @@
 
     <nav class="breadcrumps">
         <ul class="page crumbs">
-            <li><a class="abutton" href="http://localhost:8080/ubay/main">Home</a></li>
+            <li><a class="abutton" href="#" onclick="goto('main')">Home</a></li>
             <li><a id="lotId" href="">Lot #</a></li>
         </ul>
     </nav>
@@ -77,7 +78,7 @@
                     <a style="color: #494d5f" href="#" onclick="gotoSeller()"><span id="seller">seller</span>
                         <span class="seller-rating seller-rating fa fa-fw fa-star field-icon"></span><span id="rate" class="seller-rating"></span>
                     </a>
-                    <a class="button" href="http://localhost:8080/ubay/feedbacks">feedbacks</a>
+                    <a class="button" href="#" onclick="goto('feedbacks')">feedbacks</a>
                 </div>
             </div>
             <p>Current price:&emsp;<span id="price"></span></p>
@@ -107,7 +108,7 @@
                     <a class="button" href="#" onclick="auctions.addFeedback()">Add feedback</a>
                 </p>
             </div>
-            <p id="feedback">Feedback: </p>
+            <p id="feedback"></p>
         </div>
     </main>
 

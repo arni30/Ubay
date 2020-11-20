@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="resources/reset.css"/>
     <link rel="stylesheet" href="resources/main.css"/>
-    <!-- <link rel="stylesheet" href="css/exp.css"/> -->
+    <script src="resources/references.js"></script>
     <script src="resources/main.js"></script>
     <script src="resources/main_show.js"></script>
 </head>
@@ -38,8 +38,8 @@
             </ul>
         </div>
         <div class="header-login">
-            <a class="abutton" href="http://localhost:8080/ubay/authorization">Sign in</a>
-            <a class="abutton" href="http://localhost:8080/ubay/profile">Profile</a>
+            <a class="abutton" href="#" onclick="goto('authorization')">Sign in</a>
+            <a class="abutton" href="#" onclick="goto('profile')">Profile</a>
         </div>
     </div>
 

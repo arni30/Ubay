@@ -58,11 +58,11 @@ let feedbacks = {
 
 function gotoSeller() {
   let path = '?username=' + feedbacks.sellerInfo.username;
-  location.replace('http://localhost:8080/ubay/viewProfile' + path);
+  goto('viewProfile' + path);
 }
 function gotoBitter(event) {
   let path = '?username=' + event.innerHTML;
-  location.replace('http://localhost:8080/ubay/viewProfile' + path);
+  goto('viewProfile' + path);
 }
 
 let init = () => {

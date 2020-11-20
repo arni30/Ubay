@@ -1,5 +1,6 @@
 package world.ucode.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -60,6 +61,26 @@ public class ModelController {
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String profile(ModelMap model) {
         return "/profile";
+    }
+    @RequestMapping(value = "/viewProfile{login}", method = RequestMethod.GET)
+    public ModelAndView viewProfile(@RequestParam String login, ModelMap model) {
+        ModelAndView mav = new ModelAndView();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            User user = userService.findUser(login);
+            String json = mapper.writeValueAsString(user);
+            mav.addObject("user", json);
+
+            System.out.println(json);
+
+            mav.setViewName("/viewProfile");
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
     }
     @RequestMapping(value = "/feedbacks", method = RequestMethod.GET)
     public String feedbacks(ModelMap model) {
