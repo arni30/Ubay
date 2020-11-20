@@ -35,30 +35,30 @@ public class User {
     @Column(name = "verification")
     private String verification;
 
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Lot> lots;
+//    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Lot> lots;
 
     public User() {}
     public User(String login, String password) {
         System.out.println("CONSTRUCTOR");
         this.login = login;
         this.password = password;
-        lots = new ArrayList<>();
+//        lots = new ArrayList<>();
     }
 
-    public void addLot(Lot lot) {
-        lot.setSeller(this);
-        lots.add(lot);
-    }
-    public void removeLot(Lot lot) {
-        lots.remove(lot);
-    }
-    public List<Lot> getLots() {
-        return lots;
-    }
-    public void setLots(ArrayList<Lot> lots) {
-        this.lots = lots;
-    }
+//    public void addLot(Lot lot) {
+//        lot.setSeller(this);
+//        lots.add(lot);
+//    }
+//    public void removeLot(Lot lot) {
+//        lots.remove(lot);
+//    }
+//    public List<Lot> getLots() {
+//        return lots;
+//    }
+//    public void setLots(ArrayList<Lot> lots) {
+//        this.lots = lots;
+//    }
 
     public int getId() {
         return id;

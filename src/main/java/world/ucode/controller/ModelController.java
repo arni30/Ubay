@@ -145,11 +145,11 @@ public class ModelController {
     public ModelAndView signin_post(User user, ModelMap model) throws UnknownHostException {
         System.out.println(user.getType());
         ModelAndView mav = new ModelAndView();
+        try {
         if (user.getType().equals("signin")) {
             System.out.println(user.getPassword());
             System.out.println(user.getLogin());
             System.out.println("hallo");
-            try {
                 ObjectMapper mapper = new ObjectMapper();
                 User newUser = userService.validateUser(user);
                 String json = mapper.writeValueAsString(newUser);
@@ -164,23 +164,23 @@ public class ModelController {
 
 //                System.out.println(obj);
                 return mav;
-            } catch (Exception e) {
-                System.out.println("EXCEPTION VALIDATION");
-                mav.setViewName("/authorization");
+            }
+            else {
+                user.setToken(getJWTToken(user.getLogin()));
+                sendMail(user);
+                System.out.println(user.getUserRole());
+                System.out.println(user.getPassword());
+                System.out.println(user.getEmail());
+                System.out.println(user.getLogin());
+                System.out.println("hallo");
+                model.addAttribute("user",user);
+                userService.saveUser(user);
+                mav.setViewName("/main");
                 return mav;
             }
-        }
-        else {
-            user.setToken(getJWTToken(user.getLogin()));
-            sendMail(user);
-            System.out.println(user.getUserRole());
-            System.out.println(user.getPassword());
-            System.out.println(user.getEmail());
-            System.out.println(user.getLogin());
-            System.out.println("hallo");
-            model.addAttribute("user",user);
-            userService.saveUser(user);
-            mav.setViewName("/main");
+        } catch (Exception e) {
+            System.out.println("NON authorized or incorrect mail");
+            mav.setViewName("/authorization");
             return mav;
         }
     }

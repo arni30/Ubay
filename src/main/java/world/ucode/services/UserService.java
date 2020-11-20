@@ -15,10 +15,14 @@ public class UserService {
     public User validateUser(User user) throws Exception {
         User newUser = usersDao.findByLogin(user.getLogin());
         System.out.println(newUser.getVerification());
+        System.out.println(newUser.getPassword());
+        System.out.println(user.getPassword());
         if (newUser.getPassword().equals(user.getPassword()))
             return newUser;
-        else
+        else {
+            System.out.println("ENTERED EXCEPTION");
             throw new Exception("Unknown user");
+        }
     }
     public User validateToken(String token) {
         User newUser = usersDao.findByToken(token);
