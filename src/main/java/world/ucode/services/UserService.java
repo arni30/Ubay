@@ -1,13 +1,16 @@
 package world.ucode.services;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import world.ucode.dao.UserDao;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 
 import java.util.List;
-
+@Service
 public class UserService {
-    private UserDao usersDao = new UserDao();
+    private final UserDao usersDao = new UserDao();
 
     public UserService() {
     }
@@ -17,7 +20,8 @@ public class UserService {
         System.out.println(newUser.getVerification());
         System.out.println(newUser.getPassword());
         System.out.println(user.getPassword());
-        if (newUser.getPassword().equals(user.getPassword())
+//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (BCrypt.checkpw(user.getPassword(), newUser.getPassword())
                 && newUser.getVerification().equals("verificated"))
             return newUser;
         else {
@@ -28,6 +32,9 @@ public class UserService {
     public User validateToken(String token) {
         User newUser = usersDao.findByToken(token);
             return newUser;
+    }
+    public User findUserByLogin(String login) {
+        return usersDao.findByLogin(login);
     }
     public User findUser(int id) {
         return usersDao.findById(id);

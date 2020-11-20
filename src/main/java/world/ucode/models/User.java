@@ -1,5 +1,8 @@
 package world.ucode.models;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +78,9 @@ public class User {
         return password;
     }
     public void setPassword(String password) {
+//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//        this.password = bCryptPasswordEncoder.encode(password);
+//        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.password = password;
     }
 

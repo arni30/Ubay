@@ -7,6 +7,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -78,6 +79,7 @@ public class ModelController {
         modelAndView.setViewName("redirect:/");
         return modelAndView;
     }
+
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)
     public ModelAndView signin_post(User user, ModelMap model) {
         System.out.println(user.getType());
@@ -90,10 +92,11 @@ public class ModelController {
                 ObjectMapper mapper = new ObjectMapper();
                 User newUser = userService.validateUser(user);
                 String json = mapper.writeValueAsString(newUser);
-                mav.addObject("user", json);
+                mav.addObject("user", user);
                 mav.setViewName("/profile");
             } else {
                 Token token = new Token();
+                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 user.setToken(token.getJWTToken(user.getLogin()));
                 sendMail.sendMail(user);
                 System.out.println(user.getUserRole());

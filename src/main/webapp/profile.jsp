@@ -40,6 +40,7 @@
                 </ul>
             </div>
             <div class="header-login">
+                <span>${user.login}</span>
                 <a class="abutton" href="#" onclick="signOut()">Sign out</a>
             </div>
         </div>
