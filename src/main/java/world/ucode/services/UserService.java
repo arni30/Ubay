@@ -17,7 +17,8 @@ public class UserService {
         System.out.println(newUser.getVerification());
         System.out.println(newUser.getPassword());
         System.out.println(user.getPassword());
-        if (newUser.getPassword().equals(user.getPassword()))
+        if (newUser.getPassword().equals(user.getPassword())
+                && newUser.getVerification().equals("verificated"))
             return newUser;
         else {
             System.out.println("ENTERED EXCEPTION");
