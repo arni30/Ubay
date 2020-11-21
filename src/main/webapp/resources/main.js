@@ -53,8 +53,6 @@ let view = {
       products.items.sort((a, b) => (a.price < b.price) ? 1 : -1);
     }
     products.showItems();
-    document.querySelectorAll('.item_add')
-          .forEach(item => item.addEventListener('click', view.addToBasket));
   },
   filters: function() {
     let arr = [],
@@ -68,9 +66,6 @@ let view = {
       products.showFilteredItems(arr);
     else
       products.showItems();
-
-    document.querySelectorAll('.item_add')
-            .forEach(item => item.addEventListener('click', view.addToBasket));
   }
 }
 

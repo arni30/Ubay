@@ -280,7 +280,7 @@ body {
   border-bottom: 12px solid transparent;
   border-left: 12px solid #e5eaf5;
   position: absolute;
-  right: -10px;
+  right: -12px;
   top: 0;
 }
 .crumbs a::before {
@@ -440,6 +440,10 @@ aside {
   color: #74808a;
   text-align: justify;
 }
+.images {
+  height: 190px;
+}
+
 .item_thumb {
   min-width: 30px;
   max-width: 200px;

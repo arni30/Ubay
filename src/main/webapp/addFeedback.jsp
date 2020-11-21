@@ -40,7 +40,7 @@
                 <input class="button" type="submit" value="Add feedback">
                 <div>
                     <a class="abutton" href="#" onclick="window.history.back()">back</a>
-                    <a class="abutton" href="#" onclick="goto('main')">main</a>
+                    <a class="abutton" href="${pageContext.request.contextPath}/main">main</a>
                 </div>
             </div>
         </form>

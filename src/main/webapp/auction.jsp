@@ -42,8 +42,8 @@
                 </ul>
             </div>
             <div class="header-login">
-                <a class="abutton" href="#" onclick="goto('authorization')">Sign in</a>
-                <a class="abutton" href="#" onclick="goto('profile')">Profile</a>
+                <a class="abutton" href="${pageContext.request.contextPath}/authorization">Sign in</a>
+                <a class="abutton" href="${pageContext.request.contextPath}/profile">Profile</a>
             </div>
         </div>
 
@@ -60,8 +60,8 @@
 
     <nav class="breadcrumps">
         <ul class="page crumbs">
-            <li><a class="abutton" href="#" onclick="goto('main')">Home</a></li>
-            <li><a id="lotId" href="">Lot #</a></li>
+            <li><a class="abutton" href="${pageContext.request.contextPath}/main">Home</a></li>
+            <li><a id="lotId">Lot #</a></li>
         </ul>
     </nav>
 
@@ -75,10 +75,10 @@
             <div class="personal-section__header">
                 <div></div>
                 <div>
-                    <a style="color: #494d5f" href="#" onclick="gotoSeller()"><span id="seller">seller</span>
+                    <a style="color: #494d5f" href="#" onclick="viewProfile(this)"><span id="aboutProfile">seller</span>
                         <span class="seller-rating seller-rating fa fa-fw fa-star field-icon"></span><span id="rate" class="seller-rating"></span>
                     </a>
-                    <a class="button" href="#" onclick="goto('feedbacks')">feedbacks</a>
+                    <a class="button" href="#" onclick="viewFeedbacks(this)">feedbacks</a>
                 </div>
             </div>
             <p>Current price:&emsp;<span id="price"></span></p>
@@ -105,7 +105,7 @@
             <div class="personal-section__header" id="winner" style="display: none">
                 <p>Winner: </p>
                 <p id="add-feedback-button">
-                    <a class="button" href="#" onclick="auctions.addFeedback()">Add feedback</a>
+                    <a class="button" href="#" onclick="auctions.addFeedback(this)">Add feedback</a>
                 </p>
             </div>
             <p id="feedback"></p>
@@ -121,7 +121,7 @@
             <p>Copyright &copy; 2020 | Ubay | All Rights Reserved</p>
         </div>
         <div class="terms footbox">
-            <p>Terms of Servise | Privacy Policy</p>
+            <p>Terms of Service | Privacy Policy</p>
         </div>
     </div>
 </footer>

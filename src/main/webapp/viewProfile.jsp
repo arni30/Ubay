@@ -41,8 +41,8 @@
                 </ul>
             </div>
             <div class="header-login">
-                <a class="abutton" href="#" onclick="goto('authorization')">Sign in</a>
-                <a class="abutton" href="#" onclick="goto('profile')">Profile</a>
+                <a class="abutton" href="${pageContext.request.contextPath}/authorization">Sign in</a>
+                <a class="abutton" href="${pageContext.request.contextPath}/profile">Profile</a>
             </div>
         </div>
 
@@ -59,7 +59,7 @@
 
     <nav class="breadcrumps">
         <ul class="page crumbs">
-            <li><a class="abutton" href="#" onclick="goto('main')">Home</a></li>
+            <li><a class="abutton" href="${pageContext.request.contextPath}/main">Home</a></li>
             <li><a href="">Profile</a></li>
         </ul>
     </nav>
@@ -124,7 +124,7 @@
             <p>Copyright &copy; 2020 | Ubay | All Rights Reserved</p>
         </div>
         <div class="terms footbox">
-            <p>Terms of Servise | Privacy Policy</p>
+            <p>Terms of Service | Privacy Policy</p>
         </div>
     </div>
 </footer>
@@ -134,29 +134,32 @@
 
     function showInfo() {
         let response = ${user};
-        // let response = personalInfo.info;
-s
-        // console.log(response);
-        let jsonString = JSON.parse(JSON.stringify(response));
-        console.log(jsonString);
-        let elem, p;
-        elem = document.querySelectorAll('.personal-data__item');
-        for (let i = 0; elem[i]; ++i) {
-            p = document.createElement('p');
-            p.className = 'personal-data__value';
-            if (i === 0) {
-                p.innerHTML = jsonString.userRole;
-                if (jsonString.userRole === 'seller') {
-                    sellerFeatures.addSellersFeatures(p, jsonString.rate);
+        if (!response) {
+            alert('user not found');
+            window.history.back();
+        } else {
+            // console.log(response);
+            let jsonString = JSON.parse(JSON.stringify(response));
+            console.log(jsonString);
+            let elem, p;
+            elem = document.querySelectorAll('.personal-data__item');
+            for (let i = 0; elem[i]; ++i) {
+                p = document.createElement('p');
+                p.className = 'personal-data__value';
+                if (i === 0) {
+                    p.innerHTML = jsonString.userRole;
+                    if (jsonString.userRole === 'seller') {
+                        sellerFeatures.addSellersFeatures(p, jsonString.rate);
+                    }
+                } else if (i === 1) {
+                    p.innerHTML = jsonString.login;
+                } else if (i === 2) {
+                    p.innerHTML = jsonString.email;
+                } else {
+                    p.innerHTML = jsonString.balance;
                 }
-            } else if (i === 1) {
-                p.innerHTML = jsonString.login;
-            } else if (i === 2) {
-                p.innerHTML = jsonString.email;
-            } else {
-                p.innerHTML = jsonString.balance;
+                elem[i].appendChild(p);
             }
-            elem[i].appendChild(p);
         }
     }
     showInfo();

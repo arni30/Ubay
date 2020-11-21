@@ -12,6 +12,7 @@ public class Lot {
 
     private String title;
     private int startPrice;
+    private float bidStep;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sellerId")
@@ -20,7 +21,7 @@ public class Lot {
     public Lot() {}
     public Lot(String title, int startPrice) {
         this.title = title;
-        this .startPrice = startPrice;
+        this.startPrice = startPrice;
     }
 
     public int getId() {

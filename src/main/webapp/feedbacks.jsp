@@ -40,7 +40,7 @@
                 </ul>
             </div>
             <div class="header-login">
-                <a class="abutton" href="#" onclick="goto('profile')">Profile</a>
+                <a class="abutton" href="${pageContext.request.contextPath}/profile">Profile</a>
             </div>
         </div>
 
@@ -57,14 +57,14 @@
 
     <nav class="breadcrumps">
         <ul class="page crumbs">
-            <li><a class="abutton" href="#" onclick="goto('main')">Home</a></li>
-            <li><a href="#" onclick="gotoSeller()">Seller</a></li>
-            <li><a href="#">Feedbacks</a></li>
+            <li><a class="abutton" href="${pageContext.request.contextPath}/main">Home</a></li>
+            <li><a href="#" onclick="viewProfile(this)">Seller</a></li>
+            <li><a>Feedbacks</a></li>
         </ul>
     </nav>
 
     <h3 class="page feedbacks-header">
-        <a style="color: #494d5f" href="#" onclick="gotoSeller()"><span></span>
+        <a style="color: #494d5f" href="#" onclick="viewProfile(this)"><span id="aboutProfile"></span>
             <span class="seller-rating seller-rating fa fa-fw fa-star field-icon"></span><span id="rate" class="seller-rating"></span>
         </a>
     </h3>
@@ -80,7 +80,7 @@
             <p>Copyright &copy; 2020 | Ubay | All Rights Reserved</p>
         </div>
         <div class="terms footbox">
-            <p>Terms of Servise | Privacy Policy</p>
+            <p>Terms of Service | Privacy Policy</p>
         </div>
     </div>
 </footer>

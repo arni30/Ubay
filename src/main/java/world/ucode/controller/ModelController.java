@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.services.SendMail;
 import world.ucode.services.Token;
@@ -39,7 +40,7 @@ public class ModelController {
         return "/index";
     }
 
-    @RequestMapping(value = "/hallo{id}", produces = "text/plain;charset=UTF-8", method = RequestMethod.GET)
+    @RequestMapping(value = "/hallo", produces = "text/plain;charset=UTF-8", method = RequestMethod.GET)
     public String developer(@RequestParam int id, ModelMap model) {
         model.addAttribute("id", id);
         System.out.println(id);
@@ -62,17 +63,19 @@ public class ModelController {
     public String profile(ModelMap model) {
         return "/profile";
     }
-    @RequestMapping(value = "/viewProfile{login}", method = RequestMethod.GET)
-    public ModelAndView viewProfile(@RequestParam String login, ModelMap model) {
+
+    /**
+     * requires unique user login, which profile needs to be showed. --------- DONE ----------
+     * */
+    @RequestMapping(value = "/viewProfile", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView viewProfile(@RequestParam String login) {
         ModelAndView mav = new ModelAndView();
         try {
             ObjectMapper mapper = new ObjectMapper();
             User user = userService.findUser(login);
             String json = mapper.writeValueAsString(user);
             mav.addObject("user", json);
-
-            System.out.println(json);
-
             mav.setViewName("/viewProfile");
             return mav;
         } catch (Exception e) {
@@ -86,12 +89,33 @@ public class ModelController {
     public String feedbacks(ModelMap model) {
         return "/feedbacks";
     }
+    /**
+     * requires unique lot id, to what lot add feedback.
+     * */
     @RequestMapping(value = "/addFeedback", method = RequestMethod.GET)
-    public String addFeedback(ModelMap model) {
-        return "/addFeedback";
+    @ResponseBody
+    public ModelAndView addFeedback(@RequestParam int lotId) {
+        ModelAndView mav = new ModelAndView();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Lot lot = userService.findLotById(lotId);
+            String json = mapper.writeValueAsString(lot);
+            mav.addObject("lot", json);
+            mav.setViewName("/addFeedback");
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
     }
+    /**
+     * requires unique lot id.
+     * */
     @RequestMapping(value = "/auction", method = RequestMethod.GET)
-    public String auction(ModelMap model) {
+    @ResponseBody
+    public String auction(@RequestParam int lotId) {
         return "/auction";
     }
     @RequestMapping(value = "/addLot", method = RequestMethod.GET)

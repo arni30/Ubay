@@ -26,14 +26,18 @@
         <div class="page-header addLot-header">Add lot</div>
         <form class="addLot-form" action="addLot" method="POST" name="form">
 
-<%--            <label for="photo">Photo</label>--%>
-<%--            <input id="photo" class="button" type="file" name="photo" value="photo"/>--%>
+            <label for="photo">Photo</label>
+            <input id="photo" class="button" type="file" name="photo" value="photo"/>
 
             <label for="title">Title</label>
             <input id="title" class="button" type="text" name="title" required/>
 
-            <label for="price">Price</label>
-            <input id="price" class="button" type="number" name="price" required
+            <label for="startPrice">Start price</label>
+            <input id="startPrice" class="button" type="number" name="startPrice" required
+                   min=".01" step=".01"/>
+
+            <label for="bidStep">Bid step</label>
+            <input id="bidStep" class="button" type="number" name="bidStep" required
                    min=".01" step=".01"/>
 
             <label for="description">Description</label>
@@ -47,7 +51,7 @@
                 <input class="button" type="submit" value="Add lot">
                 <div>
                     <a class="abutton" href="#" onclick="window.history.back()">back</a>
-                    <a class="abutton" href="#" onclick="goto('main')">main</a>
+                    <a class="abutton" href="${pageContext.request.contextPath}/main">main</a>
                 </div>
             </div>
         </form>

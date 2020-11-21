@@ -41,7 +41,7 @@
                 </ul>
             </div>
             <div class="header-login">
-                <span>${user.login}</span>
+                <span id="aboutProfile">${user.login}</span>
                 <a class="abutton" href="#" onclick="signOut()">Sign out</a>
             </div>
         </div>
@@ -59,8 +59,8 @@
 
     <nav class="breadcrumps">
         <ul class="page crumbs">
-            <li><a class="abutton" href="#" onclick="goto('main')">Home</a></li>
-            <li><a href="#">Profile</a></li>
+            <li><a href="${pageContext.request.contextPath}/main">Home</a></li>
+            <li><a>Profile</a></li>
         </ul>
     </nav>
 
@@ -101,7 +101,7 @@
 </div>
 
     <div id="profile-buttons" class="page personal-section__header">
-        <a class="button" href="#" onclick="goto('addLot')">Add auction</a>
+        <a class="button" href="${pageContext.request.contextPath}/addLot">Add auction</a>
         <!--js: add feedback button-->
     </div>
 
@@ -129,7 +129,7 @@
             <p>Copyright &copy; 2020 | Ubay | All Rights Reserved</p>
         </div>
         <div class="terms footbox">
-            <p>Terms of Servise | Privacy Policy</p>
+            <p>Terms of Service | Privacy Policy</p>
         </div>
     </div>
 </footer>
@@ -139,11 +139,11 @@
 
     function showInfo() {
         let response = ${user};
-        // let response = personalInfo.info;
 
         console.log(response);
         let jsonString = JSON.parse(JSON.stringify(response));
         console.log(jsonString);
+
         let elem, p;
         elem = document.querySelectorAll('.personal-data__item');
         for (let i = 0; elem[i]; ++i) {

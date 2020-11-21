@@ -1,11 +1,11 @@
 'use strict';
 
 let feedbacks = {
-  sellerInfo: {username: 'user1234', rate: 4.8},
+  sellerInfo: {username: 'trohalska', rate: 4.8},
 
   feedbackList:[
-    {title: 'book "Harry Potter"', bitter: 'Vasya Petechkin', rate: '5.0', feedback: 'All good'},
-    {title: 'Cactus', bitter: 'Marina', rate: '3.5', feedback: 'Terrible quality but fast delivery'}
+    {title: 'book "Harry Potter"', bidder: 'Vasya Petechkin', rate: '5.0', feedback: 'All good'},
+    {title: 'Cactus', bidder: '124', rate: '3.5', feedback: 'Terrible quality but fast delivery'}
   ],
 
   showInfo: function () {
@@ -35,10 +35,10 @@ let feedbacks = {
           h3.innerHTML = item.title;
           div = document.createElement('div');
             a = document.createElement('a');
-            a.setAttribute('id', 'bitter');
-            a.setAttribute('onclick', 'gotoBitter(this)');
+            a.setAttribute('id', 'bidder');
+            a.setAttribute('onclick', 'viewBidderProfile(this)');
             a.setAttribute('href', '#');
-            a.innerHTML = item.bitter;
+            a.innerHTML = item.bidder;
             label = document.createElement('label');
             label.className = 'personal-data__label';
             label.innerHTML = '&emsp; rated at ' + item.rate;
@@ -54,15 +54,6 @@ let feedbacks = {
 
     elem.appendChild(node);
   }
-}
-
-function gotoSeller() {
-  let path = '?username=' + feedbacks.sellerInfo.username;
-  goto('viewProfile' + path);
-}
-function gotoBitter(event) {
-  let path = '?username=' + event.innerHTML;
-  goto('viewProfile' + path);
 }
 
 let init = () => {

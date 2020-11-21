@@ -1,12 +1,12 @@
 'use strict';
 
 let auctions = {
-  // lot: {status: 'closed', id: 125, image: 'image', title: 'Book "Harry Hotter"', seller: 'Vasylij', rate: 4.8,
-  //   price: 17.5, priceStep:2.5, description: 'ololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololo',
-  //   startTime: '2020-11-18T10:18:00', endTime: '2020-11-20T10:18:00'},
-  lot: {status: 'active', id: 125, image: 'image', title: 'Book "Harry Hotter"', seller: 'Vasylij', rate: 4.8,
-    price: 12.5, priceStep:2.5, description: 'ololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololo',
-    startTime: '2020-11-18T10:18:00', endTime: '2020-11-28T10:18:00'},
+  lot: {status: 'closed', id: 125, image: 'image', title: 'Book "Harry Hotter"', seller: 'trohalska', rate: 4.8,
+    price: 17.5, priceStep:2.5, description: 'ololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololo',
+    startTime: '2020-11-18T10:18:00', endTime: '2020-11-20T10:18:00'},
+  // lot: {status: 'active', id: 125, image: 'image', title: 'Book "Harry Hotter"', seller: 'trohalska', rate: 4.8,
+  //   price: 12.5, priceStep:2.5, description: 'ololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololo',
+  //   startTime: '2020-11-18T10:18:00', endTime: '2020-11-28T10:18:00'},
 
   winner: {bidder: 'Olga', feedback: ''},
 
@@ -28,7 +28,7 @@ let auctions = {
     document.querySelector('#title').innerHTML = this.lot.title;
     // image
     document.querySelector('#price').innerHTML += '\$' + this.lot.price;
-    document.querySelector('#seller').innerHTML = this.lot.seller;
+    document.querySelector('#aboutProfile').innerHTML = this.lot.seller;
     document.querySelector('#rate').innerHTML = this.lot.rate;
     document.querySelector('#startTime').innerHTML += this.lot.startTime.replace('T', '&emsp;');
     document.querySelector('#description').innerHTML = this.lot.description;
@@ -69,12 +69,13 @@ let auctions = {
     timer_field.setAttribute('style', 'color: red');
   },
 
-  addFeedback: function () {
+  addFeedback: function (item) {
     if (this.winner.feedback === '') {
-      goto('addFeedback');
+      item.setAttribute('href',
+          '/ubay/addFeedbacks?lot=' + this.lot.id);
+
     }
   }
-
 }
 
 let timer = setInterval(function () {
@@ -99,12 +100,9 @@ let timer = setInterval(function () {
         times[i] = '0' + times[i];
       }
     }
-
-    let str_timer = `${days} ${times[0]}:${times[1]}:${times[2]}`;
-    timer_field.innerHTML = str_timer;
+    timer_field.innerHTML = `${days} ${times[0]}:${times[1]}:${times[2]}`;
   }
 }, 1000)
-
 
 let init = () => {
   auctions.show();
