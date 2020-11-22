@@ -15,11 +15,13 @@ public class Lot {
     private String title;
     @Column(name = "startPrice")
     private double startPrice;
-//    private double bidPrice;
+//    private double bidStep;
     @Column(name = "duration")
     private int duration;
     @Column(name = "description")
     private String description;
+//    private startTime;
+//    private String category;
 //    private boolean finished;
 
 //    private BufferedImage image;
@@ -42,8 +44,8 @@ public class Lot {
     public void setStartPrice(double startPrice) { this.startPrice = startPrice; }
     public double getStartPrice() { return startPrice; }
 
-//    public void setBidPrice(double bidPrice) { this.bidPrice = bidPrice; }
-//    public double getBidPrice() { return bidPrice; }
+//    public void setbidStep(double bidStep) { this.bidStep = bidStep; }
+//    public double getbidStep() { return bidStep; }
 
     public void setDuration(int duration) { this.duration = duration; }
     public int getDuration() { return duration; }
