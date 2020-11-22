@@ -8,24 +8,24 @@ import world.ucode.models.User;
 import java.util.List;
 
 public class LotService {
-    private LotDao lotDao = new LotDao();
+    private final LotDao lotDao = new LotDao();
 
     public LotService() {
     }
 
-    public Lot findUser(int id) {
+    public Lot findLot(int id) {
         return lotDao.findById(id);
     }
 
-    public void saveUser(Lot lot) {
+    public void saveLot(Lot lot) {
         lotDao.save(lot);
     }
 
-    public void deleteUser(Lot lot) {
+    public void deleteLot(Lot lot) {
         lotDao.delete(lot);
     }
 
-    public void updateUser(Lot lot) {
+    public void updateLot(Lot lot) {
         lotDao.update(lot);
     }
 

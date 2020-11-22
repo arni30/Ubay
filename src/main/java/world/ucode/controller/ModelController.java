@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
+import world.ucode.services.LotService;
 import world.ucode.services.SendMail;
 import world.ucode.services.Token;
 import world.ucode.services.UserService;
@@ -18,6 +19,7 @@ import java.net.UnknownHostException;
 @ControllerAdvice
 public class ModelController {
     SendMail sendMail = new SendMail();
+    LotService lotService = new LotService();
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
     UserService userService = context.getBean("userService", UserService.class);
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -103,7 +105,10 @@ public class ModelController {
 
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
     public ModelAndView addLot(Lot lot) throws JsonProcessingException {
+        System.out.println(lot.getDuration());
+        System.out.println(lot.getStartPrice());
         System.out.println(lot.getDescription());
+        lotService.saveLot(lot);
         ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(lot);

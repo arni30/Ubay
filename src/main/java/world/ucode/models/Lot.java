@@ -14,8 +14,8 @@ public class Lot {
     @Column(name = "title")
     private String title;
     @Column(name = "startPrice")
-    private int startPrice;
-//    private int bidPrice;
+    private double startPrice;
+//    private double bidPrice;
     @Column(name = "duration")
     private int duration;
     @Column(name = "description")
@@ -39,11 +39,11 @@ public class Lot {
     public void setTitle(String title) { this.title = title; }
     public String getTitle() { return title; }
 
-    public void setStartPrice(int startPrice) { this.startPrice = startPrice; }
-    public int getStartPrice() { return startPrice; }
+    public void setStartPrice(double startPrice) { this.startPrice = startPrice; }
+    public double getStartPrice() { return startPrice; }
 
-//    public void setBidPrice(int bidPrice) { this.bidPrice = bidPrice; }
-//    public int getBidPrice() { return bidPrice; }
+//    public void setBidPrice(double bidPrice) { this.bidPrice = bidPrice; }
+//    public double getBidPrice() { return bidPrice; }
 
     public void setDuration(int duration) { this.duration = duration; }
     public int getDuration() { return duration; }
@@ -59,7 +59,13 @@ public class Lot {
 
     @Override
     public String toString() {
-        return title + ", " + startPrice + "$";
+        String res = "models.Lot{ " +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", startPrice=" + startPrice +
+                ", duration=" + duration +
+                ", description='" + description + "'}";
+        return res;
     }
 
 }
