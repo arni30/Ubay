@@ -17,11 +17,9 @@
         <property name="prefix" value="/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="31457280"/>
-    </bean>
-
     <mvc:annotation-driven />
     <mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>
-
+    <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+    <!--        <property name="maxUploadSize" value="31457280"/>-->
+    <!--    </bean>-->
 </beans>

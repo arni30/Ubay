@@ -10,6 +10,16 @@ $(function() {
 	});
 });
 
+$(".toggle-password").click(function() {
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    let input = $($(this).attr("toggle"));
+    if (input.attr("type") === "password") {
+        input.attr("type", "text");
+    } else {
+        input.attr("type", "password");
+    }
+});
+
 // $(function () {
 // 	$(".btn-signin").click(function() {
 //         $(".btn-animate").toggleClass("btn-animate-grow");
@@ -24,17 +34,17 @@ $(function() {
 // });
 
 function signin() {
-    let loginUsername = document.querySelector('#loginUsername').value;
-    let loginPassword = document.querySelector('#loginPassword').value;
+    let loginUsername = document.querySelector('#loginLogin').value;
+    let loginPassword = document.querySelector('#passwordLogin').value;
 
     if (!loginUsername || !loginPassword) {
         alert('All fields have to be filled!');
     } else {
-        let formData = new FormData();
-        formData.set('type', 'signin');
-        formData.set('username', loginUsername);
-        formData.set('password', loginPassword);
-        send(formData);
+        // let formData = new FormData();
+        // formData.set('type', 'signin');
+        // formData.set('username', loginUsername);
+        // formData.set('password', loginPassword);
+        // send(formData);
     }
 }
 
@@ -44,7 +54,6 @@ function checkEmail() {
         .setAttribute('class', 'form-signup-left form-signup-down');
     document.querySelector('.success').setAttribute('class', 'success success-left');
     document.querySelector('.frame').setAttribute('class', 'frame frame-short');
-
 }
 
 // $(function() {
@@ -57,10 +66,10 @@ function checkEmail() {
 // });
 
 function signup() {
-    let role = document.querySelector('#role').value;
+    let role = document.querySelector('#userRole').value;
     let balance = document.querySelector('#balance').value;
-    let username = document.querySelector('#username').value;
-    let password = document.querySelector('#password').value;
+    let username = document.querySelector('#loginSignUp').value;
+    let password = document.querySelector('#passwordSignUp').value;
     let cpassword = document.querySelector('#confirmpassword').value;
     let email = document.querySelector('#email').value;
     if (!username || !password || !cpassword || !email) {
@@ -70,26 +79,42 @@ function signup() {
     } else if (password !== cpassword) {
         alert('Passwords are different!');
     } else {
-        checkEmail();
-        let formData = new FormData();
-        formData.set('type', 'signup');
-        formData.set('role', role);
-        formData.set('balance', balance);
-        formData.set('username', username);
-        formData.set('password', password);
-        formData.set('confirmpassword', cpassword);
-        formData.set('email', email);
-        send(formData);
+        // checkEmail();
+        // let formData = new FormData();
+        // formData.set('type', 'signup');
+        // formData.set('role', role);
+        // formData.set('balance', balance);
+        // formData.set('username', username);
+        // formData.set('password', password);
+        // formData.set('confirmpassword', cpassword);
+        // formData.set('email', email);
+
+        // formData.append('form', new Blob([JSON.stringify({
+        //     "type": "signup",
+        //     "role": role,
+        //     "balance": balance,
+        //     "username": username,
+        //     "password": password,
+        //     "confirmpassword": cpassword,
+        //     "email": email
+        // })]
+        //     , {
+        //     type: "application/json"
+        // }
+        // ));
+        //
+        // send(formData);
     }
 }
+
 
 async function send(formData) {
 
     // let request = new XMLHttpRequest();
-    // request.open("POST", 'http://localhost:8080/ubay/signin');
+    // request.open("POST", 'http://localhost:8080/ubay/authorization');
     // request.send(formData);
 
-    let response = await fetch('http://localhost:8080/ubay/signin',{
+    fetch('http://localhost:8080/ubay/authorization', {
         method: 'POST',
         enctype: 'multipart/form-data',
         body: JSON.stringify({
@@ -100,8 +125,17 @@ async function send(formData) {
         },
         // body: JSON.stringify(formData),
         // headers: {
-        //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        //   'Content-type': 'application/json'
         // },
+        body: formData
+    }).then(function (response) {
+        if (response.status !== 200) {
+            alert("There was an error! Response != 200");
+        } else {
+            // alert("Request successful");
+        }
+    }).catch(function (err) {
+        alert("There was an error!");
     });
     // if (response.ok) {
     //     // let blob = await response.blob();
@@ -118,28 +152,28 @@ async function send(formData) {
 
 
 
-function onSubmit() {
-
-    let formData = new FormData();
-
-    formData.append("file", document.forms["userForm"].file.files[0]);
-    formData.append('user', new Blob([JSON.stringify({
-        "firstName": document.getElementById("firstName").value,
-        "lastName": document.getElementById("lastName").value
-    })], {
-        type: "application/json"
-    }));
-    var boundary = Math.random().toString().substr(2);
-    fetch('/upload', {
-        method: 'post',
-        body: formData
-    }).then(function (response) {
-        if (response.status !== 200) {
-            alert("There was an error!");
-        } else {
-            alert("Request successful");
-        }
-    }).catch(function (err) {
-        alert("There was an error!");
-    });;
-}
+// function onSubmit() {
+//
+//     let formData = new FormData();
+//
+//     formData.append("file", document.forms["userForm"].file.files[0]);
+//     formData.append('user', new Blob([JSON.stringify({
+//         "firstName": document.getElementById("firstName").value,
+//         "lastName": document.getElementById("lastName").value
+//     })], {
+//         type: "application/json"
+//     }));
+//
+//     fetch('/upload', {
+//         method: 'post',
+//         body: formData
+//     }).then(function (response) {
+//         if (response.status !== 200) {
+//             alert("There was an error!");
+//         } else {
+//             alert("Request successful");
+//         }
+//     }).catch(function (err) {
+//         alert("There was an error!");
+//     });;
+// }

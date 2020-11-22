@@ -2,16 +2,34 @@ package world.ucode.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.utils.HibernateSessionFactoryUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public class UserDao {
 
     public User findById(int id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(User.class, id);
+    }
+
+    public User findByLogin(String login) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Query query =  session.createQuery("SELECT user FROM User user WHERE user.login = :login").setParameter("login", login);
+        User user = (User) query.uniqueResult();
+        session.close();
+        return user;
+    }
+    public User findByToken(String token) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Query query =  session.createQuery("SELECT user FROM User user WHERE user.token = :token").setParameter("token", token);
+        User user = (User) query.uniqueResult();
+        session.close();
+        return user;
     }
 
     public void save(User user) {

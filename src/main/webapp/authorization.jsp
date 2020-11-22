@@ -1,13 +1,10 @@
-<!DOCTYPE html>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--<%@ taglib uri="https://java.sun.com/jsp/jstl/core" prefix="c" %>--%>
-<%@ page session="false" %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="ubay">
     <meta name="keywords" content="HTML, CSS, JavaScript, java, ucode, unitfactory, cbl, cblworld, ubay">
-<%--    <meta name="author" content="Tetiana Rohalska">--%>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Login</title>
     <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon"/>
@@ -15,7 +12,9 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="resources/signin.css">
+    <link rel="stylesheet" href="resources/authorization.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
@@ -27,48 +26,52 @@
                 <li class="signup-inactive"><a class="btn">Sign up</a></li>
             </ul>
         </div>
-        <div ng-app ng-init="checked = false">
-            <form class="form-signin" action="/signin" method="POST" name="form">
-                <label for="loginUsername">Username</label>
-                <input id="loginUsername" class="form-styling" type="text" name="username" placeholder=""/>
-                <label for="loginPassword">Password</label>
-                <input id="loginPassword" class="form-styling" type="password" autocomplete="on"
-                       name="password" placeholder=""/>
-
+        <div>
+            <form class="form-signin" action="authorization" method="POST" name="form">
+                <input class="form-styling" style="display: none" type="text" name="type" value="signin"/>
+                <label for="loginLogin">Username</label>
+                <input id="loginLogin" class="form-styling" type="text" name="login" required/>
+                <label for="passwordLogin">Password</label>
+                <div>
+                    <input id="passwordLogin" class="form-styling" type="password" autocomplete="on"
+                       name="password" required/>
+                    <span toggle="#passwordLogin" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
 <%--                <input type="checkbox" id="checkbox"/>--%>
 <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
-                <div class="btn-animate">
-                    <a class="btn-signin" onclick="signin()">Sign in</a>
+                <input class="btn-signin" type="submit" value="Sign in">
+<%--                onclick="signin()"--%>
+<%--                    <a class="btn-signin" onclick="signin()">Sign in</a>--%>
+            </form>
+            <form class="form-signup" id="formSignUp" action="authorization" method="POST" name="form">
+                <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signup"/>
+                <input class="form-styling" style="display: none" type="text" name="verification" placeholder="" value="not verificated"/>
+                <label for="userRole">Role</label>
+                <select id="userRole" class="form-styling" name="userRole">
+                    <option>seller</option>
+                    <option>bidder</option>
+                </select>
+                <label for="balance">Balance</label>
+                <input id="balance" class="form-styling" type="number" name="balance"
+                            step="1" min="100" max="50000" value="100" size="5" required/>
+                <label for="loginSignUp">Username</label>
+                <input id="loginSignUp" class="form-styling" type="text" name="login" required/>
+                <label for="email">Email</label>
+                <input id="email" class="form-styling" type="email" name="email" required/>
+                <label for="passwordSignUp">Password</label>
+                <div>
+                    <input id="passwordSignUp" class="form-styling" type="password" name="password" autocomplete="on" required/>
+                    <span toggle="#passwordSignUp" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
+                <div>
+                    <label for="confirmpassword">Confirm password</label>
+                    <input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" required
+                           autocomplete="on" />
+                    <span toggle="#confirmpassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+                <input class="btn-signup" type="submit" value="Sign up">
+<%--                onclick="signup()"--%>
             </form>
-
-
-            <form method="POST" action="${pageContext.request.contextPath}/uploadFile" enctype="multipart/form-data">
-                    Select File: <input type="file" name="file"/>
-                    <input type="submit" value="Upload File"/>
-            </form>
-
-            <%--            <form:form class="form-signup" method="POST" name="form" modelAttribute="form">--%>
-<%--                <form:input class="form-styling" cssStyle="display: none" type="text" name="username" placeholder="" path="type" value="signup"/>--%>
-<%--                <label for="role">Role</label>--%>
-<%--                <form:select id="role" class="form-styling" name="role" path="role">--%>
-<%--                    <option>seller</option>--%>
-<%--                    <option>bidder</option>--%>
-<%--                </form:select>--%>
-<%--                <label for="balance">Balance</label>--%>
-<%--                <form:input id="balance" class="form-styling" type="number" name="balance"--%>
-<%--                       step="10" min="100" max="50000" value="100" size="5" path="balance"/>--%>
-<%--                <label for="username">Username</label>--%>
-<%--                <form:input id="username" class="form-styling" type="text" name="username" placeholder="" path="username"/>--%>
-<%--                <label for="email">Email</label>--%>
-<%--                <form:input id="email" class="form-styling" type="email" name="email" placeholder="" path="email"/>--%>
-<%--                <label for="password">Password</label>--%>
-<%--                <form:input id="password" class="form-styling" type="password" name="password" autocomplete="on" placeholder="" path="password"/>--%>
-<%--                <label for="confirmpassword">Confirm password</label>--%>
-<%--                <form:input id="confirmpassword" class="form-styling" type="password" name="confirmpassword" placeholder=""--%>
-<%--                       autocomplete="on" path="confirmpassword"/>--%>
-<%--                <form:button class="btn-signup" type="submit">send</form:button>--%>
-<%--            </form:form>--%>
 
             <div class="success">
                 <svg width="270" height="270" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -112,7 +115,7 @@
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
 
-<script src="resources/signin.js"></script>
+<script src="resources/authorization.js"></script>
 
 </body>
 </html>

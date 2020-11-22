@@ -1,5 +1,5 @@
 <%
-    response.sendRedirect(request.getContextPath() + "/signin");
+    response.sendRedirect(request.getContextPath() + "/main");
 %>
 
 <%--<!DOCTYPE html>--%>
