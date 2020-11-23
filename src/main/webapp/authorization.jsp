@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="description" content="ubay">
     <meta name="keywords" content="HTML, CSS, JavaScript, java, ucode, unitfactory, cbl, cblworld, ubay">
+<%--    <meta name="author" content="Tetiana Rohalska">--%>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Login</title>
     <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon"/>

@@ -26,8 +26,8 @@
         <div class="page-header addLot-header">Add lot</div>
         <form class="addLot-form" action="addLot" method="POST" name="form">
 
-            <label for="photo">Photo</label>
-            <input id="photo" class="button" type="file" name="photo" value="photo"/>
+<%--            <label for="photo">Photo</label>--%>
+<%--            <input id="photo" class="button" type="file" name="photo" value="photo"/>--%>
 
             <label for="title">Title</label>
             <input id="title" class="button" type="text" name="title" required/>
