@@ -127,7 +127,11 @@ let sellerFeatures = {
 
     span = document.createElement('span');
     span.setAttribute('class', 'seller-rating');
-    span.innerHTML = rating;
+    if (rating !== 0) {
+      span.innerHTML = rating;
+    } else {
+      span.innerHTML = '-';
+    }
     item.appendChild(span);
   },
   addButtonFeatures: function() {
@@ -135,8 +139,9 @@ let sellerFeatures = {
 
     let a = document.createElement('a');
     a.setAttribute('class', 'button');
-    a.setAttribute('href', 'http://localhost:8080/ubay/feedbacks');
-    a.innerHTML = 'Bitters feedbacks';
+    a.setAttribute('href', '#');
+    a.setAttribute('onclick', 'viewFeedbacks(this)');
+    a.innerHTML = 'Bidders feedbacks';
 
     item.appendChild(a);
   }
@@ -155,27 +160,27 @@ let sellerFeatures = {
 
 let lots = {
   active: [
-    { code: 14,name: 'Jam',brand: 'J\'ELITE',taste: 'orange rum',sizeG: 220,
+    { id: 14,name: 'Jam',brand: 'J\'ELITE',taste: 'orange rum',sizeG: 220,
       price: 8.99,active: 1,description: 'Ukrainian candied.',
-      image: 'https://i.postimg.cc/dtpZxL0L/14.png'
+      image: 'resources/favicon.ico'
     },
-    { code: 15,name: 'Jam',brand: 'J\'ELITE',taste: 'strawberry basil tomato',sizeG: 220,
+    { id: 15,name: 'Jam',brand: 'J\'ELITE',taste: 'strawberry basil tomato',sizeG: 220,
       price: 8.99,active: 1,description: 'Ukrainian candied.',
-      image: 'https://i.postimg.cc/wjNR8gtF/15.png'
+      image: 'resources/favicon.ico'
     }
   ],
   closed: [
-    { code: 1,name: 'Jam',brand: 'St.Dalfout',taste: 'blueberry',sizeG: 284,
+    { id: 1,name: 'Jam',brand: 'St.Dalfout',taste: 'blueberry',sizeG: 284,
       price: 9.99,active: 0,description: 'Very tasty jam.',
-      image: 'https://i.postimg.cc/13SBjCXg/1.jpg'
+      image: 'resources/favicon.ico'
     },
-    { code: 2,name: 'Jam',brand: 'St.Dalfout',taste: 'fig',sizeG: 284,
+    { id: 2,name: 'Jam',brand: 'St.Dalfout',taste: 'fig',sizeG: 284,
       price: 9.99,active: 0,description: 'Very tasty jam.',
-      image: 'https://i.postimg.cc/4Ndp0DbF/2.jpg'
+      image: 'resources/favicon.ico'
     },
-    { code: 3, name: 'Jam', brand: 'St.Dalfout', taste: 'raspberry', sizeG: 284,
+    { id: 3, name: 'Jam', brand: 'St.Dalfout', taste: 'raspberry', sizeG: 284,
       price: 9.99, active: 0, description: 'Very tasty jam.',
-      image: 'https://i.postimg.cc/J42jCpp7/3.jpg'
+      image: 'resources/favicon.ico'
     }
   ],
   showActive: function() {
@@ -225,7 +230,6 @@ function submitChanges() {
  * */
 function signOut() {
   console.log('Log out');
-  location.replace("http://localhost:8080/ubay/main");
 }
 
 let init = () => {

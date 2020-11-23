@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="resources/reset.css"/>
     <link rel="stylesheet" href="resources/main.css"/>
-    <!-- <link rel="stylesheet" href="css/exp.css"/> -->
+    <script src="resources/references.js"></script>
     <script src="resources/main.js"></script>
     <script src="resources/main_show.js"></script>
 </head>
@@ -38,8 +39,8 @@
             </ul>
         </div>
         <div class="header-login">
-            <a class="abutton" href="http://localhost:8080/ubay/authorization">Sign in</a>
-            <a class="abutton" href="http://localhost:8080/ubay/profile">Profile</a>
+            <a class="abutton" href="${pageContext.request.contextPath}/authorization">Sign in</a>
+            <a class="abutton" href="${pageContext.request.contextPath}/profile">Profile</a>
         </div>
     </div>
 
@@ -56,7 +57,7 @@
 
 <nav class="breadcrumps">
     <ul class="page crumbs">
-        <li><a href="#">Home</a></li>
+        <li><a>Home</a></li>
     </ul>
 </nav>
 
@@ -115,27 +116,7 @@
         <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script> -->
     </aside>
     <div class="container"></div>
-
-
 </main>
-
-<div class="basket hidden">
-    <div class="basket-back"></div>
-    <div id="cart" class="shadow-large">
-        <div class="page-header cart-header">Cart</div>
-        <div class="cart-items"></div>
-        <div class="cart-total">Total: <span class="cart-numTotal item_price">$36.98</span></div>
-        <div class="cart-controls">
-            <a href="#" class="continue">Continue shopping</a>
-            <div data-location="/checkout" class="buy button">Buy</div>
-
-        </div>
-        <div class="close-icon"></div>
-        <!-- <a href="javascript:;" class="cart_empty button u-pull-left">Empty Cart <i class="fa fa-trash-o"></i></a>
-        <a href="javascript:;" class="button button-primary cart_checkout u-pull-right">Checkout <i class="fa fa-arrow-right"></i></a> -->
-
-    </div>
-</div>
 </div>
 
 <footer>
@@ -145,7 +126,7 @@
             <p>Copyright &copy; 2020 | Ubay | All Rights Reserved</p>
         </div>
         <div class="terms footbox">
-            <p>Terms of Servise | Privacy Policy</p>
+            <p>Terms of Service | Privacy Policy</p>
         </div>
     </div>
 </footer>

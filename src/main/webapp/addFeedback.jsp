@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,39 +17,27 @@
     <link rel="stylesheet" href="resources/main.css"/>
     <link rel="stylesheet" href="resources/addLot.css"/>
     <script src="resources/references.js"></script>
-    <script src="resources/addLot.js"></script>
 </head>
 
 <body id="body">
 
 <div class="addLot">
     <div id="window" class="shadow-large">
-        <div class="page-header addLot-header">Add lot</div>
-        <form class="addLot-form" action="addLot" method="POST" name="form">
+        <div class="page-header addLot-header">Add feedback</div>
+        <form class="addLot-form" action="addFeedback" method="POST" name="form">
 
-<%--            <label for="photo">Photo</label>--%>
-<%--            <input id="photo" class="button" type="file" name="photo" value="photo"/>--%>
+            <h4 id="lot" style="text-align: center">Title</h4>
 
-            <label for="title">Title</label>
-            <input id="title" class="button" type="text" name="title" required/>
+            <label for="newRate">Rate seller&nbsp;</label>
+            <input id="newRate" class="button" type="number" name="newRate" required
+                   min=".0" max="5.0" step=".1" value="5"/>
 
-            <label for="startPrice">Start price</label>
-            <input id="startPrice" class="button" type="number" name="startPrice" required
-                   min=".01" step=".01"/>
-
-            <label for="bidStep">Bid step</label>
-            <input id="bidStep" class="button" type="number" name="bidStep" required
-                   min=".01" step=".01"/>
-
-            <label for="description">Description</label>
-            <textarea id="description" class="button" type="text" name="description"
+            <label for="newFeedback">Feedback&nbsp;&nbsp;</label>
+            <textarea id="newFeedback" class="button" type="text" name="newFeedback" required
                       rows="4" maxlength="200" placeholder="200 symbols"></textarea>
 
-            <label for="duration">Duration - <span id="durationNumber">1 day</span></label>
-            <input id="duration" type="range" name="duration" min="1" max="7" value="1"/>
-
             <div class="addLot-controls">
-                <input class="button" type="submit" value="Add lot">
+                <input class="button" type="submit" value="Add feedback">
                 <div>
                     <a class="abutton" href="#" onclick="window.history.back()">back</a>
                     <a class="abutton" href="${pageContext.request.contextPath}/main">main</a>
@@ -61,4 +50,3 @@
 </body>
 
 </html>
-

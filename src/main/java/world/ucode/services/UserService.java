@@ -1,11 +1,14 @@
 package world.ucode.services;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 import world.ucode.dao.UserDao;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 
 import java.util.List;
-
+@Service
 public class UserService {
     private final UserDao usersDao = new UserDao();
 
@@ -31,6 +34,10 @@ public class UserService {
     }
     public User findUser(int id) {
         return usersDao.findById(id);
+    }
+
+    public User findUser(String login) {
+        return usersDao.findByLogin(login);
     }
 
     public void saveUser(User user) {

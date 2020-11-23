@@ -40,7 +40,8 @@
   height: 40px;
 }
 
-#description {
+#description,
+#newFeedback {
   margin: 15px 0;
   box-sizing: border-box;
   width: 100%;
