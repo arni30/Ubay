@@ -41,7 +41,7 @@
                 </ul>
             </div>
             <div class="header-login">
-                <span id="aboutProfile">${user.login}</span>
+                <span id="aboutProfile"></span>
                 <a class="abutton" href="#" onclick="signOut()">Sign out</a>
             </div>
         </div>
@@ -82,7 +82,7 @@
 <%--                        ${user.userRole}--%>
                     </li>
                     <li class="personal-data__item">
-                        <label class="personal-data__label form__label" id="username"> Username </label>
+                        <label class="personal-data__label form__label" id="viewProfile"> Username </label>
 <%--                        ${user.login}--%>
                     </li>
                     <li class="personal-data__item">
@@ -163,6 +163,8 @@
             }
             elem[i].appendChild(p);
         }
+        let userLogin = document.getElementById("aboutProfile");
+        userLogin.innerHTML = jsonString.login;
     }
     showInfo();
 </script>

@@ -20,7 +20,8 @@ public class UserService {
         System.out.println(newUser.getVerification());
         System.out.println(newUser.getPassword());
         System.out.println(user.getPassword());
-        if (newUser.getPassword().equals(user.getPassword())
+//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (BCrypt.checkpw(user.getPassword(), newUser.getPassword())
                 && newUser.getVerification().equals("verificated"))
             return newUser;
         else {

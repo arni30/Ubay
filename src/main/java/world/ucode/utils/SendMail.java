@@ -1,4 +1,4 @@
-package world.ucode.services;
+package world.ucode.utils;
 
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.mail.MailException;
