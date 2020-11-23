@@ -69,7 +69,7 @@
         <div class="personal-section__header">
             <h3 class="personal-section__heading">Personal info</h3>
             <!---->
-            <div class="personal-section__buttons">
+            <div class="personal-section__buttons">z
                 <input type="button" class="button" value="Change personal info" onclick="changeInfo()">
                 <input type="button" class="button" value="Change password" onclick="changePassword()">
             </div>

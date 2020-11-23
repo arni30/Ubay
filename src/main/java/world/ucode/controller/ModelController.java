@@ -19,6 +19,7 @@ import java.net.UnknownHostException;
 @Controller
 @ControllerAdvice
 public class ModelController {
+    ModelAndView mav = new ModelAndView();
     SendMail sendMail = new SendMail();
     LotService lotService = new LotService();
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -50,7 +51,6 @@ public class ModelController {
     @RequestMapping(value = "/viewProfile", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView viewProfile(@RequestParam String login) {
-        ModelAndView mav = new ModelAndView();
         try {
             ObjectMapper mapper = new ObjectMapper();
             User user = userService.findUser(login);
@@ -75,7 +75,6 @@ public class ModelController {
     @RequestMapping(value = "/addFeedback", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView addFeedback(@RequestParam int lotId) {
-        ModelAndView mav = new ModelAndView();
         try {
             ObjectMapper mapper = new ObjectMapper();
             Lot lot = userService.findLotById(lotId);
@@ -110,7 +109,6 @@ public class ModelController {
      * ----------------------- helpful functional
      */
     private ModelAndView pageModelAndView(String login, String page) {
-        ModelAndView mav = new ModelAndView();
         System.out.println(login);
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -133,8 +131,9 @@ public class ModelController {
         System.out.println(lot.getStartPrice());
         System.out.println(lot.getDescription());
 //        System.out.println(user.getId());
+        User user = userService.findUser("1");
+        lot.setSeller(user);
         lotService.saveLot(lot);
-        ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(lot);
         mav.addObject("lot", json);
@@ -142,14 +141,22 @@ public class ModelController {
         return mav;
     }
 
+    @RequestMapping(value = "/changeInfo", method = RequestMethod.POST)
+    public void changeInfo(User user) throws JsonProcessingException {
+        System.out.println("changeInfo");
+        User oldUser = userService.findUser(user.getLogin());
+        oldUser.setEmail(user.getEmail());
+        oldUser.setBalance(user.getBalance());
+        userService.updateUser(oldUser);
+    }
+
     @RequestMapping(value = "confirmation{token}", method = RequestMethod.GET)
     public ModelAndView confirmation(@RequestParam("token") String token){
-        ModelAndView modelAndView = new ModelAndView();
         User user = userService.validateToken(token);
         user.setVerification("verificated");
         userService.updateUser(user);
-        modelAndView.setViewName("redirect:/");
-        return modelAndView;
+        mav.setViewName("redirect:/");
+        return mav;
     }
 
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)

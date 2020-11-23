@@ -40,12 +40,15 @@ let personalInfo = {
       p.className = 'personal-data__value';
       p.placeholder = elem[i].lastChild.innerHTML;
       if (i === 1) {
+        p.setAttribute('name', 'login');
         p.setAttribute('id', 'username');
         p.setAttribute('type', 'text');
       } else if (i === 2) {
+        p.setAttribute('name', 'email');
         p.setAttribute('id', 'email');
         p.setAttribute('type', 'email');
       } else {
+        p.setAttribute('name', 'balance');
         p.setAttribute('id', 'balance');
         p.setAttribute('type', 'number');
         p.setAttribute('size', '5');
