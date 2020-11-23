@@ -13,7 +13,6 @@ public class Bid {
     private int bidderId;
     @Column(name = "auctionId")
     private int auctionId;
-    //    private int bidPrice;
     @Column(name = "price")
     private int price;
 

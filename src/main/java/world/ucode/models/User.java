@@ -35,9 +35,12 @@ public class User {
     private String token;
     @Column(name = "verification")
     private String verification;
+    @Column(name = "avarageRate")
+    private double avarageRate;
 
-//    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Lot> lots;
+
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Lot> lots;
 
     public User() {}
 //    public User(String login, String password) {
@@ -102,19 +105,21 @@ public class User {
         this.token = token;
     }
 
-    @Override
-    public String toString() {
-        String res = "models.User{ " +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password=" + password +
-                ", role=";
-        if (userRole.equals("seller")) {
-            res += "seller";
-        } else {
-            res += "bitter";
-        }
-        res += "(" + userRole + ") }";
-        return res;
-    }
+    public void setAvarageRate(double avarageRate) { this.avarageRate = avarageRate; }
+    public double getAvarageRate() { return avarageRate; }
+    //    @Override
+//    public String toString() {
+//        String res = "models.User{ " +
+//                "id=" + id +
+//                ", login='" + login + '\'' +
+//                ", password=" + password +
+//                ", role=";
+//        if (userRole.equals("seller")) {
+//            res += "seller";
+//        } else {
+//            res += "bitter";
+//        }
+//        res += "(" + userRole + ") }";
+//        return res;
+//    }
 }

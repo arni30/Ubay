@@ -92,6 +92,7 @@ public class ModelController {
                 System.out.println(user.getLogin());
                 System.out.println("hallo");
                 model.addAttribute("user",user);
+                user.setAvarageRate(0.0);
                 userService.saveUser(user);
                 mav.setViewName("/main");
             }
@@ -108,6 +109,7 @@ public class ModelController {
         System.out.println(lot.getDuration());
         System.out.println(lot.getStartPrice());
         System.out.println(lot.getDescription());
+//        System.out.println(user.getId());
         lotService.saveLot(lot);
         ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();

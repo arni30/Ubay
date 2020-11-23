@@ -22,6 +22,8 @@
 
         <mapping  class="world.ucode.models.User"/>
         <mapping  class="world.ucode.models.Lot"/>
+        <mapping  class="world.ucode.models.Bid"/>
+        <mapping  class="world.ucode.models.Feedback"/>
     </session-factory>
 
 </hibernate-configuration>
