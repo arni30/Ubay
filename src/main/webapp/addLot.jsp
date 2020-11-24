@@ -32,6 +32,16 @@
             <label for="title">Title</label>
             <input id="title" class="button" type="text" name="title" required/>
 
+            <label for="category">Category</label>
+            <select id="category" class="button" name="category">
+                <option>technics</option>
+                <option>furniture</option>
+                <option>books</option>
+                <option>clothes</option>
+                <option>food</option>
+                <option>others</option>
+            </select>
+
             <label for="startPrice">Start price</label>
             <input id="startPrice" class="button" type="number" name="startPrice" required
                    min=".01" step=".01"/>

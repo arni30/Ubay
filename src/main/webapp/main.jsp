@@ -78,29 +78,29 @@
         </div>
 
         <div>
-            <p>Brand:</p>
-            <label class="filterbox">J'ELITE
-                <input type="checkbox" class="check-brand" value="J'ELITE">
+            <p>Category:</p>
+            <label class="filterbox">technics
+                <input type="checkbox" class="check-brand" value="technics">
                 <span class="checkmark"></span>
             </label>
-            <label class="filterbox">St.Dalfout
-                <input type="checkbox" class="check-brand" value="St.Dalfout">
+            <label class="filterbox">furniture
+                <input type="checkbox" class="check-brand" value="furniture">
                 <span class="checkmark"></span>
             </label>
-            <label class="filterbox">Chantaine
-                <input type="checkbox" class="check-brand" value="Chantaine">
+            <label class="filterbox">books
+                <input type="checkbox" class="check-brand" value="books">
                 <span class="checkmark"></span>
             </label>
-            <label class="filterbox">Dabur
-                <input type="checkbox" class="check-brand" value="Dabur">
+            <label class="filterbox">clothes
+                <input type="checkbox" class="check-brand" value="clothes">
                 <span class="checkmark"></span>
             </label>
-            <label class="filterbox">Bionerica
-                <input type="checkbox" class="check-brand" value="Bionerica">
+            <label class="filterbox">food
+                <input type="checkbox" class="check-brand" value="food">
                 <span class="checkmark"></span>
             </label>
-            <label class="filterbox">Triuga
-                <input type="checkbox" class="check-brand" value="Triuga">
+            <label class="filterbox">others
+                <input type="checkbox" class="check-brand" value="others">
                 <span class="checkmark"></span>
             </label>
         </div>
@@ -157,5 +157,11 @@
 </footer>
 
 </body>
+
+<script type="text/javascript">
+    if (${lots}) {
+        products.items = ${lots};
+    }
+</script>
 
 </html>

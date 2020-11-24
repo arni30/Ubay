@@ -163,7 +163,7 @@
             }
             elem[i].appendChild(p);
         }
-        let userLogin = document.getElementById("aboutProfile");
+        let userLogin = document.getElementById("userLogin");
         userLogin.innerHTML = jsonString.login;
     }
     showInfo();

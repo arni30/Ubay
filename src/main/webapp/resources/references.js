@@ -21,7 +21,7 @@ function viewFeedbacks(item) {
 }
 function gotoAddLot(item) {
     item.setAttribute('href',
-        `/ubay/addLot?login=${document.querySelector('#aboutProfile').innerHTML}`);
+        `/ubay/addLot?login=${document.querySelector('#userLogin').innerHTML}`);
 }
 function gotoAuction(item) {
     location.replace(`/ubay/auction?lotId=${item.id}`);
