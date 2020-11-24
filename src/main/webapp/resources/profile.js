@@ -40,15 +40,12 @@ let personalInfo = {
       p.className = 'personal-data__value';
       p.placeholder = elem[i].lastChild.innerHTML;
       if (i === 1) {
-        p.setAttribute('name', 'login');
-        p.setAttribute('id', 'username');
+        p.setAttribute('id', 'aboutProfile');
         p.setAttribute('type', 'text');
       } else if (i === 2) {
-        p.setAttribute('name', 'email');
         p.setAttribute('id', 'email');
         p.setAttribute('type', 'email');
       } else {
-        p.setAttribute('name', 'balance');
         p.setAttribute('id', 'balance');
         p.setAttribute('type', 'number');
         p.setAttribute('size', '5');
@@ -66,7 +63,7 @@ let personalInfo = {
 
     if (this.changes) return; else this.changes = true;
 
-    document.querySelector('#username').innerHTML = 'Old password';
+    document.querySelector('#aboutProfile').innerHTML = 'Old password';
     document.querySelector('#email').innerHTML = 'New password';
     document.querySelector('#balance').innerHTML = 'Confirm new password';
 
@@ -163,25 +160,25 @@ let sellerFeatures = {
 
 let lots = {
   active: [
-    { id: 14,name: 'Jam',brand: 'J\'ELITE',taste: 'orange rum',sizeG: 220,
+    { id: 14,title: 'Jam',category: 'J\'ELITE',
       price: 8.99,active: 1,description: 'Ukrainian candied.',
       image: 'resources/favicon.ico'
     },
-    { id: 15,name: 'Jam',brand: 'J\'ELITE',taste: 'strawberry basil tomato',sizeG: 220,
+    { id: 15,title: 'Jam',category: 'J\'ELITE',
       price: 8.99,active: 1,description: 'Ukrainian candied.',
       image: 'resources/favicon.ico'
     }
   ],
   closed: [
-    { id: 1,name: 'Jam',brand: 'St.Dalfout',taste: 'blueberry',sizeG: 284,
+    { id: 1,title: 'Jam',category: 'St.Dalfout',
       price: 9.99,active: 0,description: 'Very tasty jam.',
       image: 'resources/favicon.ico'
     },
-    { id: 2,name: 'Jam',brand: 'St.Dalfout',taste: 'fig',sizeG: 284,
+    { id: 2,title: 'Jam',category: 'St.Dalfout',
       price: 9.99,active: 0,description: 'Very tasty jam.',
       image: 'resources/favicon.ico'
     },
-    { id: 3, name: 'Jam', brand: 'St.Dalfout', taste: 'raspberry', sizeG: 284,
+    { id: 3, title: 'Jam', category: 'St.Dalfout',
       price: 9.99, active: 0, description: 'Very tasty jam.',
       image: 'resources/favicon.ico'
     }

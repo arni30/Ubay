@@ -69,7 +69,7 @@
         <div class="personal-section__header">
             <h3 class="personal-section__heading">Personal info</h3>
             <!---->
-            <div class="personal-section__buttons">z
+            <div class="personal-section__buttons">
                 <input type="button" class="button" value="Change personal info" onclick="changeInfo()">
                 <input type="button" class="button" value="Change password" onclick="changePassword()">
             </div>
@@ -82,7 +82,7 @@
 <%--                        ${user.userRole}--%>
                     </li>
                     <li class="personal-data__item">
-                        <label class="personal-data__label form__label" id="viewProfile"> Username </label>
+                        <label class="personal-data__label form__label" id="aboutProfile"> Login </label>
 <%--                        ${user.login}--%>
                     </li>
                     <li class="personal-data__item">
@@ -101,7 +101,7 @@
 </div>
 
     <div id="profile-buttons" class="page personal-section__header">
-        <a class="button" href="${pageContext.request.contextPath}/addLot">Add auction</a>
+        <a class="button" href="#" onclick="gotoAddLot(this)">Add auction</a>
         <!--js: add feedback button-->
     </div>
 
