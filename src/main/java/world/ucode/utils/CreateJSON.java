@@ -12,7 +12,7 @@ public class CreateJSON {
     public JSONObject auctionJSON(User seller, Lot lot) {
         JSONObject json = new JSONObject();
 
-        json.put("status", "active");
+        json.put("active", true);
         json.put("id", lot.getId());
         json.put("image", "");
         json.put("title", lot.getTitle());
@@ -37,7 +37,7 @@ public class CreateJSON {
                 json.put("title", lot.getTitle());
                 json.put("category", lot.getCategory());
                 json.put("price", lot.getStartPrice());
-                json.put("status", "active");   // active: 1,
+                json.put("active", true);
                 json.put("description", lot.getDescription());
                 json.put("image", "resources/favicon.ico");
 

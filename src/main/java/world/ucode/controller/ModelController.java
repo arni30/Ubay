@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONObject;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,14 @@ import world.ucode.utils.Token;
 import world.ucode.services.UserService;
 import java.net.UnknownHostException;
 import java.util.List;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Controller
 @ControllerAdvice
 public class ModelController {
+    ModelAndView mav = new ModelAndView();
     SendMail sendMail = new SendMail();
     LotService lotService = new LotService();
     CreateJSON createJSON = new CreateJSON();
@@ -167,17 +172,34 @@ public class ModelController {
         return pageModelAndView(login, "/addLot");
     }
 
+    public static Timestamp addDays(Timestamp date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);// w ww.  j ava  2  s  .co m
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return new Timestamp(cal.getTime().getTime());
+
+    }
+
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
     public ModelAndView addLot(Lot lot) throws JsonProcessingException {
         System.out.println(lot.getDuration());
         System.out.println(lot.getStartPrice());
         System.out.println(lot.getDescription());
 //        System.out.println(user.getId());
+        User user = userService.findUser("1");
+        lot.setSeller(user);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp curTime = new Timestamp(System.currentTimeMillis());
+        System.out.println(formatter.format(curTime).replace(' ','T'));
+        //форматирование времени под фронт formatter.format(curTime).replace(' ','T') для записи в json
+        lot.setStartTime(curTime);
+        lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lotService.saveLot(lot);
-        ModelAndView mav = new ModelAndView();
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(lot);
-        mav.addObject("lot", json);
+//        JSONObject json = new JSONObject();
+//        json.put("title", lot.getTitle());
+//        ObjectMapper mapper = new ObjectMapper();
+//        String json = mapper.writeValueAsString(lot);
+//        mav.addObject("lot", json);
         mav.setViewName("/profile");
         return mav;
     }
@@ -257,4 +279,5 @@ public class ModelController {
         userService.updateUser(user);
         context.close();
     }
+
 }

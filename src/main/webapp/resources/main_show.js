@@ -2,44 +2,8 @@
 
 let products = {
   items: [
-    { id: 14, title: 'Jam', category: 'J\'ELITE',
-      price: 8.99,active: 1,description: 'Ukrainian candied.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 15,title: 'Jam',category: 'J\'ELITE',
-      price: 8.99,active: 2,description: 'Ukrainian candied.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 1,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 0,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 2,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 2,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 3,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 0,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 4,title: 'Jam',category: 'St.Dalfout',
-      price: 6.99,active: 10,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 5,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 10,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 6,title: 'Jam',category: 'Chantaine',
-      price: 11.99,active: 10,description: 'Natural jam, made in France.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 7,title: 'Jam',category: 'Chantaine',
-      price: 11.99,active: 10,description: 'Natural jam, made in France.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 8,title: 'Jam',category: 'Chantaine',
-      price: 11.99,active: 10,description: 'Natural jam, made in France.',
+    { id: 1, title: 'Jam', category: 'food',
+      price: 8.99, active: true, description: 'Ukrainian candied.',
       image: 'resources/favicon.ico'
     }
   ],
@@ -97,7 +61,7 @@ let products = {
 
     p = document.createElement('h5');
     p.className = 'item_name';
-    p.innerHTML = item.title + ' ' + item.category;
+    p.innerHTML = item.title;
     shelf.appendChild(p);
 
     p = document.createElement('p');

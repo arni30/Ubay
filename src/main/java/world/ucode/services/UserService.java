@@ -36,8 +36,12 @@ public class UserService {
     public User findUserByLogin(String login) {
         return usersDao.findByLogin(login);
     }
-    public User findUserById(int id) {
+    public User findUser(int id) {
         return usersDao.findById(id);
+    }
+
+    public User findUser(String login) {
+        return usersDao.findByLogin(login);
     }
 
     public void saveUser(User user) {

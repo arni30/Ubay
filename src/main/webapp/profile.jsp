@@ -41,7 +41,7 @@
                 </ul>
             </div>
             <div class="header-login">
-                <span id="userLogin">${user.login}</span>
+                <span id="userLogin"></span>
                 <a class="abutton" href="#" onclick="signOut()">Sign out</a>
             </div>
         </div>
@@ -64,41 +64,41 @@
         </ul>
     </nav>
 
-<div class="contact-info page">
-    <section class="personal-section">
-        <div class="personal-section__header">
-            <h3 class="personal-section__heading">Personal info</h3>
-            <!---->
-            <div class="personal-section__buttons">
-                <input type="button" class="button" value="Change personal info" onclick="changeInfo()">
-                <input type="button" class="button" value="Change password" onclick="changePassword()">
-            </div>
-        </div>
-        <form>
-            <div class="personal-data">
-                <ul class="personal-data__list">
-                    <li class="personal-data__item">
-                        <label class="personal-data__label form__label" id="role"> Role </label>
-<%--                        ${user.userRole}--%>
-                    </li>
-                    <li class="personal-data__item">
-                        <label class="personal-data__label form__label" id="aboutProfile"> Login </label>
-<%--                        ${user.login}--%>
-                    </li>
-                    <li class="personal-data__item">
-                        <label class="personal-data__label form__label" id="email"> Email </label>
-<%--                        ${user.email}--%>
-                    </li>
-                    <li class="personal-data__item">
-                        <label  class="personal-data__label form__label" id="balance"> Balance </label>
-<%--                        ${user.balance}--%>
-                    </li>
-                </ul>
+    <div class="contact-info page">
+        <section class="personal-section">
+            <div class="personal-section__header">
+                <h3 class="personal-section__heading">Personal info</h3>
                 <!---->
+                <div class="personal-section__buttons">
+                    <input type="button" class="button" value="Change personal info" onclick="changeInfo()">
+                    <input type="button" class="button" value="Change password" onclick="changePassword()">
+                </div>
             </div>
-        </form>
-    </section>
-</div>
+            <form>
+                <div class="personal-data">
+                    <ul class="personal-data__list">
+                        <li class="personal-data__item">
+                            <label class="personal-data__label form__label" id="role"> Role </label>
+                            <%--                        ${user.userRole}--%>
+                        </li>
+                        <li class="personal-data__item">
+                            <label class="personal-data__label form__label" id="aboutProfile"> Login </label>
+                            <%--                        ${user.login}--%>
+                        </li>
+                        <li class="personal-data__item">
+                            <label class="personal-data__label form__label" id="email"> Email </label>
+                            <%--                        ${user.email}--%>
+                        </li>
+                        <li class="personal-data__item">
+                            <label  class="personal-data__label form__label" id="balance"> Balance </label>
+                            <%--                        ${user.balance}--%>
+                        </li>
+                    </ul>
+                    <!---->
+                </div>
+            </form>
+        </section>
+    </div>
 
     <div id="profile-buttons" class="page personal-section__header">
         <a class="button" href="#" onclick="gotoAddLot(this)">Add auction</a>
@@ -136,14 +136,11 @@
 
 </body>
 <script type="text/javascript">
-
     function showInfo() {
         let response = ${user};
-
         console.log(response);
         let jsonString = JSON.parse(JSON.stringify(response));
         console.log(jsonString);
-
         let elem, p;
         elem = document.querySelectorAll('.personal-data__item');
         for (let i = 0; elem[i]; ++i) {

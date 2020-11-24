@@ -3,6 +3,7 @@ package world.ucode.models;
 import javax.persistence.*;
 import java.awt.image.BufferedImage;
 import java.security.PublicKey;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "lots")
@@ -23,7 +24,10 @@ public class Lot {
     private String description;
     @Column(name = "category")
     private String category;
-    //    private startTime;
+    @Column(name = "startTime")
+    private Timestamp startTime;
+    @Column(name = "finishTime")
+    private Timestamp finishTime;
 //    private boolean finished;
 
 //    private BufferedImage image;
@@ -63,6 +67,12 @@ public class Lot {
 
     public void setSeller(User seller) { this.seller = seller; }
     public User getSeller() { return seller; }
+
+    public void setStartTime(Timestamp startTime) { this.startTime = startTime; }
+    public Timestamp getStartTime() { return startTime; }
+
+    public void setFinishTime(Timestamp finishTime) { this.finishTime = finishTime; }
+    public Timestamp getFinishTime() { return finishTime; }
 
     @Override
     public String toString() {

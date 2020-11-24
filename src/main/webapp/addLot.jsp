@@ -69,6 +69,15 @@
 </div>
 
 </body>
+<script>
+    <%--function showInfo() {--%>
+    <%--    let response = ${user};--%>
+
+    <%--    console.log(response);--%>
+    <%--    let jsonString = JSON.parse(JSON.stringify(response));--%>
+    <%--    --%>
+    <%--}--%>
+</script>
 
 </html>
 
