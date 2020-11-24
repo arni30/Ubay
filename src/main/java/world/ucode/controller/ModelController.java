@@ -10,10 +10,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import world.ucode.models.Lot;
+import world.ucode.models.Search;
 import world.ucode.models.User;
 import world.ucode.services.SendMail;
 import world.ucode.services.Token;
@@ -48,6 +50,44 @@ public class ModelController {
         return "/id";
     }
 
+    /**
+     * ----------------------- helpful functional
+     */
+    private ModelAndView pageModelAndView(String login, String page) {
+        ModelAndView mav = new ModelAndView();
+        System.out.println(login);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            User user = userService.findUserByLogin(login);
+            String json = mapper.writeValueAsString(user);
+            mav.addObject("user", json);
+            mav.setViewName(page);
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
+    }
+    private ModelAndView pageModelAndView(int lotId, String page) {
+        ModelAndView mav = new ModelAndView();
+        System.out.println(lotId);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+//            Lot lot = userService.findLotById(lotId);
+//            String json = mapper.writeValueAsString(lot);
+//            mav.addObject("lot", json);
+            mav.setViewName(page);
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
+    }
+
     // -----------------------
     @RequestMapping(value = "/authorization", method = RequestMethod.GET)
     public String signin(ModelMap model) throws UnknownHostException {
@@ -57,70 +97,51 @@ public class ModelController {
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String main(ModelMap model) {
+        if(!model.containsAttribute("search")) {
+            model.addAttribute("search", new Search());
+        }
         return "/main";
     }
+
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String profile(ModelMap model) {
         return "/profile";
     }
 
     /**
-     * requires unique user login, which profile needs to be showed. --------- DONE ----------
+     * requires unique user login, which profile needs to be showed.
      * */
     @RequestMapping(value = "/viewProfile", method = RequestMethod.GET)
-    @ResponseBody
     public ModelAndView viewProfile(@RequestParam String login) {
-        ModelAndView mav = new ModelAndView();
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            User user = userService.findUser(login);
-            String json = mapper.writeValueAsString(user);
-            mav.addObject("user", json);
-            mav.setViewName("/viewProfile");
-            return mav;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Bad JSON");
-            mav.setViewName("/errors/error");
-            return mav;
-        }
-    }
-    @RequestMapping(value = "/feedbacks", method = RequestMethod.GET)
-    public String feedbacks(ModelMap model) {
-        return "/feedbacks";
+        return pageModelAndView(login, "/viewProfile");
     }
     /**
-     * requires unique lot id, to what lot add feedback.
+     * requires unique seller login (feedbacks about what seller).
+     * */
+    @RequestMapping(value = "/feedbacks", method = RequestMethod.GET)
+    public ModelAndView feedbacks(@RequestParam String login) {
+        return pageModelAndView(login, "/feedbacks");
+    }
+    /**
+     * requires unique seller login (what seller added lot).
+     * */
+    @RequestMapping(value = "/addLot", method = RequestMethod.GET)
+    public ModelAndView addLot(@RequestParam String login) {
+        return pageModelAndView(login,"/addLot");
+    }
+    /**
+     * requires unique lot id (to what lot was added feedback).
      * */
     @RequestMapping(value = "/addFeedback", method = RequestMethod.GET)
-    @ResponseBody
-    public ModelAndView addFeedback(@RequestParam int lotId) {
-        ModelAndView mav = new ModelAndView();
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            Lot lot = userService.findLotById(lotId);
-            String json = mapper.writeValueAsString(lot);
-            mav.addObject("lot", json);
-            mav.setViewName("/addFeedback");
-            return mav;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Bad JSON");
-            mav.setViewName("/errors/error");
-            return mav;
-        }
+    public ModelAndView addFeedback(@RequestParam String lotId) {
+        return pageModelAndView(Integer.parseInt(lotId), "/addFeedback");
     }
     /**
-     * requires unique lot id.
+     * requires unique lot id (that auction show).
      * */
     @RequestMapping(value = "/auction", method = RequestMethod.GET)
-    @ResponseBody
-    public String auction(@RequestParam int lotId) {
-        return "/auction";
-    }
-    @RequestMapping(value = "/addLot", method = RequestMethod.GET)
-    public String addLot(ModelMap model) {
-        return "/addLot";
+    public ModelAndView auction(@RequestParam String lotId) {
+        return pageModelAndView(Integer.parseInt(lotId), "/auction");
     }
 
     @RequestMapping(value = "confirmation{token}", method = RequestMethod.GET)
@@ -145,7 +166,7 @@ public class ModelController {
                 ObjectMapper mapper = new ObjectMapper();
                 User newUser = userService.validateUser(user);
                 String json = mapper.writeValueAsString(newUser);
-                mav.addObject("user", user);
+                mav.addObject("user", json);
                 mav.setViewName("/profile");
             } else {
                 Token token = new Token();
@@ -161,12 +182,25 @@ public class ModelController {
                 userService.saveUser(user);
                 mav.setViewName("/main");
             }
+//            model.addAttribute("user", user);
             return mav;
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("NON authorized or incorrect mail");
             mav.setViewName("/authorization");
             return mav;
         }
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String search_post(@ModelAttribute("search") Search search, Model model) {
+        System.out.println(search.getTitle());
+        System.out.println(search.getStartPrice());
+        System.out.println(search.getDuration());
+        System.out.println(search.getStartTime());
+        System.out.println(search.getDescription());
+
+        return "redirect:/main";
     }
 
 

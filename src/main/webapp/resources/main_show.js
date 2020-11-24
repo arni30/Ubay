@@ -2,43 +2,43 @@
 
 let products = {
   items: [
-    { id: 14,name: 'Jam',brand: 'J\'ELITE',taste: 'orange rum',sizeG: 220,
+    { id: 14, title: 'Jam', category: 'J\'ELITE',
       price: 8.99,active: 1,description: 'Ukrainian candied.',
       image: 'resources/favicon.ico'
     },
-    { id: 15,name: 'Jam',brand: 'J\'ELITE',taste: 'strawberry basil tomato',sizeG: 220,
+    { id: 15,title: 'Jam',category: 'J\'ELITE',
       price: 8.99,active: 2,description: 'Ukrainian candied.',
       image: 'resources/favicon.ico'
     },
-    { id: 1,name: 'Jam',brand: 'St.Dalfout',taste: 'blueberry',sizeG: 284,
+    { id: 1,title: 'Jam',category: 'St.Dalfout',
       price: 9.99,active: 0,description: 'Very tasty jam.',
       image: 'resources/favicon.ico'
     },
-    { id: 2,name: 'Jam',brand: 'St.Dalfout',taste: 'fig',sizeG: 284,
+    { id: 2,title: 'Jam',category: 'St.Dalfout',
       price: 9.99,active: 2,description: 'Very tasty jam.',
       image: 'resources/favicon.ico'
     },
-    { id: 3,name: 'Jam',brand: 'St.Dalfout',taste: 'raspberry',sizeG: 284,
+    { id: 3,title: 'Jam',category: 'St.Dalfout',
       price: 9.99,active: 0,description: 'Very tasty jam.',
       image: 'resources/favicon.ico'
     },
-    { id: 4,name: 'Jam',brand: 'St.Dalfout',taste: 'orange',sizeG: 170,
+    { id: 4,title: 'Jam',category: 'St.Dalfout',
       price: 6.99,active: 10,description: 'Very tasty jam.',
       image: 'resources/favicon.ico'
     },
-    { id: 5,name: 'Jam',brand: 'St.Dalfout',taste: 'pineapple',sizeG: 284,
+    { id: 5,title: 'Jam',category: 'St.Dalfout',
       price: 9.99,active: 10,description: 'Very tasty jam.',
       image: 'resources/favicon.ico'
     },
-    { id: 6,name: 'Jam',brand: 'Chantaine',taste: 'cranberry',sizeG: 325,
+    { id: 6,title: 'Jam',category: 'Chantaine',
       price: 11.99,active: 10,description: 'Natural jam, made in France.',
       image: 'resources/favicon.ico'
     },
-    { id: 7,name: 'Jam',brand: 'Chantaine',taste: 'pineapple',sizeG: 325,
+    { id: 7,title: 'Jam',category: 'Chantaine',
       price: 11.99,active: 10,description: 'Natural jam, made in France.',
       image: 'resources/favicon.ico'
     },
-    { id: 8,name: 'Jam',brand: 'Chantaine',taste: 'cherry',sizeG: 325,
+    { id: 8,title: 'Jam',category: 'Chantaine',
       price: 11.99,active: 10,description: 'Natural jam, made in France.',
       image: 'resources/favicon.ico'
     }
@@ -54,7 +54,7 @@ let products = {
 
     for (let i in this.items) {
       for (let j = 0; j < arr.length; ++j) {
-        if (this.items[i].brand === arr[j]) {
+        if (this.items[i].category === arr[j]) {
           this.showItem(elem, this.items[i]);
           break;
         }
@@ -97,7 +97,7 @@ let products = {
 
     p = document.createElement('h5');
     p.className = 'item_name';
-    p.innerHTML = item.name + ' ' + item.brand + ' ' + item.taste + ', ' + item.sizeG + 'g';
+    p.innerHTML = item.title + ' ' + item.category;
     shelf.appendChild(p);
 
     p = document.createElement('p');

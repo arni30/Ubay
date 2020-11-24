@@ -41,7 +41,7 @@
                 </ul>
             </div>
             <div class="header-login">
-                <span id="aboutProfile">${user.login}</span>
+                <span>${user.login}</span>
                 <a class="abutton" href="#" onclick="signOut()">Sign out</a>
             </div>
         </div>
@@ -82,7 +82,7 @@
 <%--                        ${user.userRole}--%>
                     </li>
                     <li class="personal-data__item">
-                        <label class="personal-data__label form__label" id="username"> Username </label>
+                        <label class="personal-data__label form__label" id="aboutProfile"> Login </label>
 <%--                        ${user.login}--%>
                     </li>
                     <li class="personal-data__item">
@@ -101,7 +101,7 @@
 </div>
 
     <div id="profile-buttons" class="page personal-section__header">
-        <a class="button" href="${pageContext.request.contextPath}/addLot">Add auction</a>
+        <a class="button" href="#" onclick="gotoAddLot(this)">Add auction</a>
         <!--js: add feedback button-->
     </div>
 
