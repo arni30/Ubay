@@ -22,6 +22,7 @@
 
 <body>
 
+<div class="help_footer">
 <header class="header">
     <div class="header-top-back"></div>
 
@@ -66,16 +67,6 @@
 
     <aside class="filters">
 
-        <!--      <div class="search">-->
-        <!--        <p>Search:</p>-->
-        <!--        <select class="sort-select">-->
-        <!--          <option value="1">none</option>-->
-        <!--          <option value="2">cheap first</option>-->
-        <!--          <option value="3">expensive first</option>-->
-
-        <!--        </select>-->
-        <!--      </div>-->
-
         <div class="sort">
             <p>Sort:</p>
             <select class="sort-select">
@@ -112,6 +103,40 @@
                 <input type="checkbox" class="check-brand" value="Triuga">
                 <span class="checkmark"></span>
             </label>
+        </div>
+
+        <br><br><br><br>
+
+        <div class="search">
+            <p>Search:</p>
+            <form action="search" method="POST" name="search">
+                <label for="searchByTitle">Title</label>
+                <input id="searchByTitle" class="form-styling" type="text"
+                       name="title"/>
+
+                <label for="searchByOpenPrice">Opening price</label>
+                <input id="searchByOpenPrice" class="form-styling"
+                       type="number" min=".01" step=".01"
+                       name="startPrice"/>
+
+                <label for="searchByDuration">Duration</label>
+                <input id="searchByDuration" class="form-styling"
+                       type="number" min="1" max="7" step="1"
+                       name="duration"/>
+
+                <label for="searchByStartTime">Start time (day)</label>
+                <input id="searchByStartTime" class="form-styling" type="date"
+                       name="startTime"/>
+                <script>
+                    document.getElementById('searchByStartTime').max = new Date().toISOString().split("T")[0];
+                </script>
+
+                <label for="searchByDescription">Description</label>
+                <input id="searchByDescription" class="form-styling" type="text"
+                       name="description"/>
+
+                <input id="formButton" class="button" type="submit" value="Search">
+            </form>
         </div>
         <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script> -->
     </aside>

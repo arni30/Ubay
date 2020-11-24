@@ -77,7 +77,7 @@
 
                         </li>
                         <li class="personal-data__item">
-                            <label class="personal-data__label form__label" id="username"> Username </label>
+                            <label class="personal-data__label form__label" id="aboutProfile"> Login </label>
 
                         </li>
                         <li class="personal-data__item">

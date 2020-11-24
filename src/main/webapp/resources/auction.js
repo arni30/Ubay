@@ -72,7 +72,7 @@ let auctions = {
   addFeedback: function (item) {
     if (this.winner.feedback === '') {
       item.setAttribute('href',
-          '/ubay/addFeedbacks?lot=' + this.lot.id);
+          '/ubay/addFeedback?lotId=' + this.lot.id);
 
     }
   }

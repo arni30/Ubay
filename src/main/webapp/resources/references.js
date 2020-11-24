@@ -19,6 +19,10 @@ function viewFeedbacks(item) {
     item.setAttribute('href',
         `/ubay/feedbacks?login=${document.querySelector('#aboutProfile').innerHTML}`);
 }
+function gotoAddLot(item) {
+    item.setAttribute('href',
+        `/ubay/addLot?login=${document.querySelector('#aboutProfile').innerHTML}`);
+}
 function gotoAuction(item) {
-    location.replace(`/ubay/auction?lot=${item.id}`);
+    location.replace(`/ubay/auction?lotId=${item.id}`);
 }

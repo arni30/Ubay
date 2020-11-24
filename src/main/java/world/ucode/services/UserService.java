@@ -33,12 +33,11 @@ public class UserService {
         User newUser = usersDao.findByToken(token);
             return newUser;
     }
-    public User findUser(int id) {
-        return usersDao.findById(id);
-    }
-
-    public User findUser(String login) {
+    public User findUserByLogin(String login) {
         return usersDao.findByLogin(login);
+    }
+    public User findUserById(int id) {
+        return usersDao.findById(id);
     }
 
     public void saveUser(User user) {
