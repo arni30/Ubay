@@ -2,6 +2,7 @@ package world.ucode.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONObject;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -150,12 +151,15 @@ public class ModelController {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
         System.out.println(formatter.format(curTime).replace(' ','T'));
+        //форматирование времени под фронт formatter.format(curTime).replace(' ','T') для записи в json
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lotService.saveLot(lot);
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(lot);
-        mav.addObject("lot", json);
+//        JSONObject json = new JSONObject();
+//        json.put("title", lot.getTitle());
+//        ObjectMapper mapper = new ObjectMapper();
+//        String json = mapper.writeValueAsString(lot);
+//        mav.addObject("lot", json);
         mav.setViewName("/profile");
         return mav;
     }
