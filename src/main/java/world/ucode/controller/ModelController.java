@@ -17,6 +17,9 @@ import world.ucode.utils.SendMail;
 import world.ucode.utils.Token;
 import world.ucode.services.UserService;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Controller
 @ControllerAdvice
@@ -128,6 +131,14 @@ public class ModelController {
         return pageModelAndView(login, "/addLot");
     }
 
+    public static Timestamp addDays(Timestamp date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);// w ww.  j ava  2  s  .co m
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return new Timestamp(cal.getTime().getTime());
+
+    }
+
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
     public ModelAndView addLot(Lot lot) throws JsonProcessingException {
         System.out.println(lot.getDuration());
@@ -136,6 +147,11 @@ public class ModelController {
 //        System.out.println(user.getId());
         User user = userService.findUser("1");
         lot.setSeller(user);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp curTime = new Timestamp(System.currentTimeMillis());
+        System.out.println(formatter.format(curTime).replace(' ','T'));
+        lot.setStartTime(curTime);
+        lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lotService.saveLot(lot);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(lot);
