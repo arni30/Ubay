@@ -3,6 +3,7 @@ package world.ucode.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,15 @@ import world.ucode.models.Lot;
 import world.ucode.models.Search;
 import world.ucode.models.User;
 import world.ucode.services.LotService;
+import world.ucode.utils.CreateJSON;
 import world.ucode.utils.SendMail;
 import world.ucode.utils.Token;
 import world.ucode.services.UserService;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,6 +34,7 @@ public class ModelController {
     ModelAndView mav = new ModelAndView();
     SendMail sendMail = new SendMail();
     LotService lotService = new LotService();
+    CreateJSON createJSON = new CreateJSON();
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
     UserService userService = context.getBean("userService", UserService.class);
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -43,7 +50,7 @@ public class ModelController {
         System.out.println(login);
         try {
             ObjectMapper mapper = new ObjectMapper();
-            User user = userService.findUser(login);
+            User user = userService.findUserByLogin(login);
             String json = mapper.writeValueAsString(user);
             mav.addObject("user", json);
             mav.setViewName(page);
@@ -81,11 +88,28 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
-    public String main(ModelMap model) {
-        if(!model.containsAttribute("search")) {
+    public ModelAndView main(ModelMap model) {
+        if (!model.containsAttribute("search")) {
             model.addAttribute("search", new Search());
         }
-        return "/main";
+        ModelAndView mav = new ModelAndView();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+//            Lot lot = userService.findLotById(Integer.parseInt(lotId));
+//            String json = mapper.writeValueAsString(lot);
+
+            List<Lot> lots = lotService.findAllLots();
+            JSONArray json = createJSON.mainShowLotsJSON(lots);
+
+            mav.addObject("lots", json);
+            mav.setViewName("/main");
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
@@ -121,7 +145,25 @@ public class ModelController {
      * */
     @RequestMapping(value = "/auction", method = RequestMethod.GET)
     public ModelAndView auction(@RequestParam String lotId) {
-        return pageModelAndView(Integer.parseInt(lotId), "/auction");
+        ModelAndView mav = new ModelAndView();
+        System.out.println(lotId);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+//            Lot lot = userService.findLotById(Integer.parseInt(lotId));
+//            String json = mapper.writeValueAsString(lot);
+
+            Lot lot = userService.findLotById(Integer.parseInt(lotId));
+            User user = lot.getSeller();
+            JSONObject json = createJSON.auctionJSON(user, lot);
+            mav.addObject("lot", json);
+            mav.setViewName("/auction");
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
     }
 
     /**

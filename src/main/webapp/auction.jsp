@@ -128,5 +128,12 @@
 
 </body>
 
+<script type="text/javascript">
+    if (${lot}) {
+        auctions.lot = ${lot};
+    }
+</script>
+
+
 </html>
 
