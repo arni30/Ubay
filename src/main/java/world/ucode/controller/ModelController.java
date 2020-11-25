@@ -204,12 +204,12 @@ public class ModelController {
     @RequestMapping(value = "/newBit", method = RequestMethod.POST)
     public ModelAndView newBid(Bid bid) throws JsonProcessingException {
         System.out.println(bid.getPrice());
-        Bid prevBid = bidService.findLast(11);
         //set previous bid to false
+        Bid prevBid = bidService.findLast(10);
         prevBid.setActive(false);
         bidService.updateBid(prevBid);
         bid.setBidder(userService.findUser("2"));
-        bid.setLot(lotService.findLot(11));
+        bid.setLot(lotService.findLot(10));
         bid.setActive(true);
         bidService.saveBid(bid);
         mav.setViewName("redirect:/main");
