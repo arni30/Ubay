@@ -3,32 +3,33 @@
 let personalInfo = {
   info:
     { userRole: 'seller', login: 'user1234',
-      email: 'trololo@gmail.com', balance: 170, rate: 4.5},
+      email: 'trololo@gmail.com', balance: 170, avarageRate: 4.5 },
+
   changes: false,
 
-  showInfo: function () {
-    let elem, p;
-
-    elem = document.querySelectorAll('.personal-data__item');
-
-    for (let i = 0; elem[i]; ++i) {
-      p = document.createElement('p');
-      p.setAttribute('class', 'personal-data__value');
-      if (i === 0) {
-        p.innerHTML = this.info.userRole;
-        if (this.info.userRole === 'seller') {
-          sellerFeatures.addSellersFeatures(p, this.info.rate);
-        }
-      } else if (i === 1) {
-        p.innerHTML = this.info.login;
-      } else if (i === 2) {
-        p.innerHTML = this.info.email;
-      } else {
-        p.innerHTML = this.info.balance;
-      }
-      elem[i].appendChild(p);
-    }
-  },
+  // showInfo: function () {
+  //   let elem, p;
+  //
+  //   elem = document.querySelectorAll('.personal-data__item');
+  //
+  //   for (let i = 0; elem[i]; ++i) {
+  //     p = document.createElement('p');
+  //     p.setAttribute('class', 'personal-data__value');
+  //     if (i === 0) {
+  //       p.innerHTML = this.info.userRole;
+  //       if (this.info.userRole === 'seller') {
+  //         sellerFeatures.addSellersFeatures(p, this.info.rate);
+  //       }
+  //     } else if (i === 1) {
+  //       p.innerHTML = this.info.login;
+  //     } else if (i === 2) {
+  //       p.innerHTML = this.info.email;
+  //     } else {
+  //       p.innerHTML = this.info.balance;
+  //     }
+  //     elem[i].appendChild(p);
+  //   }
+  // },
   changeInfo: function () {
     let elem, p;
 
@@ -116,7 +117,7 @@ let personalInfo = {
 let sellerFeatures = {
   addSellersFeatures: function (item, rating) {
     this.addStar(item, rating);
-    this.addButtonFeatures();
+    this.addButtonsFeatures();
   },
   addStar: function(item, rating) {
     item.innerHTML += '&emsp;';
@@ -130,20 +131,13 @@ let sellerFeatures = {
     if (rating !== 0) {
       span.innerHTML = rating;
     } else {
-      span.innerHTML = '-';
+      span.innerHTML = ' -';
     }
     item.appendChild(span);
   },
-  addButtonFeatures: function() {
+  addButtonsFeatures: function() {
     let item = document.querySelector('#profile-buttons');
-
-    let a = document.createElement('a');
-    a.setAttribute('class', 'button');
-    a.setAttribute('href', '#');
-    a.setAttribute('onclick', 'viewFeedbacks(this)');
-    a.innerHTML = 'Bidders feedbacks';
-
-    item.appendChild(a);
+    item.setAttribute('style', 'display = block;');
   }
 }
 
@@ -159,49 +153,49 @@ let sellerFeatures = {
 //     $('#newImgDiv').attr("style", "display: initial");
 
 let lots = {
-  active: [
-    { id: 14,title: 'Jam',category: 'J\'ELITE',
-      price: 8.99,active: 1,description: 'Ukrainian candied.',
+  items: [
+    { id: 1, title: '', category: 'others',
+      price: 1, active: true, description: '',
       image: 'resources/favicon.ico'
     },
-    { id: 15,title: 'Jam',category: 'J\'ELITE',
-      price: 8.99,active: 1,description: 'Ukrainian candied.',
+    { id: 1, title: '', category: 'others',
+      price: 1, active: false, description: '',
       image: 'resources/favicon.ico'
     }
   ],
-  closed: [
-    { id: 1,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 0,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 2,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 0,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 3, title: 'Jam', category: 'St.Dalfout',
-      price: 9.99, active: 0, description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    }
-  ],
-  showActive: function() {
-    let elem = document.querySelector('.active-lots');
+  showItems: function() {
+    let elemActive = document.querySelector('.active-lots');
+    if (elemActive.firstChild)
+      while (elemActive.firstChild)
+        elemActive.removeChild(elemActive.lastChild);
 
-    if (elem.firstChild)
-      while (elem.firstChild)
-        elem.removeChild(elem.lastChild);
-
-    for (let i in this.active)
-      products.showItem(elem, this.active[i]);
-  },
-  showClosed: function() {
     let elem = document.querySelector('.closed-lots');
-
     if (elem.firstChild)
       while (elem.firstChild)
         elem.removeChild(elem.lastChild);
 
-    for (let i in this.closed)
-      products.showItem(elem, this.closed[i]);
+    for (let i in this.items) {
+      if (this.items[i].active) {
+        document.querySelector('#activeBox')
+            .setAttribute('style', 'display:flex');
+        break;
+      }
+    }
+    for (let i in this.items) {
+      if (!this.items[i].active) {
+        document.querySelector('#closedBox')
+            .setAttribute('style', 'display:flex');
+        break;
+      }
+    }
+
+    for (let i in this.items) {
+      if (this.items[i].active) {
+        products.showItem(elemActive, this.items[i]);
+      } else {
+        products.showItem(elem, this.items[i]);
+      }
+    }
   },
 }
 
@@ -234,8 +228,7 @@ function signOut() {
 
 let init = () => {
   // personalInfo.showInfo();
-  lots.showActive();
-  lots.showClosed();
+  lots.showItems();
 }
 
 window.onload = init;

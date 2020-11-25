@@ -21,8 +21,8 @@ public class CreateJSON {
         json.put("price", lot.getStartPrice());
         json.put("priceStep", lot.getBidStep());
         json.put("description", lot.getDescription());
-        json.put("startTime", "2020-11-18T10:18:00");
-        json.put("endTime", "2020-11-30T10:18:00");
+        json.put("startTime", lot.getStartTime());
+        json.put("endTime", lot.getFinishTime());
 
         return json;
     }

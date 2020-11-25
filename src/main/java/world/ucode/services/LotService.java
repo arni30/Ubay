@@ -32,4 +32,8 @@ public class LotService {
     public List<Lot> findAllLots() {
         return lotDao.findAll();
     }
+
+    public List<Lot> findAllLotsByUser(String login) {
+        return lotDao.findAllByUser(login);
+    }
 }

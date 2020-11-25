@@ -113,8 +113,28 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String profile(ModelMap model) {
-        return "/profile";
+    public ModelAndView profile(@RequestParam (required = false) String login, ModelMap model) {
+
+        ModelAndView mav = new ModelAndView();
+        try {
+            if (login != null && login != "") {
+                ObjectMapper mapper = new ObjectMapper();
+                User user = userService.findUserByLogin(login);
+                String json = mapper.writeValueAsString(user);
+                mav.addObject("user", json);
+
+                List<Lot> lots = lotService.findAllLotsByUser(login);
+                JSONArray jsonArr = createJSON.mainShowLotsJSON(lots);
+                mav.addObject("lots", jsonArr);
+            }
+            mav.setViewName("/profile");
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
     }
 
     /**

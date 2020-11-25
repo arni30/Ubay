@@ -9,7 +9,6 @@
     <meta name="keywords" content="HTML, CSS, JS, Java, ucode, unitfactory, cbl, cblworld">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ubay</title>
-    <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon">
     <link rel="icon" href="resources/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -100,20 +99,19 @@
         </section>
     </div>
 
-    <div id="profile-buttons" class="page personal-section__header">
-        <a class="button" href="#" onclick="gotoAddLot(this)">Add auction</a>
-        <!--js: add feedback button-->
+    <div id="profile-buttons" class="page personal-section__header" style="display: none">
+        <a id="addLotId" class="button" href="#">Add auction</a>
+        <a class="button" href="#" onclick="viewFeedbacks(this)">Bidders feedbacks</a>
     </div>
 
-    <main class="page">
-        <!-- <div id="main-overlay"></div> -->
+    <main class="page" id="activeBox" style="display: none">
         <aside>
             <h3 class="personal-section__heading">Active auctions</h3>
         </aside>
         <div class="container active-lots"></div>
     </main>
 
-    <main class="page">
+    <main class="page" id="closedBox" style="display: none">
         <aside>
             <h3 class="personal-section__heading">Closed auctions</h3>
         </aside>
@@ -149,7 +147,7 @@
             if (i === 0) {
                 p.innerHTML = jsonString.userRole;
                 if (jsonString.userRole === 'seller') {
-                    sellerFeatures.addSellersFeatures(p, jsonString.rate);
+                    sellerFeatures.addSellersFeatures(p, jsonString.avarageRate);
                 }
             } else if (i === 1) {
                 p.innerHTML = jsonString.login;
@@ -162,8 +160,17 @@
         }
         let userLogin = document.getElementById("userLogin");
         userLogin.innerHTML = jsonString.login;
+
+        gotoAddLot(jsonString.login, jsonString.id);
     }
     showInfo();
+
+    if (${user}) {
+        personalInfo.info = ${user};
+    }
+    if (${lots}) {
+        lots.items = ${lots};
+    }
 </script>
 
 </html>
