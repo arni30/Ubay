@@ -5,14 +5,21 @@ import org.json.simple.JSONObject;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CreateJSON {
 
     public JSONObject auctionJSON(User seller, Lot lot) {
         JSONObject json = new JSONObject();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp curTime = new Timestamp(System.currentTimeMillis());
+        //потом уберу - проверка на активность аукциона (@натся)
+        if (lot.getFinishTime().before(curTime))
+            lot.setActive(false);
 
-        json.put("active", true);
+        json.put("active", lot.getActive());
         json.put("id", lot.getId());
         json.put("image", "");
         json.put("title", lot.getTitle());
@@ -21,8 +28,8 @@ public class CreateJSON {
         json.put("price", lot.getStartPrice());
         json.put("priceStep", lot.getBidStep());
         json.put("description", lot.getDescription());
-        json.put("startTime", "2020-11-18T10:18:00");
-        json.put("endTime", "2020-11-30T10:18:00");
+        json.put("startTime", formatter.format(lot.getStartTime()).replace(' ','T'));
+        json.put("endTime", formatter.format(lot.getFinishTime()).replace(' ','T'));
 
         return json;
     }
@@ -31,13 +38,17 @@ public class CreateJSON {
 
         JSONArray jsonArray = new JSONArray();
             for (Lot lot : lots) {
+                //потом уберу - проверка на активность аукциона (@натся)
+                Timestamp curTime = new Timestamp(System.currentTimeMillis());
+                if (lot.getFinishTime().before(curTime))
+                    lot.setActive(false);
                 JSONObject json = new JSONObject();
 
                 json.put("id", lot.getId());
                 json.put("title", lot.getTitle());
                 json.put("category", lot.getCategory());
                 json.put("price", lot.getStartPrice());
-                json.put("active", true);
+                json.put("active", lot.getActive());
                 json.put("description", lot.getDescription());
                 json.put("image", "resources/favicon.ico");
 

@@ -43,4 +43,12 @@ public class BidDao {
                 .openSession().createQuery("From Bid").list();
         return bids;
     }
+
+    public Bid findLast(int lotId) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Bid> bids =  session.createQuery("SELECT bid FROM Bid bid WHERE bid.lot.id = :lotId").setParameter("lotId", lotId).list();
+        Bid bid = bids.get(bids.size() - 1);
+        session.close();
+        return bid;
+    }
 }

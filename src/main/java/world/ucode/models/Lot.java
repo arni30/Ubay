@@ -28,7 +28,8 @@ public class Lot {
     private Timestamp startTime;
     @Column(name = "finishTime")
     private Timestamp finishTime;
-//    private boolean finished;
+    @Column(name = "active")
+    private boolean active;
 
 //    private BufferedImage image;
 
@@ -73,6 +74,9 @@ public class Lot {
 
     public void setFinishTime(Timestamp finishTime) { this.finishTime = finishTime; }
     public Timestamp getFinishTime() { return finishTime; }
+
+    public void setActive(boolean active) { this.active = active; }
+    public boolean getActive() { return active; }
 
     @Override
     public String toString() {

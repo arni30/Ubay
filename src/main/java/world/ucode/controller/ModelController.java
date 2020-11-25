@@ -11,9 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import world.ucode.models.Bid;
 import world.ucode.models.Lot;
 import world.ucode.models.Search;
 import world.ucode.models.User;
+import world.ucode.services.BidService;
 import world.ucode.services.LotService;
 import world.ucode.utils.CreateJSON;
 import world.ucode.utils.SendMail;
@@ -34,6 +36,7 @@ public class ModelController {
     ModelAndView mav = new ModelAndView();
     SendMail sendMail = new SendMail();
     LotService lotService = new LotService();
+    BidService bidService = new BidService();
     CreateJSON createJSON = new CreateJSON();
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
     UserService userService = context.getBean("userService", UserService.class);
@@ -146,12 +149,7 @@ public class ModelController {
     @RequestMapping(value = "/auction", method = RequestMethod.GET)
     public ModelAndView auction(@RequestParam String lotId) {
         ModelAndView mav = new ModelAndView();
-        System.out.println(lotId);
         try {
-            ObjectMapper mapper = new ObjectMapper();
-//            Lot lot = userService.findLotById(Integer.parseInt(lotId));
-//            String json = mapper.writeValueAsString(lot);
-
             Lot lot = userService.findLotById(Integer.parseInt(lotId));
             User user = lot.getSeller();
             JSONObject json = createJSON.auctionJSON(user, lot);
@@ -184,10 +182,6 @@ public class ModelController {
 
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
     public ModelAndView addLot(Lot lot) throws JsonProcessingException {
-        System.out.println(lot.getDuration());
-        System.out.println(lot.getStartPrice());
-        System.out.println(lot.getDescription());
-//        System.out.println(user.getId());
         User user = userService.findUser("1");
         lot.setSeller(user);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -196,6 +190,7 @@ public class ModelController {
         //форматирование времени под фронт formatter.format(curTime).replace(' ','T') для записи в json
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
+        lot.setActive(true);
         lotService.saveLot(lot);
 //        JSONObject json = new JSONObject();
 //        json.put("title", lot.getTitle());
@@ -203,6 +198,21 @@ public class ModelController {
 //        String json = mapper.writeValueAsString(lot);
 //        mav.addObject("lot", json);
         mav.setViewName("/profile");
+        return mav;
+    }
+
+    @RequestMapping(value = "/newBit", method = RequestMethod.POST)
+    public ModelAndView newBid(Bid bid) throws JsonProcessingException {
+        System.out.println(bid.getPrice());
+        Bid prevBid = bidService.findLast(11);
+        //set previous bid to false
+        prevBid.setActive(false);
+        bidService.updateBid(prevBid);
+        bid.setBidder(userService.findUser("2"));
+        bid.setLot(lotService.findLot(11));
+        bid.setActive(true);
+        bidService.saveBid(bid);
+        mav.setViewName("redirect:/main");
         return mav;
     }
 
