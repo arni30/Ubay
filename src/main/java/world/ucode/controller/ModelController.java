@@ -26,9 +26,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 @Controller
 @ControllerAdvice
@@ -40,6 +37,7 @@ public class ModelController {
     CreateJSON createJSON = new CreateJSON();
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
     UserService userService = context.getBean("userService", UserService.class);
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "/index";
@@ -106,6 +104,17 @@ public class ModelController {
 
             mav.addObject("lots", json);
             mav.setViewName("/main");
+
+//            List<Lot> lotss = userService.findUser("3").getLots();
+//            for (Lot lot:lotss) {
+//                System.out.println(lot.getTitle());
+//            }
+//            List<Bid> bids = userService.findUser("4").getBids();
+//            for (Bid bid:bids) {
+//                System.out.println(bid.getPrice());
+//            }
+
+
             return mav;
         } catch (Exception e) {
             e.printStackTrace();
@@ -182,21 +191,13 @@ public class ModelController {
 
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
     public ModelAndView addLot(Lot lot) throws JsonProcessingException {
-        User user = userService.findUser("1");
-        lot.setSeller(user);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        User user = userService.findUser("3");
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
-        System.out.println(formatter.format(curTime).replace(' ','T'));
-        //форматирование времени под фронт formatter.format(curTime).replace(' ','T') для записи в json
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lot.setActive(true);
+        user.addLot(lot);
         lotService.saveLot(lot);
-//        JSONObject json = new JSONObject();
-//        json.put("title", lot.getTitle());
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(lot);
-//        mav.addObject("lot", json);
         mav.setViewName("/profile");
         return mav;
     }
@@ -204,13 +205,10 @@ public class ModelController {
     @RequestMapping(value = "/newBit", method = RequestMethod.POST)
     public ModelAndView newBid(Bid bid) throws JsonProcessingException {
         System.out.println(bid.getPrice());
-        //set previous bid to false
-        Bid prevBid = bidService.findLast(10);
-        prevBid.setActive(false);
-        bidService.updateBid(prevBid);
-        bid.setBidder(userService.findUser("2"));
+        User user = userService.findUser("4");
         bid.setLot(lotService.findLot(10));
         bid.setActive(true);
+        user.addBid(bid);
         bidService.saveBid(bid);
         mav.setViewName("redirect:/main");
         return mav;
@@ -228,14 +226,10 @@ public class ModelController {
 
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)
     public ModelAndView signin_post(User user, ModelMap model) throws Exception {
-        System.out.println(user.getType());
         ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
 //        try {
             if (user.getType().equals("signin")) {
-                System.out.println(user.getPassword());
-                System.out.println(user.getLogin());
-                System.out.println("hallo");
                 User newUser = userService.validateUser(user);
                 String json = mapper.writeValueAsString(newUser);
                 mav.addObject("user", json);
@@ -245,11 +239,6 @@ public class ModelController {
                 user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 user.setToken(token.getJWTToken(user.getLogin()));
                 sendMail.sendMail(user);
-                System.out.println(user.getUserRole());
-                System.out.println(user.getPassword());
-                System.out.println(user.getEmail());
-                System.out.println(user.getLogin());
-                System.out.println("hallo");
                 userService.saveUser(user);
                 String json = mapper.writeValueAsString(user);
                 mav.addObject("user",json);
@@ -271,11 +260,8 @@ public class ModelController {
         System.out.println(search.getDuration());
         System.out.println(search.getStartTime());
         System.out.println(search.getDescription());
-
         return "redirect:/main";
     }
-
-
     // -----------------------
     @RequestMapping(value = "/errors/404", method = RequestMethod.GET)
     public String error404() {
@@ -286,10 +272,4 @@ public class ModelController {
     public String exceptions() {
         return "/errors/error";
     }
-
-    private void databaseClose(User user) {
-        userService.updateUser(user);
-        context.close();
-    }
-
 }

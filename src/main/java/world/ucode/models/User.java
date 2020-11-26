@@ -41,35 +41,11 @@ public class User {
     @Column(name = "avarageRate")
     private double avarageRate;
 
-
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Lot> lots;
+    private List<Lot> lots = new ArrayList<Lot>();
 
-    public User() {}
-//    public User(String login, String password) {
-//        System.out.println("CONSTRUCTOR");
-//        this.login = login;
-//        this.password = password;
-//        lots = new ArrayList<>();
-//    }
-//
-//    public void addLot(Lot lot) {
-//        lot.setSeller(this);
-//        lots.add(lot);
-//    }
-//    public void removeLot(Lot lot) {
-//        lots.remove(lot);
-//    }
-//    public List<Lot> getLots() {
-//        return lots;
-//    }
-//    public void setLots(ArrayList<Lot> lots) {
-//        this.lots = lots;
-//    }
-
-    public int getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "bidder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bid> bids = new ArrayList<Bid>();
 
     public String getLogin() {
         return login;
@@ -113,6 +89,24 @@ public class User {
 
     public void setAvarageRate(double avarageRate) { this.avarageRate = avarageRate; }
     public double getAvarageRate() { return avarageRate; }
+
+    public void addLot(Lot lot) {
+        lot.setSeller(this);
+        lots.add(lot);
+    }
+    public void removeLot(Lot lot) { lots.remove(lot); }
+
+    public List<Lot> getLots() { return lots; }
+    public void setLots(ArrayList<Lot> lots) { this.lots = lots; }
+
+    public void addBid(Bid bid) {
+        bid.setBidder(this);
+        bids.add(bid);
+    }
+    public void removeBid(Bid bid) { bids.remove(bid); }
+
+    public List<Bid> getBids() { return bids; }
+    public void setBids(ArrayList<Bid> bids) { this.bids = bids; }
     //    @Override
 //    public String toString() {
 //        String res = "models.User{ " +
