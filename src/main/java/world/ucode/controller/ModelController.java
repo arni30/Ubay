@@ -204,10 +204,7 @@ public class ModelController {
     public ModelAndView addLot(Lot lot) throws JsonProcessingException {
         User user = userService.findUser("1");
         lot.setSeller(user);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
-        System.out.println(formatter.format(curTime).replace(' ','T'));
-        //форматирование времени под фронт formatter.format(curTime).replace(' ','T') для записи в json
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lot.setActive(true);

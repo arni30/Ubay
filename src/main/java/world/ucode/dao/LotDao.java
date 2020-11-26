@@ -61,4 +61,16 @@ public class LotDao {
         session.close();
         return lots;
     }
+//
+//    public void findAllClosure() {
+//        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+//        Query query = session.createQuery("SELECT lot FROM Lot lot WHERE lot.startTime >= lot.finishTime");
+//        List<Lot> lots = (List<Lot>) query.getResultList();
+//        session.close();
+//
+//        for (Lot lot : lots) {
+////            lot.setActive(false);
+////            update(lot);
+//        }
+//    }
 }

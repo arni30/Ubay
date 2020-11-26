@@ -15,9 +15,9 @@ function viewBidderProfile(item) {
     item.setAttribute('href',
         `/ubay/viewProfile?login=${item.innerHTML}`);
 }
-function viewFeedbacks(item) {
-    item.setAttribute('href',
-        `/ubay/feedbacks?login=${document.querySelector('#aboutProfile').innerHTML}`);
+function viewFeedbacks(login) {
+    document.querySelector('#biddersFeedbacks')
+        .setAttribute('href',`/ubay/feedbacks?login=${login}`);
 }
 function gotoAddLot(login, userId) {
     document.querySelector('#addLotId')
