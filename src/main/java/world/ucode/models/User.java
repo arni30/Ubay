@@ -1,14 +1,19 @@
 package world.ucode.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table (name = "users")
-public class User {
+public class User implements UserDetails {
     private String type;
 
     public void setType(String type) {
@@ -40,7 +45,10 @@ public class User {
     private String verification;
     @Column(name = "avarageRate")
     private double avarageRate;
-
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lot> lots;
@@ -78,14 +86,53 @@ public class User {
         this.login = login;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
     public String getPassword() {
         return password;
     }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
     public void setPassword(String password) {
 //        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 //        this.password = bCryptPasswordEncoder.encode(password);
 //        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.password = password;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     public String getEmail() { return email; }
@@ -113,6 +160,7 @@ public class User {
 
     public void setAvarageRate(double avarageRate) { this.avarageRate = avarageRate; }
     public double getAvarageRate() { return avarageRate; }
+
     //    @Override
 //    public String toString() {
 //        String res = "models.User{ " +

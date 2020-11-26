@@ -41,7 +41,7 @@
                 </ul>
             </div>
             <div class="header-login">
-                <span id="userLogin">${user.login}</span>
+                <span id="userLogin"></span>
                 <a class="abutton" href="#" onclick="signOut()">Sign out</a>
             </div>
         </div>
@@ -163,7 +163,7 @@
             }
             elem[i].appendChild(p);
         }
-        let userLogin = document.getElementById("aboutProfile");
+        let userLogin = document.getElementById("userLogin");
         userLogin.innerHTML = jsonString.login;
     }
     showInfo();

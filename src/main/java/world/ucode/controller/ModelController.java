@@ -2,6 +2,7 @@ package world.ucode.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import world.ucode.models.Lot;
+import world.ucode.models.Role;
 import world.ucode.models.Search;
 import world.ucode.models.User;
 import world.ucode.services.LotService;
@@ -17,14 +19,16 @@ import world.ucode.utils.SendMail;
 import world.ucode.utils.Token;
 import world.ucode.services.UserService;
 import java.net.UnknownHostException;
+import java.util.Collections;
 
 @Controller
 @ControllerAdvice
 public class ModelController {
     SendMail sendMail = new SendMail();
     LotService lotService = new LotService();
-    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-    UserService userService = context.getBean("userService", UserService.class);
+//    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    @Autowired
+    UserService userService;
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "/index";
@@ -154,6 +158,7 @@ public class ModelController {
 
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)
     public ModelAndView signin_post(User user, ModelMap model) throws Exception {
+//        SecurityConfig securityConfig = new SecurityConfig();
         System.out.println(user.getType());
         ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
@@ -168,9 +173,11 @@ public class ModelController {
                 mav.setViewName("/profile");
             } else {
                 Token token = new Token();
-                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+                user.setRoles(Collections.singleton(Role.USER));
+//                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 user.setToken(token.getJWTToken(user.getLogin()));
                 sendMail.sendMail(user);
+                System.out.println(user.getRoles());
                 System.out.println(user.getUserRole());
                 System.out.println(user.getPassword());
                 System.out.println(user.getEmail());
@@ -179,7 +186,7 @@ public class ModelController {
                 userService.saveUser(user);
                 String json = mapper.writeValueAsString(user);
                 mav.addObject("user",json);
-                mav.setViewName("/main");
+                mav.setViewName("/authorization");
             }
             return mav;
 //        } catch (Exception e) {
@@ -215,6 +222,6 @@ public class ModelController {
 
     private void databaseClose(User user) {
         userService.updateUser(user);
-        context.close();
+//        context.close();
     }
 }

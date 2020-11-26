@@ -1,5 +1,8 @@
 package world.ucode.services;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,8 +11,8 @@ import world.ucode.models.Lot;
 import world.ucode.models.User;
 
 import java.util.List;
-@Service
-public class UserService {
+@Service("userService")
+public class UserService implements UserDetailsService {
     private final UserDao usersDao = new UserDao();
 
     public UserService() {
@@ -21,7 +24,8 @@ public class UserService {
         System.out.println(newUser.getPassword());
         System.out.println(user.getPassword());
 //        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        if (BCrypt.checkpw(user.getPassword(), newUser.getPassword())
+//        if (BCrypt.checkpw(user.getPassword(), newUser.getPassword())
+        if (user.getPassword().equals(newUser.getPassword())
                 && newUser.getVerification().equals("verificated"))
             return newUser;
         else {
@@ -58,5 +62,10 @@ public class UserService {
 
     public Lot findLotById(int id) {
         return usersDao.findLotById(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return findUserByLogin(s);
     }
 }
