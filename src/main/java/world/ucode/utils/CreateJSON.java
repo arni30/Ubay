@@ -4,13 +4,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
-
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CreateJSON {
 
     public JSONObject auctionJSON(User seller, Lot lot) {
         JSONObject json = new JSONObject();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         json.put("active", true);
         json.put("id", lot.getId());
@@ -21,8 +22,8 @@ public class CreateJSON {
         json.put("price", lot.getStartPrice());
         json.put("priceStep", lot.getBidStep());
         json.put("description", lot.getDescription());
-        json.put("startTime", lot.getStartTime());
-        json.put("endTime", lot.getFinishTime());
+        json.put("startTime", formatter.format(lot.getStartTime()).replace(' ','T'));
+        json.put("endTime", formatter.format(lot.getFinishTime()).replace(' ','T'));
 
         return json;
     }

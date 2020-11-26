@@ -101,7 +101,7 @@
 
     <div id="profile-buttons" class="page personal-section__header" style="display: none">
         <a id="addLotId" class="button" href="#">Add auction</a>
-        <a class="button" href="#" onclick="viewFeedbacks(this)">Bidders feedbacks</a>
+        <a id="biddersFeedbacks" class="button" href="#">Bidders feedbacks</a>
     </div>
 
     <main class="page" id="activeBox" style="display: none">
@@ -162,6 +162,7 @@
         userLogin.innerHTML = jsonString.login;
 
         gotoAddLot(jsonString.login, jsonString.id);
+        viewFeedbacks(jsonString.login);
     }
     showInfo();
 
