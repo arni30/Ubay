@@ -1,9 +1,7 @@
 'use strict';
 
 let personalInfo = {
-  info:
-    { userRole: 'seller', login: 'user1234',
-      email: 'trololo@gmail.com', balance: 170, avarageRate: 4.5 },
+  info: { userRole: '', login: '', email: '', balance: 0, avarageRate: 0 },
 
   changes: false,
 
@@ -154,12 +152,12 @@ let sellerFeatures = {
 
 let lots = {
   items: [
-    { id: 1, title: '', category: 'others',
-      price: 1, active: true, description: '',
+    { id: 1, title: 'NONE', category: '',
+      price: 0, active: true, description: '',
       image: 'resources/favicon.ico'
     },
-    { id: 1, title: '', category: 'others',
-      price: 1, active: false, description: '',
+    { id: 1, title: 'NONE', category: '',
+      price: 0, active: false, description: '',
       image: 'resources/favicon.ico'
     }
   ],
