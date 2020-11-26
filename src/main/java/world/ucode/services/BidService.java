@@ -32,4 +32,8 @@ public class BidService {
     public List<Bid> findAllBids() {
         return bidDao.findAll();
     }
+
+    public Bid findLast(int lotId) {
+        return bidDao.findLast(lotId);
+    }
 }
