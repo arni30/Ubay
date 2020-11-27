@@ -47,6 +47,9 @@ public class BidDao {
     public Bid findLast(int lotId) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         List<Bid> bids =  session.createQuery("SELECT bid FROM Bid bid WHERE bid.lot.id = :lotId").setParameter("lotId", lotId).list();
+        System.out.println(bids.size());
+        if (bids.size() - 1 < 0)
+            return null;
         Bid bid = bids.get(bids.size() - 1);
         session.close();
         return bid;

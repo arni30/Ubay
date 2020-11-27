@@ -21,6 +21,10 @@ import world.ucode.utils.CreateJSON;
 import world.ucode.utils.SendMail;
 import world.ucode.utils.Token;
 import world.ucode.services.UserService;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -40,6 +44,7 @@ public class ModelController {
     CreateJSON createJSON = new CreateJSON();
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
     UserService userService = context.getBean("userService", UserService.class);
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "/index";
@@ -106,6 +111,7 @@ public class ModelController {
 
             mav.addObject("lots", json);
             mav.setViewName("/main");
+
             return mav;
         } catch (Exception e) {
             e.printStackTrace();
@@ -201,34 +207,30 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
-    public ModelAndView addLot(Lot lot) throws JsonProcessingException {
-        User user = userService.findUser("1");
-        lot.setSeller(user);
+    public ModelAndView addLot(Lot lot, @CookieValue("login") String login) throws JsonProcessingException {
+        System.out.println("HERE");
+        System.out.println(login);
+        User seller = userService.findUser(login);
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
         curTime.setTime(curTime.getTime() + (2 * 60 * 60 * 1000));
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lot.setActive(true);
+        seller.addLot(lot);
+//        lot.setSeller(seller);
         lotService.saveLot(lot);
-//        JSONObject json = new JSONObject();
-//        json.put("title", lot.getTitle());
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(lot);
-//        mav.addObject("lot", json);
         mav.setViewName("/profile");
         return mav;
     }
 
     @RequestMapping(value = "/newBit", method = RequestMethod.POST)
-    public ModelAndView newBid(Bid bid) throws JsonProcessingException {
+    public ModelAndView newBid(Bid bid, @CookieValue("login") String login) throws JsonProcessingException {
         System.out.println(bid.getPrice());
-        //set previous bid to false
-        Bid prevBid = bidService.findLast(10);
-        prevBid.setActive(false);
-        bidService.updateBid(prevBid);
-        bid.setBidder(userService.findUser("2"));
-        bid.setLot(lotService.findLot(10));
+        User bidder = userService.findUser(login);
+        bid.setLot(lotService.findLot(12));
         bid.setActive(true);
+        bidder.addBid(bid);
+//        bid.setBidder(bidder);
         bidService.saveBid(bid);
         mav.setViewName("redirect:/main");
         return mav;
@@ -245,33 +247,34 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)
-    public ModelAndView signin_post(User user, ModelMap model) throws Exception {
-        System.out.println(user.getType());
+    public ModelAndView signin_post(User user, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
 //        try {
             if (user.getType().equals("signin")) {
-                System.out.println(user.getPassword());
-                System.out.println(user.getLogin());
-                System.out.println("hallo");
                 User newUser = userService.validateUser(user);
                 String json = mapper.writeValueAsString(newUser);
+//                List<Lot> lotss = newUser.getLots();
+//                for (Lot lot:lotss) {
+//                    System.out.println(lot.getTitle());
+//                }
+//                List<Bid> bids = userService.findUser("4").getBids();
+//                for (Bid bid:bids) {
+//                    System.out.println(bid.getPrice());
+//                }
                 mav.addObject("user", json);
                 mav.setViewName("/profile");
+                response.addCookie(new Cookie("login", user.getLogin()));
             } else {
                 Token token = new Token();
                 user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 user.setToken(token.getJWTToken(user.getLogin()));
                 sendMail.sendMail(user);
-                System.out.println(user.getUserRole());
-                System.out.println(user.getPassword());
-                System.out.println(user.getEmail());
-                System.out.println(user.getLogin());
-                System.out.println("hallo");
                 userService.saveUser(user);
                 String json = mapper.writeValueAsString(user);
                 mav.addObject("user",json);
                 mav.setViewName("/main");
+                response.addCookie(new Cookie("login", user.getLogin()));
             }
             return mav;
 //        } catch (Exception e) {
@@ -289,11 +292,8 @@ public class ModelController {
         System.out.println(search.getDuration());
         System.out.println(search.getStartTime());
         System.out.println(search.getDescription());
-
         return "redirect:/main";
     }
-
-
     // -----------------------
     @RequestMapping(value = "/errors/404", method = RequestMethod.GET)
     public String error404() {
@@ -304,10 +304,4 @@ public class ModelController {
     public String exceptions() {
         return "/errors/error";
     }
-
-    private void databaseClose(User user) {
-        userService.updateUser(user);
-        context.close();
-    }
-
 }

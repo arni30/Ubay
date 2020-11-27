@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.awt.image.BufferedImage;
 import java.security.PublicKey;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "lots")
@@ -37,11 +39,8 @@ public class Lot {
     @JoinColumn(name = "sellerId", referencedColumnName = "userId")
     private User seller;
 
-    public Lot() {}
-    public Lot(String title, int startPrice) {
-        this.title = title;
-        this .startPrice = startPrice;
-    }
+//    @OneToOne(mappedBy = "auctionId",cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
+//    private Bid lastBid;
 
     public int getId() { return id; }
 
@@ -63,9 +62,6 @@ public class Lot {
     public void setCategory(String category) { this.category = category; }
     public String getCategory() { return category; }
 
-    //    public void setFinished(boolean finished) { this.finished = finished; }
-    //    public boolean getFinished() { return finished; }
-
     public void setSeller(User seller) { this.seller = seller; }
     public User getSeller() { return seller; }
 
@@ -77,6 +73,9 @@ public class Lot {
 
     public void setActive(boolean active) { this.active = active; }
     public boolean getActive() { return active; }
+
+//    public void setLastBid(Bid lastBid) { this.lastBid = lastBid; }
+//    public Bid getLastBid() { return lastBid; }
 
     @Override
     public String toString() {
