@@ -1,5 +1,6 @@
 package world.ucode.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -42,10 +43,12 @@ public class User {
     private double avarageRate;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Lot> lots = new ArrayList<Lot>();
+    @JsonIgnore
+    private List<Lot> lots;
 
     @OneToMany(mappedBy = "bidder", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Bid> bids = new ArrayList<Bid>();
+    @JsonIgnore
+    private List<Bid> bids;
 
     public String getLogin() {
         return login;

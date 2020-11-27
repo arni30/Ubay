@@ -105,16 +105,6 @@ public class ModelController {
             mav.addObject("lots", json);
             mav.setViewName("/main");
 
-//            List<Lot> lotss = userService.findUser("3").getLots();
-//            for (Lot lot:lotss) {
-//                System.out.println(lot.getTitle());
-//            }
-//            List<Bid> bids = userService.findUser("4").getBids();
-//            for (Bid bid:bids) {
-//                System.out.println(bid.getPrice());
-//            }
-
-
             return mav;
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,6 +222,14 @@ public class ModelController {
             if (user.getType().equals("signin")) {
                 User newUser = userService.validateUser(user);
                 String json = mapper.writeValueAsString(newUser);
+//                List<Lot> lotss = newUser.getLots();
+//                for (Lot lot:lotss) {
+//                    System.out.println(lot.getTitle());
+//                }
+//                List<Bid> bids = userService.findUser("4").getBids();
+//                for (Bid bid:bids) {
+//                    System.out.println(bid.getPrice());
+//                }
                 mav.addObject("user", json);
                 mav.setViewName("/profile");
             } else {
