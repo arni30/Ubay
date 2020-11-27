@@ -21,6 +21,10 @@ import world.ucode.utils.CreateJSON;
 import world.ucode.utils.SendMail;
 import world.ucode.utils.Token;
 import world.ucode.services.UserService;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -180,25 +184,29 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
-    public ModelAndView addLot(Lot lot) throws JsonProcessingException {
-        User user = userService.findUser("3");
+    public ModelAndView addLot(Lot lot, @CookieValue("login") String login) throws JsonProcessingException {
+        System.out.println("HERE");
+        System.out.println(login);
+        User seller = userService.findUser(login);
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lot.setActive(true);
-        user.addLot(lot);
+        seller.addLot(lot);
+//        lot.setSeller(seller);
         lotService.saveLot(lot);
         mav.setViewName("/profile");
         return mav;
     }
 
     @RequestMapping(value = "/newBit", method = RequestMethod.POST)
-    public ModelAndView newBid(Bid bid) throws JsonProcessingException {
+    public ModelAndView newBid(Bid bid, @CookieValue("login") String login) throws JsonProcessingException {
         System.out.println(bid.getPrice());
-        User user = userService.findUser("4");
-        bid.setLot(lotService.findLot(10));
+        User bidder = userService.findUser(login);
+        bid.setLot(lotService.findLot(12));
         bid.setActive(true);
-        user.addBid(bid);
+        bidder.addBid(bid);
+//        bid.setBidder(bidder);
         bidService.saveBid(bid);
         mav.setViewName("redirect:/main");
         return mav;
@@ -215,7 +223,7 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)
-    public ModelAndView signin_post(User user, ModelMap model) throws Exception {
+    public ModelAndView signin_post(User user, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
 //        try {
@@ -232,6 +240,7 @@ public class ModelController {
 //                }
                 mav.addObject("user", json);
                 mav.setViewName("/profile");
+                response.addCookie(new Cookie("login", user.getLogin()));
             } else {
                 Token token = new Token();
                 user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
@@ -241,6 +250,7 @@ public class ModelController {
                 String json = mapper.writeValueAsString(user);
                 mav.addObject("user",json);
                 mav.setViewName("/main");
+                response.addCookie(new Cookie("login", user.getLogin()));
             }
             return mav;
 //        } catch (Exception e) {

@@ -15,11 +15,11 @@ public class Bid {
     private boolean active;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "auctionId", referencedColumnName = "lotId", insertable = false, updatable = false, nullable = falsez)
+    @JoinColumn(name = "auctionId", referencedColumnName = "lotId")
     private Lot lot;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bidderId", referencedColumnName = "userId", insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "bidderId", referencedColumnName = "userId")
     private User bidder;
 
     public int getId() {

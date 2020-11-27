@@ -50,6 +50,10 @@ public class User {
     @JsonIgnore
     private List<Bid> bids;
 
+    public int getId() {
+        return id;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -95,7 +99,7 @@ public class User {
 
     public void addLot(Lot lot) {
         lot.setSeller(this);
-        lots.add(lot);
+//        lots.add(lot);
     }
     public void removeLot(Lot lot) { lots.remove(lot); }
 
@@ -104,7 +108,7 @@ public class User {
 
     public void addBid(Bid bid) {
         bid.setBidder(this);
-        bids.add(bid);
+//        bids.add(bid);
     }
     public void removeBid(Bid bid) { bids.remove(bid); }
 

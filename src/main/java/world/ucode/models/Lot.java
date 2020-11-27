@@ -36,7 +36,7 @@ public class Lot {
 //    private BufferedImage image;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sellerId", referencedColumnName = "userId", insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "sellerId", referencedColumnName = "userId")
     private User seller;
 
 //    @OneToOne(mappedBy = "auctionId",cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
