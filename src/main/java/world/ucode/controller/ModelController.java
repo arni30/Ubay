@@ -204,7 +204,10 @@ public class ModelController {
     public ModelAndView signup_post(User user, ModelMap model) throws Exception {
         ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
-        user.setRoles(Collections.singleton(Role.USER));
+        if (user.getUserRole().equals("seller"))
+            user.setRoles(Collections.singleton(Role.SELLER));
+        else
+            user.setRoles(Collections.singleton(Role.BIDDER));
 //        Token token = new Token();
                 user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 //        user.setToken(token.getJWTToken(user.getLogin()));
@@ -223,8 +226,8 @@ public class ModelController {
     }
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String signup(ModelMap model, HttpServletRequest request) throws UnknownHostException {
-        model.addAttribute("hallo", request.getUserPrincipal().getName());
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+//        model.addAttribute("hallo", request.getUserPrincipal().getName());
+//        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 //        model.addAttribute("form", new User());
         return "/registration";
     }
