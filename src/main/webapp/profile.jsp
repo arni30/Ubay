@@ -42,7 +42,7 @@
             </div>
             <div class="header-login">
                 <span id="userLogin"></span>
-                <a class="abutton" href="#" onclick="signOut()">Sign out</a>
+                <a class="abutton" href="/ubay/logout">Sign out</a>
             </div>
         </div>
 
@@ -138,7 +138,7 @@
 <script type="text/javascript">
 
     function showInfo() {
-        let response = ${user};
+        let response = ${user}
 
         console.log(response);
         let jsonString = JSON.parse(JSON.stringify(response));
