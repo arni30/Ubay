@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import world.ucode.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.Collections;
 
 @Controller
@@ -222,7 +224,7 @@ public class ModelController {
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String signup(ModelMap model, HttpServletRequest request) throws UnknownHostException {
         model.addAttribute("hallo", request.getUserPrincipal().getName());
-        System.out.println(request.getUserPrincipal().getName());
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 //        model.addAttribute("form", new User());
         return "/registration";
     }

@@ -14,23 +14,26 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.firewall.HttpStatusRequestRejectedHandler;
+import org.springframework.security.web.firewall.RequestRejectedHandler;
 import world.ucode.services.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http
+        .cors().disable()
+                .csrf().disable();
 
         // The pages does not require login
         http.authorizeRequests().antMatchers("/", "/main", "/authorization").permitAll();
 
         // /userInfo page requires login as USER or ADMIN.
         // If no login, it will redirect to /login page.
-        http.authorizeRequests().antMatchers("/profile").access("hasAnyRole('USER', 'ADMIN')");
+        http.authorizeRequests().antMatchers("/profile/**").hasAuthority("USER");
 
         // For ADMIN only.
 //        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
@@ -38,8 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // When the user has logged in as XX.
         // But access a page that requires role YY,
         // AccessDeniedException will throw.
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/aaa").accessDeniedHandler(new AccessDeniedExceptions());
         // Config for Login Form
         http.authorizeRequests().and().formLogin()//
                 // Submit URL of login page.
@@ -53,10 +55,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
                 // Config for Logout Page
 //                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
-    }
-    public AuthenticationSuccessHandler hallo() {
-        System.out.println("PIPEC");
-        return null;
     }
     UserService userService = new UserService();
     @Bean
