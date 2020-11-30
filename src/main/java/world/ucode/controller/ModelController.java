@@ -18,6 +18,8 @@ import world.ucode.services.LotService;
 import world.ucode.utils.SendMail;
 import world.ucode.utils.Token;
 import world.ucode.services.UserService;
+
+import javax.servlet.http.HttpServletRequest;
 import java.net.UnknownHostException;
 import java.util.Collections;
 
@@ -173,7 +175,6 @@ public class ModelController {
                 mav.setViewName("/profile");
             } else {
                 Token token = new Token();
-                user.setRoles(Collections.singleton(Role.USER));
 //                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 user.setToken(token.getJWTToken(user.getLogin()));
                 sendMail.sendMail(user);
@@ -195,6 +196,35 @@ public class ModelController {
 //            mav.setViewName("/authorization");
 //            return mav;
 //        }
+    }
+
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public ModelAndView signup_post(User user, ModelMap model) throws Exception {
+        ModelAndView mav = new ModelAndView();
+        ObjectMapper mapper = new ObjectMapper();
+        user.setRoles(Collections.singleton(Role.USER));
+//        Token token = new Token();
+                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+//        user.setToken(token.getJWTToken(user.getLogin()));
+//        sendMail.sendMail(user);
+        System.out.println(user.getRoles());
+        System.out.println(user.getUserRole());
+        System.out.println(user.getPassword());
+        System.out.println(user.getEmail());
+        System.out.println(user.getLogin());
+        System.out.println("hallo");
+        userService.saveUser(user);
+        String json = mapper.writeValueAsString(user);
+        mav.addObject("user",json);
+        mav.setViewName("/authorization");
+        return mav;
+    }
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public String signup(ModelMap model, HttpServletRequest request) throws UnknownHostException {
+        model.addAttribute("hallo", request.getUserPrincipal().getName());
+        System.out.println(request.getUserPrincipal().getName());
+//        model.addAttribute("form", new User());
+        return "/registration";
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)

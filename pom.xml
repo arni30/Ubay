@@ -10,14 +10,12 @@
   <packaging>war</packaging>
   <name>ubay Maven Webapp</name>
 <!--  <url>http://www.example.com</url>-->
-
   <properties>
     <project.name>ubay</project.name>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 <!--    <maven.compiler.source>8</maven.compiler.source>-->
 <!--    <maven.compiler.target>8</maven.compiler.target>-->
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -31,7 +29,6 @@
       <version>3.0.1</version>
       <scope>provided</scope>
     </dependency>
-
     <!-- Apache Commons FileUpload -->
     <dependency>
       <groupId>commons-fileupload</groupId>
@@ -93,6 +90,7 @@
       <artifactId>javax.mail</artifactId>
       <version>1.5.4</version>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-core</artifactId>
@@ -122,17 +120,29 @@
       <plugins>
 
         <!-- Tomcat plugin -->
+<!--        <plugin>-->
+<!--          <groupId>org.apache.tomcat.maven</groupId>-->
+<!--          <artifactId>tomcat7-maven-plugin</artifactId>-->
+<!--          <version>2.2</version>-->
+<!--          <configuration>-->
+<!--            <uriEncoding>${project.build.sourceEncoding}</uriEncoding>-->
+<!--            <port>8080</port>-->
+<!--            &lt;!&ndash;<update>true</update>&ndash;&gt;-->
+<!--&lt;!&ndash;            <path>/</path>&ndash;&gt;-->
+<!--          </configuration>-->
+<!--        </plugin>-->
+<!--        <plugin>-->
+<!--          <groupId>org.apache.tomee.maven</groupId>-->
+<!--          <artifactId>tomee-maven-plugin</artifactId>-->
+<!--          <version>7.1.1</version>-->
+<!--        </plugin>-->
         <plugin>
           <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
+          <artifactId>tomcat8-maven-plugin</artifactId>
           <version>2.2</version>
-          <configuration>
-            <uriEncoding>${project.build.sourceEncoding}</uriEncoding>
-            <port>8080</port>
-            <!--<update>true</update>-->
-<!--            <path>/</path>-->
-          </configuration>
         </plugin>
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat.maven/tomcat8-maven-plugin -->
+
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
