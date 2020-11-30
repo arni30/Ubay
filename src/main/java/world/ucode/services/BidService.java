@@ -19,13 +19,15 @@ public class BidService {
 
     public void saveBid(Bid bid) {
         //set previous bid to false
-        Bid prevBid = this.findLast(bid.getId());
-        if (prevBid != null) {
+        try {
+            Bid prevBid = this.findLast(bid.getLot().getId());
             prevBid.setActive(false);
             this.updateBid(prevBid);
-            System.out.println("hello bid");
         }
-        bidDao.save(bid);
+        catch (IndexOutOfBoundsException ignored){}
+        finally {
+            bidDao.save(bid);
+        }
     }
 
     public void deleteBid(Bid bid) {

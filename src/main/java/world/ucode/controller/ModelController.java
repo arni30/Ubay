@@ -203,7 +203,7 @@ public class ModelController {
     public ModelAndView newBid(Bid bid, @CookieValue("login") String login) throws JsonProcessingException {
         System.out.println(bid.getPrice());
         User bidder = userService.findUser(login);
-        bid.setLot(lotService.findLot(12));
+        bid.setLot(lotService.findLot(15));
         bid.setActive(true);
         bidder.addBid(bid);
 //        bid.setBidder(bidder);
