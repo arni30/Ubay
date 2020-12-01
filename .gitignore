@@ -6,9 +6,9 @@
 /lib
 *tmp*
 *build*
-
+*.png
 .idea
 /target
-
+.png
 *.html
 ubay.iml

@@ -9,10 +9,6 @@ public class Bid {
     @Column(name="bidId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-//    @Column(name = "bidderId")
-//    private int bidderId;
-//    @Column(name = "auctionId")
-//    private int auctionId;
     @Column(name = "price")
     private int price;
     @Column(name = "active")
@@ -32,6 +28,7 @@ public class Bid {
 
     public void setLot(Lot lot) {
         this.lot = lot;
+//        lot.setLastBid(this);
     }
     public Lot getLot() {
         return lot;

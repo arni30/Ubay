@@ -5,29 +5,34 @@ let personalInfo = {
 
   changes: false,
 
-  // showInfo: function () {
-  //   let elem, p;
-  //
-  //   elem = document.querySelectorAll('.personal-data__item');
-  //
-  //   for (let i = 0; elem[i]; ++i) {
-  //     p = document.createElement('p');
-  //     p.setAttribute('class', 'personal-data__value');
-  //     if (i === 0) {
-  //       p.innerHTML = this.info.userRole;
-  //       if (this.info.userRole === 'seller') {
-  //         sellerFeatures.addSellersFeatures(p, this.info.rate);
-  //       }
-  //     } else if (i === 1) {
-  //       p.innerHTML = this.info.login;
-  //     } else if (i === 2) {
-  //       p.innerHTML = this.info.email;
-  //     } else {
-  //       p.innerHTML = this.info.balance;
-  //     }
-  //     elem[i].appendChild(p);
-  //   }
-  // },
+  showInfo: function () {
+    let elem, p;
+
+    elem = document.querySelectorAll('.personal-data__item');
+
+    for (let i = 0; elem[i]; ++i) {
+      p = document.createElement('p');
+      p.setAttribute('class', 'personal-data__value');
+      if (i === 0) {
+        p.innerHTML = this.info.userRole;
+        if (this.info.userRole === 'seller') {
+          sellerFeatures.addSellersFeatures(p, this.info.rate);
+        }
+      } else if (i === 1) {
+        p.innerHTML = this.info.login;
+      } else if (i === 2) {
+        p.innerHTML = this.info.email;
+      } else {
+        p.innerHTML = this.info.balance;
+      }
+      elem[i].appendChild(p);
+    }
+    let userLogin = document.getElementById("userLogin");
+    userLogin.innerHTML = this.info.login;
+
+    gotoAddLot(this.info.login, this.info.id);
+    viewFeedbacks(this.info.login);
+  },
   changeInfo: function () {
     let elem, p;
 
@@ -156,7 +161,7 @@ let lots = {
       price: 0, active: true, description: '',
       image: 'resources/favicon.ico'
     },
-    { id: 1, title: 'NONE', category: '',
+    { id: 2, title: 'NONE', category: '',
       price: 0, active: false, description: '',
       image: 'resources/favicon.ico'
     }
@@ -225,7 +230,7 @@ function signOut() {
 }
 
 let init = () => {
-  // personalInfo.showInfo();
+  personalInfo.showInfo();
   lots.showItems();
 }
 

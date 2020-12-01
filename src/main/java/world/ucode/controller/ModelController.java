@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import world.ucode.models.*;
 import world.ucode.services.BidService;
+import world.ucode.models.Lot;
+import world.ucode.models.Role;
+import world.ucode.models.Search;
+import world.ucode.models.User;
 import world.ucode.services.LotService;
 import world.ucode.utils.CreateJSON;
 import world.ucode.utils.ImageHandler;
@@ -21,11 +27,19 @@ import world.ucode.utils.SendMail;
 import world.ucode.utils.Token;
 import world.ucode.services.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,10 +54,14 @@ public class ModelController {
     ModelAndView mav = new ModelAndView();
     SendMail sendMail = new SendMail();
     LotService lotService = new LotService();
+//    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    @Autowired
+    UserService userService;
     BidService bidService = new BidService();
     CreateJSON createJSON = new CreateJSON();
-    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-    UserService userService = context.getBean("userService", UserService.class);
+//    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+//    UserService userService = context.getBean("userService", UserService.class);
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "/index";
@@ -110,6 +128,7 @@ public class ModelController {
 
             mav.addObject("lots", json);
             mav.setViewName("/main");
+
             return mav;
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,11 +139,11 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public ModelAndView profile(@RequestParam (required = false) String login, ModelMap model) {
-
+    public ModelAndView profile(ModelMap model, HttpServletRequest request) {
+        String login = request.getUserPrincipal().getName();
         ModelAndView mav = new ModelAndView();
         try {
-            if (login != null && login != "") {
+            if (login != null && !login.equals("")) {
                 ObjectMapper mapper = new ObjectMapper();
                 User user = userService.findUserByLogin(login);
                 String json = mapper.writeValueAsString(user);
@@ -192,8 +211,8 @@ public class ModelController {
      * requires unique seller login (what seller added lot).
      * */
     @RequestMapping(value = "/addLot", method = RequestMethod.GET)
-    public ModelAndView addLot(@RequestParam String login) {
-        return pageModelAndView(login, "/addLot");
+    public ModelAndView addLot(HttpServletRequest request) {
+        return pageModelAndView(request.getUserPrincipal().getName(), "/addLot");
     }
 
     public static Timestamp addDays(Timestamp date, int days) {
@@ -205,9 +224,9 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
-    public ModelAndView addLot(Lot lot, @RequestParam("photo") MultipartFile file) throws IOException {
-        User user = userService.findUser("1");
-        lot.setSeller(user);
+    public ModelAndView addLot(Lot lot, @RequestParam("photo") MultipartFile file, HttpServletRequest request) throws IOException {
+        User seller = userService.findUser(request.getUserPrincipal().getName());
+        lot.setSeller(seller);
         lot.setImage(file.getBytes());  // Data truncation: Data too long for column 'image' at row 1
         ImageHandler.savePicture(file);  // проверка
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
@@ -215,26 +234,21 @@ public class ModelController {
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lot.setActive(true);
+        seller.addLot(lot);
+//        lot.setSeller(seller);
         lotService.saveLot(lot);
-//        JSONObject json = new JSONObject();
-//        json.put("title", lot.getTitle());
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(lot);
-//        mav.addObject("lot", json);
-        mav.setViewName("/profile");
+        mav.setViewName("redirect:/profile");
         return mav;
     }
 
     @RequestMapping(value = "/newBit", method = RequestMethod.POST)
-    public ModelAndView newBid(Bid bid) throws JsonProcessingException {
+    public ModelAndView newBid(Bid bid, HttpServletRequest request) throws JsonProcessingException {
         System.out.println(bid.getPrice());
-        //set previous bid to false
-        Bid prevBid = bidService.findLast(10);
-        prevBid.setActive(false);
-        bidService.updateBid(prevBid);
-        bid.setBidder(userService.findUser("2"));
-        bid.setLot(lotService.findLot(10));
+        User bidder = userService.findUser(request.getUserPrincipal().getName());
+        bid.setLot(lotService.findLot(1));
         bid.setActive(true);
+        bidder.addBid(bid);
+//        bid.setBidder(bidder);
         bidService.saveBid(bid);
         mav.setViewName("redirect:/main");
         return mav;
@@ -251,33 +265,37 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)
-    public ModelAndView signin_post(User user, ModelMap model) throws Exception {
-        System.out.println(user.getType());
+    public ModelAndView signin_post(User user, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
 //        try {
             if (user.getType().equals("signin")) {
-                System.out.println(user.getPassword());
-                System.out.println(user.getLogin());
-                System.out.println("hallo");
                 User newUser = userService.validateUser(user);
                 String json = mapper.writeValueAsString(newUser);
+//                List<Lot> lotss = newUser.getLots();
+//                for (Lot lot:lotss) {
+//                    System.out.println(lot.getTitle());
+//                }
+//                List<Bid> bids = userService.findUser("4").getBids();
+//                for (Bid bid:bids) {
+//                    System.out.println(bid.getPrice());
+//                }
                 mav.addObject("user", json);
+                List<Lot> lots = lotService.findAllLotsByUser(newUser.getLogin());
+                JSONArray jsonArr = createJSON.mainShowLotsJSON(lots);
+                mav.addObject("lots", jsonArr);
                 mav.setViewName("/profile");
+                response.addCookie(new Cookie("login", user.getLogin()));
             } else {
                 Token token = new Token();
-                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+//                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 user.setToken(token.getJWTToken(user.getLogin()));
                 sendMail.sendMail(user);
-                System.out.println(user.getUserRole());
-                System.out.println(user.getPassword());
-                System.out.println(user.getEmail());
-                System.out.println(user.getLogin());
-                System.out.println("hallo");
                 userService.saveUser(user);
                 String json = mapper.writeValueAsString(user);
                 mav.addObject("user",json);
                 mav.setViewName("/main");
+                response.addCookie(new Cookie("login", user.getLogin()));
             }
             return mav;
 //        } catch (Exception e) {
@@ -286,6 +304,33 @@ public class ModelController {
 //            mav.setViewName("/authorization");
 //            return mav;
 //        }
+    }
+
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public ModelAndView signup_post(User user, HttpServletResponse response) throws Exception {
+        ModelAndView mav = new ModelAndView();
+        ObjectMapper mapper = new ObjectMapper();
+        if (user.getUserRole().equals("seller"))
+            user.setRoles(Collections.singleton(Role.SELLER));
+        else
+            user.setRoles(Collections.singleton(Role.BIDDER));
+        Token token = new Token();
+                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        user.setToken(token.getJWTToken(user.getLogin()));
+//        sendMail.sendMail(user);
+        response.addCookie(new Cookie("login", user.getLogin()));
+        userService.saveUser(user);
+        String json = mapper.writeValueAsString(user);
+        mav.addObject("user",json);
+        mav.setViewName("/authorization");
+        return mav;
+    }
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public String signup(ModelMap model, HttpServletRequest request) throws UnknownHostException {
+//        model.addAttribute("hallo", request.getUserPrincipal().getName());
+//        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+//        model.addAttribute("form", new User());
+        return "/registration";
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -336,11 +381,6 @@ public class ModelController {
     @RequestMapping(value = "/errors/error", method = RequestMethod.GET)
     public String exceptions() {
         return "/errors/error";
-    }
-
-    private void databaseClose(User user) {
-        userService.updateUser(user);
-        context.close();
     }
 
 }

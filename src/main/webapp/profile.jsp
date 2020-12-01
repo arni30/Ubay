@@ -41,7 +41,7 @@
             </div>
             <div class="header-login">
                 <span id="userLogin"></span>
-                <a class="abutton" href="#" onclick="signOut()">Sign out</a>
+                <a class="abutton" href="/ubay/logout">Sign out</a>
             </div>
         </div>
 
@@ -134,38 +134,7 @@
 
 </body>
 <script type="text/javascript">
-    function showInfo() {
-        let response = ${user};
-        console.log(response);
-        let jsonString = JSON.parse(JSON.stringify(response));
-        console.log(jsonString);
-        let elem, p;
-        elem = document.querySelectorAll('.personal-data__item');
-        for (let i = 0; elem[i]; ++i) {
-            p = document.createElement('p');
-            p.className = 'personal-data__value';
-            if (i === 0) {
-                p.innerHTML = jsonString.userRole;
-                if (jsonString.userRole === 'seller') {
-                    sellerFeatures.addSellersFeatures(p, jsonString.avarageRate);
-                }
-            } else if (i === 1) {
-                p.innerHTML = jsonString.login;
-            } else if (i === 2) {
-                p.innerHTML = jsonString.email;
-            } else {
-                p.innerHTML = jsonString.balance;
-            }
-            elem[i].appendChild(p);
-        }
-        let userLogin = document.getElementById("userLogin");
-        userLogin.innerHTML = jsonString.login;
-
-        gotoAddLot(jsonString.login, jsonString.id);
-        viewFeedbacks(jsonString.login);
-    }
-    showInfo();
-
+    console.log(${user});
     if (${user}) {
         personalInfo.info = ${user};
     }

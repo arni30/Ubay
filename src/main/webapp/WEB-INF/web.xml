@@ -13,16 +13,10 @@
   <multipart-config />
 </servlet>
 
-<servlet-mapping>
-  <servlet-name>mvc-dispatcher</servlet-name>
-  <url-pattern>/</url-pattern>
-</servlet-mapping>
-
-<!--  <servlet-mapping>-->
-<!--    <servlet-name>signin</servlet-name>-->
-<!--    <url-pattern>/signin/*</url-pattern>-->
-<!--  </servlet-mapping>-->
-
+  <servlet-mapping>
+    <servlet-name>mvc-dispatcher</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
   <error-page>
     <error-code>404</error-code>
     <location>/errors/404</location>

@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.awt.image.BufferedImage;
 import java.security.PublicKey;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "lots")
@@ -77,6 +79,9 @@ public class Lot {
 
     public void setActive(boolean active) { this.active = active; }
     public boolean getActive() { return active; }
+
+//    public void setLastBid(Bid lastBid) { this.lastBid = lastBid; }
+//    public Bid getLastBid() { return lastBid; }
 
     public byte[] getImage() {
         return image;
