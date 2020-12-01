@@ -3,6 +3,7 @@ package world.ucode.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +18,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.firewall.HttpStatusRequestRejectedHandler;
 import org.springframework.security.web.firewall.RequestRejectedHandler;
 import world.ucode.services.UserService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableWebSecurity
@@ -44,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // AccessDeniedException will throw.
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/aaa").accessDeniedHandler(new AccessDeniedExceptions());
         // Config for Login Form
+
         http.authorizeRequests().and().formLogin()//
                 // Submit URL of login page.
                 .loginProcessingUrl("/authorization").permitAll() // Submit URL
@@ -64,9 +68,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService);
-        authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
-            auth.authenticationProvider(authProvider);
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(userService);
+//        authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+//            auth.authenticationProvider(authProvider);
+
+            auth.authenticationProvider(new AuthProvider());
     }
 }

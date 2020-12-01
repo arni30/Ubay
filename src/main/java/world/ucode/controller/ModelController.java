@@ -59,7 +59,7 @@ public class ModelController {
     UserService userService;
     BidService bidService = new BidService();
     CreateJSON createJSON = new CreateJSON();
-    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+//    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 //    UserService userService = context.getBean("userService", UserService.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -139,11 +139,11 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public ModelAndView profile(@RequestParam (required = false) String login, ModelMap model) {
-
+    public ModelAndView profile(ModelMap model, HttpServletRequest request) {
+        String login = request.getUserPrincipal().getName();
         ModelAndView mav = new ModelAndView();
         try {
-            if (login != null && login != "") {
+            if (login != null && !login.equals("")) {
                 ObjectMapper mapper = new ObjectMapper();
                 User user = userService.findUserByLogin(login);
                 String json = mapper.writeValueAsString(user);
@@ -211,8 +211,8 @@ public class ModelController {
      * requires unique seller login (what seller added lot).
      * */
     @RequestMapping(value = "/addLot", method = RequestMethod.GET)
-    public ModelAndView addLot(@RequestParam String login) {
-        return pageModelAndView(login, "/addLot");
+    public ModelAndView addLot(HttpServletRequest request) {
+        return pageModelAndView(request.getUserPrincipal().getName(), "/addLot");
     }
 
     public static Timestamp addDays(Timestamp date, int days) {
@@ -224,13 +224,11 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
-    public ModelAndView addLot(Lot lot, @RequestParam("photo") MultipartFile file, @CookieValue("login") String login) throws IOException {
-        User seller = userService.findUser(login);
+    public ModelAndView addLot(Lot lot, @RequestParam("photo") MultipartFile file, HttpServletRequest request) throws IOException {
+        User seller = userService.findUser(request.getUserPrincipal().getName());
         lot.setSeller(seller);
         lot.setImage(file.getBytes());  // Data truncation: Data too long for column 'image' at row 1
         ImageHandler.savePicture(file);  // проверка
-        System.out.println("HERE");
-        System.out.println(login);
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
         curTime.setTime(curTime.getTime() + (2 * 60 * 60 * 1000));
         lot.setStartTime(curTime);
@@ -239,15 +237,15 @@ public class ModelController {
         seller.addLot(lot);
 //        lot.setSeller(seller);
         lotService.saveLot(lot);
-        mav.setViewName("redirect:/profile?login="+login);
+        mav.setViewName("redirect:/profile");
         return mav;
     }
 
     @RequestMapping(value = "/newBit", method = RequestMethod.POST)
-    public ModelAndView newBid(Bid bid, @CookieValue("login") String login) throws JsonProcessingException {
+    public ModelAndView newBid(Bid bid, HttpServletRequest request) throws JsonProcessingException {
         System.out.println(bid.getPrice());
-        User bidder = userService.findUser(login);
-        bid.setLot(lotService.findLot(15));
+        User bidder = userService.findUser(request.getUserPrincipal().getName());
+        bid.setLot(lotService.findLot(1));
         bid.setActive(true);
         bidder.addBid(bid);
 //        bid.setBidder(bidder);
@@ -309,23 +307,18 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView signup_post(User user, ModelMap model) throws Exception {
+    public ModelAndView signup_post(User user, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
         if (user.getUserRole().equals("seller"))
             user.setRoles(Collections.singleton(Role.SELLER));
         else
             user.setRoles(Collections.singleton(Role.BIDDER));
-//        Token token = new Token();
+        Token token = new Token();
                 user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-//        user.setToken(token.getJWTToken(user.getLogin()));
+        user.setToken(token.getJWTToken(user.getLogin()));
 //        sendMail.sendMail(user);
-        System.out.println(user.getRoles());
-        System.out.println(user.getUserRole());
-        System.out.println(user.getPassword());
-        System.out.println(user.getEmail());
-        System.out.println(user.getLogin());
-        System.out.println("hallo");
+        response.addCookie(new Cookie("login", user.getLogin()));
         userService.saveUser(user);
         String json = mapper.writeValueAsString(user);
         mav.addObject("user",json);
