@@ -139,17 +139,6 @@ let sellerFeatures = {
   }
 }
 
-
-//   success: function (response) {
-//     console.log("SUCCESS : ", data);
-//     var json = JSON.parse(response);
-//     console.log(json);
-//     var newImgPath =  path + "/uploadFiles/" + json.newFile;
-//     $('#newImg').attr("src", newImgPath);
-//     $('#download').attr("href", newImgPath);
-//     $('#load').attr("style", "visibility: visible");
-//     $('#newImgDiv').attr("style", "display: initial");
-
 let lots = {
   items: [
     { id: 1, title: 'NONE', category: '',

@@ -208,8 +208,8 @@ public class ModelController {
     public ModelAndView addLot(Lot lot, @RequestParam("photo") MultipartFile file) throws IOException {
         User user = userService.findUser("1");
         lot.setSeller(user);
-        lot.setImage(file.getBytes());  // Data truncation: Data too long for column 'image' at row 1
-        ImageHandler.savePicture(file);  // проверка
+        lot.setImage(file.getBytes());
+//        ImageHandler.savePicture(file);  // проверка
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
         curTime.setTime(curTime.getTime() + (2 * 60 * 60 * 1000));
         lot.setStartTime(curTime);

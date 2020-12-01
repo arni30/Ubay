@@ -19,10 +19,10 @@ function viewFeedbacks(login) {
     document.querySelector('#biddersFeedbacks')
         .setAttribute('href',`/ubay/feedbacks?login=${login}`);
 }
-function gotoAddLot(login, userId) {
-    document.querySelector('#addLotId')
-        .setAttribute('href', `/ubay/addLot?login=${login}&userId=${userId}`);
-}
+// function gotoAddLot(login, userId) {
+//     document.querySelector('#addLotId')
+//         .setAttribute('href', `/ubay/addLot`);
+// }
 function gotoAuction(item) {
     location.replace(`/ubay/auction?lotId=${item.id}`);
 }
