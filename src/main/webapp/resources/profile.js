@@ -16,7 +16,7 @@ let personalInfo = {
       if (i === 0) {
         p.innerHTML = this.info.userRole;
         if (this.info.userRole === 'seller') {
-          sellerFeatures.addSellersFeatures(p, this.info.rate);
+          sellerFeatures.addSellersFeatures(p, this.info.avarageRate);
         }
       } else if (i === 1) {
         p.innerHTML = this.info.login;

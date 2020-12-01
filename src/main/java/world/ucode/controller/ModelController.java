@@ -211,8 +211,8 @@ public class ModelController {
      * requires unique seller login (what seller added lot).
      * */
     @RequestMapping(value = "/addLot", method = RequestMethod.GET)
-    public ModelAndView addLot(@RequestParam String login) {
-        return pageModelAndView(login, "/addLot");
+    public ModelAndView addLot(HttpServletRequest request) {
+        return pageModelAndView(request.getUserPrincipal().getName(), "/addLot");
     }
 
     public static Timestamp addDays(Timestamp date, int days) {
