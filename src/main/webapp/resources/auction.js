@@ -29,7 +29,7 @@ let auctions = {
     // image
     document.querySelector('#price').innerHTML += '\$' + this.lot.price;
     document.querySelector('#aboutProfile').innerHTML = this.lot.seller;
-    document.querySelector('#rate').innerHTML = this.lot.rate;
+    document.querySelector('#rate').innerHTML = (this.lot.rate === 0) ? ' - ' : this.lot.rate;
     document.querySelector('#startTime').innerHTML += this.lot.startTime.replace('T', '&emsp;');
     document.querySelector('#description').innerHTML = this.lot.description;
 

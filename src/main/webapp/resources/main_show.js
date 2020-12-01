@@ -2,8 +2,8 @@
 
 let products = {
   items: [
-    { id: 1, title: 'Jam', category: 'food',
-      price: 8.99, active: true, description: 'Ukrainian candied.',
+    { id: 0, title: '', category: 'other',
+      price: 0, active: true, description: 'NONE',
       image: 'resources/favicon.ico'
     }
   ],
@@ -79,14 +79,13 @@ let products = {
     p1 = document.createElement('input');
     p1.setAttribute('id', item.id);
     p1.setAttribute('value', 'show details');
-    // if (item.active !== 0) {
+    if (item.price !== 0) {
       p1.setAttribute('type', 'button');
       p1.setAttribute('onclick', 'gotoAuction(this)');
       p1.className = 'item_add button';
-
-    // }
-    // else
-    //   p1.className = 'button-empty';
+    }
+    else
+      p1.className = 'button-empty';
     p.appendChild(p1);
 
     shelf.appendChild(p);

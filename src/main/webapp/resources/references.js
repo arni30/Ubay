@@ -15,14 +15,24 @@ function viewBidderProfile(item) {
     item.setAttribute('href',
         `/ubay/viewProfile?login=${item.innerHTML}`);
 }
-function viewFeedbacks(item) {
-    item.setAttribute('href',
-        `/ubay/feedbacks?login=${document.querySelector('#aboutProfile').innerHTML}`);
+function viewFeedbacks(login) {
+    document.querySelector('#biddersFeedbacks')
+        .setAttribute('href',`/ubay/feedbacks?login=${login}`);
 }
-function gotoAddLot(item) {
-    item.setAttribute('href',
-        `/ubay/addLot?login=${document.querySelector('#userLogin').innerHTML}`);
+function gotoAddLot(login, userId) {
+    document.querySelector('#addLotId')
+        .setAttribute('href', `/ubay/addLot?login=${login}&userId=${userId}`);
 }
 function gotoAuction(item) {
     location.replace(`/ubay/auction?lotId=${item.id}`);
+}
+
+function receiveGetParameters() {
+    let param = [];
+    let i = 0;
+    location.search.substr(1).split("&")
+        .forEach(function(item) {
+            param[i++] = item.split("=");
+        })
+    return param;
 }

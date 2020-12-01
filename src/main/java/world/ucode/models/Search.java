@@ -1,11 +1,13 @@
 package world.ucode.models;
 
 public class Search {
-    private String title = null;
-    private float startPrice = 0;
-    private int duration = 0;
-    private String startTime = null;
-    private String description = null;
+    private String title = "";
+//    private float startPrice = 0;
+//    private int duration = 0;
+    private String startPrice = "";
+    private String duration = "";
+    private String startTime = "";
+    private String description = "";
 
 
     public String getTitle() {
@@ -17,18 +19,24 @@ public class Search {
     }
 
     public float getStartPrice() {
-        return startPrice;
+        if (startPrice == "") {
+            return 0;
+        }
+        return Float.parseFloat(startPrice);
     }
 
-    public void setStartPrice(float startPrice) {
+    public void setStartPrice(String startPrice) {
         this.startPrice = startPrice;
     }
 
     public int getDuration() {
-        return duration;
+        if (duration == "") {
+            return 0;
+        }
+        return Integer.parseInt(duration);
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

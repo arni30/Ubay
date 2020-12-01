@@ -30,6 +30,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Controller
 @ControllerAdvice
@@ -119,8 +122,28 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String profile(ModelMap model) {
-        return "/profile";
+    public ModelAndView profile(@RequestParam (required = false) String login, ModelMap model) {
+
+        ModelAndView mav = new ModelAndView();
+        try {
+            if (login != null && login != "") {
+                ObjectMapper mapper = new ObjectMapper();
+                User user = userService.findUserByLogin(login);
+                String json = mapper.writeValueAsString(user);
+                mav.addObject("user", json);
+
+                List<Lot> lots = lotService.findAllLotsByUser(login);
+                JSONArray jsonArr = createJSON.mainShowLotsJSON(lots);
+                mav.addObject("lots", jsonArr);
+            }
+            mav.setViewName("/profile");
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
     }
 
     /**
@@ -189,6 +212,7 @@ public class ModelController {
         System.out.println(login);
         User seller = userService.findUser(login);
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
+        curTime.setTime(curTime.getTime() + (2 * 60 * 60 * 1000));
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lot.setActive(true);
