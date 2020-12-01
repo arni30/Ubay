@@ -226,7 +226,7 @@ public class ModelController {
         seller.addLot(lot);
 //        lot.setSeller(seller);
         lotService.saveLot(lot);
-        mav.setViewName("/profile");
+        mav.setViewName("redirect:/profile?login="+login);
         return mav;
     }
 
