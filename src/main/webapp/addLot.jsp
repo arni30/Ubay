@@ -24,13 +24,23 @@
 <div class="addLot">
     <div id="window" class="shadow-large">
         <div class="page-header addLot-header">Add lot</div>
-        <form class="addLot-form" action="addLot" method="POST" name="form">
+        <form class="addLot-form" action="addLot" method="POST" name="form" enctype="multipart/form-data">
 
-<%--            <label for="photo">Photo</label>--%>
-<%--            <input id="photo" class="button" type="file" name="photo" value="photo"/>--%>
+            <label for="photo">Photo</label>
+            <input id="photo" class="button" type="file" name="photo" value="photo" required/>
 
             <label for="title">Title</label>
             <input id="title" class="button" type="text" name="title" required/>
+
+            <label for="category">Category</label>
+            <select id="category" class="button" name="category">
+                <option>technics</option>
+                <option>furniture</option>
+                <option>books</option>
+                <option>clothes</option>
+                <option>food</option>
+                <option>others</option>
+            </select>
 
             <label for="startPrice">Start price</label>
             <input id="startPrice" class="button" type="number" name="startPrice" required
@@ -59,6 +69,15 @@
 </div>
 
 </body>
+<script>
+    <%--function showInfo() {--%>
+    <%--    let response = ${user};--%>
+
+    <%--    console.log(response);--%>
+    <%--    let jsonString = JSON.parse(JSON.stringify(response));--%>
+    <%--    --%>
+    <%--}--%>
+</script>
 
 </html>
 

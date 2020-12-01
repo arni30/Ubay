@@ -2,6 +2,8 @@ package world.ucode.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,29 +12,56 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import world.ucode.models.*;
+import world.ucode.services.BidService;
 import world.ucode.models.Lot;
 import world.ucode.models.Role;
 import world.ucode.models.Search;
 import world.ucode.models.User;
 import world.ucode.services.LotService;
+import world.ucode.utils.CreateJSON;
+import world.ucode.utils.ImageHandler;
 import world.ucode.utils.SendMail;
 import world.ucode.utils.Token;
 import world.ucode.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Controller
 @ControllerAdvice
 public class ModelController {
+    ModelAndView mav = new ModelAndView();
     SendMail sendMail = new SendMail();
     LotService lotService = new LotService();
 //    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
     @Autowired
     UserService userService;
+    BidService bidService = new BidService();
+    CreateJSON createJSON = new CreateJSON();
+    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+//    UserService userService = context.getBean("userService", UserService.class);
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "/index";
@@ -84,16 +113,54 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
-    public String main(ModelMap model) {
-        if(!model.containsAttribute("search")) {
+    public ModelAndView main(ModelMap model) {
+        if (!model.containsAttribute("search")) {
             model.addAttribute("search", new Search());
         }
-        return "/main";
+        ModelAndView mav = new ModelAndView();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+//            Lot lot = userService.findLotById(Integer.parseInt(lotId));
+//            String json = mapper.writeValueAsString(lot);
+
+            List<Lot> lots = lotService.findAllLots();
+            JSONArray json = createJSON.mainShowLotsJSON(lots);
+
+            mav.addObject("lots", json);
+            mav.setViewName("/main");
+
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String profile(ModelMap model) {
-        return "/profile";
+    public ModelAndView profile(@RequestParam (required = false) String login, ModelMap model) {
+
+        ModelAndView mav = new ModelAndView();
+        try {
+            if (login != null && login != "") {
+                ObjectMapper mapper = new ObjectMapper();
+                User user = userService.findUserByLogin(login);
+                String json = mapper.writeValueAsString(user);
+                mav.addObject("user", json);
+
+                List<Lot> lots = lotService.findAllLotsByUser(login);
+                JSONArray jsonArr = createJSON.mainShowLotsJSON(lots);
+                mav.addObject("lots", jsonArr);
+            }
+            mav.setViewName("/profile");
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
     }
 
     /**
@@ -124,7 +191,20 @@ public class ModelController {
      * */
     @RequestMapping(value = "/auction", method = RequestMethod.GET)
     public ModelAndView auction(@RequestParam String lotId) {
-        return pageModelAndView(Integer.parseInt(lotId), "/auction");
+        ModelAndView mav = new ModelAndView();
+        try {
+            Lot lot = userService.findLotById(Integer.parseInt(lotId));
+            User user = lot.getSeller();
+            JSONObject json = createJSON.auctionJSON(user, lot);
+            mav.addObject("lot", json);
+            mav.setViewName("/auction");
+            return mav;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Bad JSON");
+            mav.setViewName("/errors/error");
+            return mav;
+        }
     }
 
     /**
@@ -135,18 +215,44 @@ public class ModelController {
         return pageModelAndView(login, "/addLot");
     }
 
+    public static Timestamp addDays(Timestamp date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);// w ww.  j ava  2  s  .co m
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return new Timestamp(cal.getTime().getTime());
+
+    }
+
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
-    public ModelAndView addLot(Lot lot) throws JsonProcessingException {
-        System.out.println(lot.getDuration());
-        System.out.println(lot.getStartPrice());
-        System.out.println(lot.getDescription());
-//        System.out.println(user.getId());
+    public ModelAndView addLot(Lot lot, @RequestParam("photo") MultipartFile file, @CookieValue("login") String login) throws IOException {
+        User seller = userService.findUser(login);
+        lot.setSeller(seller);
+        lot.setImage(file.getBytes());  // Data truncation: Data too long for column 'image' at row 1
+        ImageHandler.savePicture(file);  // проверка
+        System.out.println("HERE");
+        System.out.println(login);
+        Timestamp curTime = new Timestamp(System.currentTimeMillis());
+        curTime.setTime(curTime.getTime() + (2 * 60 * 60 * 1000));
+        lot.setStartTime(curTime);
+        lot.setFinishTime(addDays(curTime, lot.getDuration()));
+        lot.setActive(true);
+        seller.addLot(lot);
+//        lot.setSeller(seller);
         lotService.saveLot(lot);
-        ModelAndView mav = new ModelAndView();
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(lot);
-        mav.addObject("lot", json);
-        mav.setViewName("/profile");
+        mav.setViewName("redirect:/profile?login="+login);
+        return mav;
+    }
+
+    @RequestMapping(value = "/newBit", method = RequestMethod.POST)
+    public ModelAndView newBid(Bid bid, @CookieValue("login") String login) throws JsonProcessingException {
+        System.out.println(bid.getPrice());
+        User bidder = userService.findUser(login);
+        bid.setLot(lotService.findLot(15));
+        bid.setActive(true);
+        bidder.addBid(bid);
+//        bid.setBidder(bidder);
+        bidService.saveBid(bid);
+        mav.setViewName("redirect:/main");
         return mav;
     }
 
@@ -161,35 +267,37 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/authorization", method = RequestMethod.POST)
-    public ModelAndView signin_post(User user, ModelMap model) throws Exception {
-//        SecurityConfig securityConfig = new SecurityConfig();
-        System.out.println(user.getType());
+    public ModelAndView signin_post(User user, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
 //        try {
             if (user.getType().equals("signin")) {
-                System.out.println(user.getPassword());
-                System.out.println(user.getLogin());
-                System.out.println("hallo");
                 User newUser = userService.validateUser(user);
                 String json = mapper.writeValueAsString(newUser);
+//                List<Lot> lotss = newUser.getLots();
+//                for (Lot lot:lotss) {
+//                    System.out.println(lot.getTitle());
+//                }
+//                List<Bid> bids = userService.findUser("4").getBids();
+//                for (Bid bid:bids) {
+//                    System.out.println(bid.getPrice());
+//                }
                 mav.addObject("user", json);
+                List<Lot> lots = lotService.findAllLotsByUser(newUser.getLogin());
+                JSONArray jsonArr = createJSON.mainShowLotsJSON(lots);
+                mav.addObject("lots", jsonArr);
                 mav.setViewName("/profile");
+                response.addCookie(new Cookie("login", user.getLogin()));
             } else {
                 Token token = new Token();
 //                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 user.setToken(token.getJWTToken(user.getLogin()));
                 sendMail.sendMail(user);
-                System.out.println(user.getRoles());
-                System.out.println(user.getUserRole());
-                System.out.println(user.getPassword());
-                System.out.println(user.getEmail());
-                System.out.println(user.getLogin());
-                System.out.println("hallo");
                 userService.saveUser(user);
                 String json = mapper.writeValueAsString(user);
                 mav.addObject("user",json);
-                mav.setViewName("/authorization");
+                mav.setViewName("/main");
+                response.addCookie(new Cookie("login", user.getLogin()));
             }
             return mav;
 //        } catch (Exception e) {
@@ -244,6 +352,33 @@ public class ModelController {
     }
 
 
+//    @RequestMapping(value="/upload", method=RequestMethod.GET)
+//    public @ResponseBody String provideUploadInfo() {
+//        return "Вы можете загружать файл с использованием того же URL.";
+//    }
+
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public String handleFileUpload(@RequestParam("name") String name,
+                                   @RequestParam("file") MultipartFile file){
+        ImageHandler.savePicture(file);
+        return "/main";
+    }
+
+//    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+//    public String uploadFileHandler(@RequestBody JSONObject jsonString)
+////    public @ResponseBody String uploadFileHandler(@RequestParam("imageForm") MultipartFile multipartFile)
+//            throws IOException, ServletException {
+////        System.out.println("Uploaded: " + multipartFile.getSize() + " bytes");
+////        System.out.println("JSON: " + text.toString());
+//        System.out.println("text: " + jsonString.get("text"));
+////        String img = (String) jsonString.get("image");
+//        InputStream in = new ByteArrayInputStream(ImageHandler.serialize(jsonString.get("image")));
+//        // get & process file
+//        BufferedImage image = ImageIO.read(in);
+//        System.out.println("image height: " + image.getHeight());
+////        ImageIO.write(image, type, resp.getOutputStream());
+//        return "/main";
+//    }
     // -----------------------
     @RequestMapping(value = "/errors/404", method = RequestMethod.GET)
     public String error404() {
@@ -255,8 +390,4 @@ public class ModelController {
         return "/errors/error";
     }
 
-    private void databaseClose(User user) {
-        userService.updateUser(user);
-//        context.close();
-    }
 }

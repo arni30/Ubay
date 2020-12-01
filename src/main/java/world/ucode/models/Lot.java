@@ -3,6 +3,9 @@ package world.ucode.models;
 import javax.persistence.*;
 import java.awt.image.BufferedImage;
 import java.security.PublicKey;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "lots")
@@ -23,10 +26,14 @@ public class Lot {
     private String description;
     @Column(name = "category")
     private String category;
-    //    private startTime;
-//    private boolean finished;
-
-//    private BufferedImage image;
+    @Column(name = "startTime")
+    private Timestamp startTime;
+    @Column(name = "finishTime")
+    private Timestamp finishTime;
+    @Column(name = "active")
+    private boolean active;
+    @Lob()
+    private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sellerId", referencedColumnName = "userId")
@@ -63,6 +70,25 @@ public class Lot {
 
     public void setSeller(User seller) { this.seller = seller; }
     public User getSeller() { return seller; }
+
+    public void setStartTime(Timestamp startTime) { this.startTime = startTime; }
+    public Timestamp getStartTime() { return startTime; }
+
+    public void setFinishTime(Timestamp finishTime) { this.finishTime = finishTime; }
+    public Timestamp getFinishTime() { return finishTime; }
+
+    public void setActive(boolean active) { this.active = active; }
+    public boolean getActive() { return active; }
+
+//    public void setLastBid(Bid lastBid) { this.lastBid = lastBid; }
+//    public Bid getLastBid() { return lastBid; }
+
+    public byte[] getImage() {
+        return image;
+    }
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     @Override
     public String toString() {

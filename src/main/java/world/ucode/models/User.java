@@ -2,6 +2,7 @@ package world.ucode.models;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -50,30 +51,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Lot> lots;
 
-    public User() {}
-//    public User(String login, String password) {
-//        System.out.println("CONSTRUCTOR");
-//        this.login = login;
-//        this.password = password;
-//        lots = new ArrayList<>();
-//    }
-//
-//    public void addLot(Lot lot) {
-//        lot.setSeller(this);
-//        lots.add(lot);
-//    }
-//    public void removeLot(Lot lot) {
-//        lots.remove(lot);
-//    }
-//    public List<Lot> getLots() {
-//        return lots;
-//    }
-//    public void setLots(ArrayList<Lot> lots) {
-//        this.lots = lots;
-//    }
+    @OneToMany(mappedBy = "bidder", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Bid> bids;
 
     public int getId() {
         return id;
@@ -159,6 +144,24 @@ public class User implements UserDetails {
         return getRoles();
     }
 
+
+    public void addLot(Lot lot) {
+        lot.setSeller(this);
+//        lots.add(lot);
+    }
+    public void removeLot(Lot lot) { lots.remove(lot); }
+
+    public List<Lot> getLots() { return lots; }
+    public void setLots(ArrayList<Lot> lots) { this.lots = lots; }
+
+    public void addBid(Bid bid) {
+        bid.setBidder(this);
+//        bids.add(bid);
+    }
+    public void removeBid(Bid bid) { bids.remove(bid); }
+
+    public List<Bid> getBids() { return bids; }
+    public void setBids(ArrayList<Bid> bids) { this.bids = bids; }
     //    @Override
 //    public String toString() {
 //        String res = "models.User{ " +

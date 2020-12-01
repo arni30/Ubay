@@ -9,7 +9,6 @@
     <meta name="keywords" content="HTML, CSS, JS, Java, ucode, unitfactory, cbl, cblworld">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ubay</title>
-    <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon">
     <link rel="icon" href="resources/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -64,56 +63,55 @@
         </ul>
     </nav>
 
-<div class="contact-info page">
-    <section class="personal-section">
-        <div class="personal-section__header">
-            <h3 class="personal-section__heading">Personal info</h3>
-            <!---->
-            <div class="personal-section__buttons">
-                <input type="button" class="button" value="Change personal info" onclick="changeInfo()">
-                <input type="button" class="button" value="Change password" onclick="changePassword()">
-            </div>
-        </div>
-        <form>
-            <div class="personal-data">
-                <ul class="personal-data__list">
-                    <li class="personal-data__item">
-                        <label class="personal-data__label form__label" id="role"> Role </label>
-<%--                        ${user.userRole}--%>
-                    </li>
-                    <li class="personal-data__item">
-                        <label class="personal-data__label form__label" id="aboutProfile"> Login </label>
-<%--                        ${user.login}--%>
-                    </li>
-                    <li class="personal-data__item">
-                        <label class="personal-data__label form__label" id="email"> Email </label>
-<%--                        ${user.email}--%>
-                    </li>
-                    <li class="personal-data__item">
-                        <label  class="personal-data__label form__label" id="balance"> Balance </label>
-<%--                        ${user.balance}--%>
-                    </li>
-                </ul>
+    <div class="contact-info page">
+        <section class="personal-section">
+            <div class="personal-section__header">
+                <h3 class="personal-section__heading">Personal info</h3>
                 <!---->
+                <div class="personal-section__buttons">
+                    <input type="button" class="button" value="Change personal info" onclick="changeInfo()">
+                    <input type="button" class="button" value="Change password" onclick="changePassword()">
+                </div>
             </div>
-        </form>
-    </section>
-</div>
-
-    <div id="profile-buttons" class="page personal-section__header">
-        <a class="button" href="#" onclick="gotoAddLot(this)">Add auction</a>
-        <!--js: add feedback button-->
+            <form>
+                <div class="personal-data">
+                    <ul class="personal-data__list">
+                        <li class="personal-data__item">
+                            <label class="personal-data__label form__label" id="role"> Role </label>
+                            <%--                        ${user.userRole}--%>
+                        </li>
+                        <li class="personal-data__item">
+                            <label class="personal-data__label form__label" id="aboutProfile"> Login </label>
+                            <%--                        ${user.login}--%>
+                        </li>
+                        <li class="personal-data__item">
+                            <label class="personal-data__label form__label" id="email"> Email </label>
+                            <%--                        ${user.email}--%>
+                        </li>
+                        <li class="personal-data__item">
+                            <label  class="personal-data__label form__label" id="balance"> Balance </label>
+                            <%--                        ${user.balance}--%>
+                        </li>
+                    </ul>
+                    <!---->
+                </div>
+            </form>
+        </section>
     </div>
 
-    <main class="page">
-        <!-- <div id="main-overlay"></div> -->
+    <div id="profile-buttons" class="page personal-section__header" style="display: none">
+        <a id="addLotId" class="button" href="#">Add auction</a>
+        <a id="biddersFeedbacks" class="button" href="#">Bidders feedbacks</a>
+    </div>
+
+    <main class="page" id="activeBox" style="display: none">
         <aside>
             <h3 class="personal-section__heading">Active auctions</h3>
         </aside>
         <div class="container active-lots"></div>
     </main>
 
-    <main class="page">
+    <main class="page" id="closedBox" style="display: none">
         <aside>
             <h3 class="personal-section__heading">Closed auctions</h3>
         </aside>
@@ -136,37 +134,13 @@
 
 </body>
 <script type="text/javascript">
-
-    function showInfo() {
-        let response = ${user}
-
-        console.log(response);
-        let jsonString = JSON.parse(JSON.stringify(response));
-        console.log(jsonString);
-
-        let elem, p;
-        elem = document.querySelectorAll('.personal-data__item');
-        for (let i = 0; elem[i]; ++i) {
-            p = document.createElement('p');
-            p.className = 'personal-data__value';
-            if (i === 0) {
-                p.innerHTML = jsonString.userRole;
-                if (jsonString.userRole === 'seller') {
-                    sellerFeatures.addSellersFeatures(p, jsonString.rate);
-                }
-            } else if (i === 1) {
-                p.innerHTML = jsonString.login;
-            } else if (i === 2) {
-                p.innerHTML = jsonString.email;
-            } else {
-                p.innerHTML = jsonString.balance;
-            }
-            elem[i].appendChild(p);
-        }
-        let userLogin = document.getElementById("userLogin");
-        userLogin.innerHTML = jsonString.login;
+    console.log(${user});
+    if (${user}) {
+        personalInfo.info = ${user};
     }
-    showInfo();
+    if (${lots}) {
+        lots.items = ${lots};
+    }
 </script>
 
 </html>

@@ -18,7 +18,16 @@ public class BidService {
     }
 
     public void saveBid(Bid bid) {
-        bidDao.save(bid);
+        //set previous bid to false
+        try {
+            Bid prevBid = this.findLast(bid.getLot().getId());
+            prevBid.setActive(false);
+            this.updateBid(prevBid);
+        }
+        catch (IndexOutOfBoundsException ignored){}
+        finally {
+            bidDao.save(bid);
+        }
     }
 
     public void deleteBid(Bid bid) {
@@ -31,5 +40,9 @@ public class BidService {
 
     public List<Bid> findAllBids() {
         return bidDao.findAll();
+    }
+
+    public Bid findLast(int lotId) {
+        return bidDao.findLast(lotId);
     }
 }

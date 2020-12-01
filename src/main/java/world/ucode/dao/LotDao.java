@@ -7,6 +7,7 @@ import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.utils.HibernateSessionFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LotDao {
@@ -51,4 +52,25 @@ public class LotDao {
                 .openSession().createQuery("From Lot").list();
         return lots;
     }
+
+    public List<Lot> findAllByUser(String login) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("SELECT lot FROM Lot lot WHERE lot.seller.login = :login")
+                .setParameter("login", login);
+        List<Lot> lots = (List<Lot>) query.getResultList();
+        session.close();
+        return lots;
+    }
+//
+//    public void findAllClosure() {
+//        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+//        Query query = session.createQuery("SELECT lot FROM Lot lot WHERE lot.startTime >= lot.finishTime");
+//        List<Lot> lots = (List<Lot>) query.getResultList();
+//        session.close();
+//
+//        for (Lot lot : lots) {
+////            lot.setActive(false);
+////            update(lot);
+//        }
+//    }
 }

@@ -1,12 +1,12 @@
 'use strict';
 
 let auctions = {
-  lot: {status: 'closed', id: 125, image: 'image', title: 'Book "Harry Hotter"', seller: 'trohalska', rate: 4.8,
-    price: 17.5, priceStep:2.5, description: 'ololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololo',
-    startTime: '2020-11-18T10:18:00', endTime: '2020-11-20T10:18:00'},
-  // lot: {status: 'active', id: 125, image: 'image', title: 'Book "Harry Hotter"', seller: 'trohalska', rate: 4.8,
-  //   price: 12.5, priceStep:2.5, description: 'ololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololo',
-  //   startTime: '2020-11-18T10:18:00', endTime: '2020-11-28T10:18:00'},
+  // lot: {active: false, id: 125, image: 'image', title: 'Book "Harry Hotter"', seller: 'trohalska', rate: 4.8,
+  //   price: 17.5, priceStep:2.5, description: 'ololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololo',
+  //   startTime: '2020-11-18T10:18:00', endTime: '2020-11-20T10:18:00'},
+  lot: {active: true, id: 125, image: 'image', title: '', seller: 'trohalska', rate: 4.8,
+    price: 1, priceStep: 1, description: '',
+    startTime: '2020-11-18T10:18:00', endTime: '2020-11-28T10:18:00'},
 
   winner: {bidder: 'Olga', feedback: ''},
 
@@ -29,11 +29,11 @@ let auctions = {
     // image
     document.querySelector('#price').innerHTML += '\$' + this.lot.price;
     document.querySelector('#aboutProfile').innerHTML = this.lot.seller;
-    document.querySelector('#rate').innerHTML = this.lot.rate;
+    document.querySelector('#rate').innerHTML = (this.lot.rate === 0) ? ' - ' : this.lot.rate;
     document.querySelector('#startTime').innerHTML += this.lot.startTime.replace('T', '&emsp;');
     document.querySelector('#description').innerHTML = this.lot.description;
 
-    if (this.lot.status === 'active') {
+    if (this.lot.active) {
       this.activateElement('#addBit-buttons');
     } else {
       this.setClosedTimer();

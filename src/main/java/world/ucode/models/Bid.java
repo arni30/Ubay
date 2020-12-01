@@ -9,29 +9,36 @@ public class Bid {
     @Column(name="bidId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "bidderId")
-    private int bidderId;
-    @Column(name = "auctionId")
-    private int auctionId;
     @Column(name = "price")
     private int price;
+    @Column(name = "active")
+    private boolean active;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "auctionId", referencedColumnName = "lotId")
+    private Lot lot;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bidderId", referencedColumnName = "userId")
+    private User bidder;
 
     public int getId() {
         return id;
     }
 
-    public void setAuctionId(int auctionId) {
-        this.auctionId = auctionId;
+    public void setLot(Lot lot) {
+        this.lot = lot;
+//        lot.setLastBid(this);
     }
-    public int getAuctionId() {
-        return auctionId;
+    public Lot getLot() {
+        return lot;
     }
 
-    public void setBidderId(int bidderId) {
-        this.bidderId = bidderId;
+    public void setBidder(User bidder) {
+        this.bidder = bidder;
     }
-    public int getBidderId() {
-        return bidderId;
+    public User getBidder() {
+        return bidder;
     }
 
     public void setPrice(int price) {
@@ -40,4 +47,7 @@ public class Bid {
     public int getPrice() {
         return price;
     }
+
+    public void setActive(boolean active) { this.active = active; }
+    public boolean getActive() { return active; }
 }

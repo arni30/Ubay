@@ -1,9 +1,8 @@
 'use strict';
 
 let personalInfo = {
-  info:
-    { userRole: 'seller', login: 'user1234',
-      email: 'trololo@gmail.com', balance: 170, rate: 4.5},
+  info: { userRole: '', login: '', email: '', balance: 0, avarageRate: 0 },
+
   changes: false,
 
   showInfo: function () {
@@ -28,6 +27,11 @@ let personalInfo = {
       }
       elem[i].appendChild(p);
     }
+    let userLogin = document.getElementById("userLogin");
+    userLogin.innerHTML = this.info.login;
+
+    gotoAddLot(this.info.login, this.info.id);
+    viewFeedbacks(this.info.login);
   },
   changeInfo: function () {
     let elem, p;
@@ -116,7 +120,7 @@ let personalInfo = {
 let sellerFeatures = {
   addSellersFeatures: function (item, rating) {
     this.addStar(item, rating);
-    this.addButtonFeatures();
+    this.addButtonsFeatures();
   },
   addStar: function(item, rating) {
     item.innerHTML += '&emsp;';
@@ -130,20 +134,13 @@ let sellerFeatures = {
     if (rating !== 0) {
       span.innerHTML = rating;
     } else {
-      span.innerHTML = '-';
+      span.innerHTML = ' -';
     }
     item.appendChild(span);
   },
-  addButtonFeatures: function() {
+  addButtonsFeatures: function() {
     let item = document.querySelector('#profile-buttons');
-
-    let a = document.createElement('a');
-    a.setAttribute('class', 'button');
-    a.setAttribute('href', '#');
-    a.setAttribute('onclick', 'viewFeedbacks(this)');
-    a.innerHTML = 'Bidders feedbacks';
-
-    item.appendChild(a);
+    item.setAttribute('style', 'display = block;');
   }
 }
 
@@ -159,49 +156,49 @@ let sellerFeatures = {
 //     $('#newImgDiv').attr("style", "display: initial");
 
 let lots = {
-  active: [
-    { id: 14,title: 'Jam',category: 'J\'ELITE',
-      price: 8.99,active: 1,description: 'Ukrainian candied.',
+  items: [
+    { id: 1, title: 'NONE', category: '',
+      price: 0, active: true, description: '',
       image: 'resources/favicon.ico'
     },
-    { id: 15,title: 'Jam',category: 'J\'ELITE',
-      price: 8.99,active: 1,description: 'Ukrainian candied.',
+    { id: 2, title: 'NONE', category: '',
+      price: 0, active: false, description: '',
       image: 'resources/favicon.ico'
     }
   ],
-  closed: [
-    { id: 1,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 0,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 2,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 0,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 3, title: 'Jam', category: 'St.Dalfout',
-      price: 9.99, active: 0, description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    }
-  ],
-  showActive: function() {
-    let elem = document.querySelector('.active-lots');
+  showItems: function() {
+    let elemActive = document.querySelector('.active-lots');
+    if (elemActive.firstChild)
+      while (elemActive.firstChild)
+        elemActive.removeChild(elemActive.lastChild);
 
-    if (elem.firstChild)
-      while (elem.firstChild)
-        elem.removeChild(elem.lastChild);
-
-    for (let i in this.active)
-      products.showItem(elem, this.active[i]);
-  },
-  showClosed: function() {
     let elem = document.querySelector('.closed-lots');
-
     if (elem.firstChild)
       while (elem.firstChild)
         elem.removeChild(elem.lastChild);
 
-    for (let i in this.closed)
-      products.showItem(elem, this.closed[i]);
+    for (let i in this.items) {
+      if (this.items[i].active) {
+        document.querySelector('#activeBox')
+            .setAttribute('style', 'display:flex');
+        break;
+      }
+    }
+    for (let i in this.items) {
+      if (!this.items[i].active) {
+        document.querySelector('#closedBox')
+            .setAttribute('style', 'display:flex');
+        break;
+      }
+    }
+
+    for (let i in this.items) {
+      if (this.items[i].active) {
+        products.showItem(elemActive, this.items[i]);
+      } else {
+        products.showItem(elem, this.items[i]);
+      }
+    }
   },
 }
 
@@ -233,9 +230,8 @@ function signOut() {
 }
 
 let init = () => {
-  // personalInfo.showInfo();
-  lots.showActive();
-  lots.showClosed();
+  personalInfo.showInfo();
+  lots.showItems();
 }
 
 window.onload = init;

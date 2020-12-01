@@ -33,7 +33,8 @@
   display: block;
 }
 
-.addLot-form > input {
+.addLot-form > input,
+.addLot-form > select {
   margin: 15px 0;
   box-sizing: border-box;
   width: 100%;

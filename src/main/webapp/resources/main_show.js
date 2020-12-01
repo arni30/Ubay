@@ -2,44 +2,8 @@
 
 let products = {
   items: [
-    { id: 14, title: 'Jam', category: 'J\'ELITE',
-      price: 8.99,active: 1,description: 'Ukrainian candied.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 15,title: 'Jam',category: 'J\'ELITE',
-      price: 8.99,active: 2,description: 'Ukrainian candied.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 1,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 0,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 2,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 2,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 3,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 0,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 4,title: 'Jam',category: 'St.Dalfout',
-      price: 6.99,active: 10,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 5,title: 'Jam',category: 'St.Dalfout',
-      price: 9.99,active: 10,description: 'Very tasty jam.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 6,title: 'Jam',category: 'Chantaine',
-      price: 11.99,active: 10,description: 'Natural jam, made in France.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 7,title: 'Jam',category: 'Chantaine',
-      price: 11.99,active: 10,description: 'Natural jam, made in France.',
-      image: 'resources/favicon.ico'
-    },
-    { id: 8,title: 'Jam',category: 'Chantaine',
-      price: 11.99,active: 10,description: 'Natural jam, made in France.',
+    { id: 0, title: '', category: 'other',
+      price: 0, active: true, description: 'NONE',
       image: 'resources/favicon.ico'
     }
   ],
@@ -97,7 +61,7 @@ let products = {
 
     p = document.createElement('h5');
     p.className = 'item_name';
-    p.innerHTML = item.title + ' ' + item.category;
+    p.innerHTML = item.title;
     shelf.appendChild(p);
 
     p = document.createElement('p');
@@ -115,14 +79,13 @@ let products = {
     p1 = document.createElement('input');
     p1.setAttribute('id', item.id);
     p1.setAttribute('value', 'show details');
-    // if (item.active !== 0) {
+    if (item.price !== 0) {
       p1.setAttribute('type', 'button');
       p1.setAttribute('onclick', 'gotoAuction(this)');
       p1.className = 'item_add button';
-
-    // }
-    // else
-    //   p1.className = 'button-empty';
+    }
+    else
+      p1.className = 'button-empty';
     p.appendChild(p1);
 
     shelf.appendChild(p);
