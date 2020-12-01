@@ -32,15 +32,18 @@ public class Lot {
     private Timestamp finishTime;
     @Column(name = "active")
     private boolean active;
-
-//    private BufferedImage image;
+    @Lob()
+    private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sellerId", referencedColumnName = "userId")
     private User seller;
 
-//    @OneToOne(mappedBy = "auctionId",cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
-//    private Bid lastBid;
+    public Lot() {}
+    public Lot(String title, int startPrice) {
+        this.title = title;
+        this .startPrice = startPrice;
+    }
 
     public int getId() { return id; }
 
@@ -62,6 +65,9 @@ public class Lot {
     public void setCategory(String category) { this.category = category; }
     public String getCategory() { return category; }
 
+    //    public void setFinished(boolean finished) { this.finished = finished; }
+    //    public boolean getFinished() { return finished; }
+
     public void setSeller(User seller) { this.seller = seller; }
     public User getSeller() { return seller; }
 
@@ -76,6 +82,13 @@ public class Lot {
 
 //    public void setLastBid(Bid lastBid) { this.lastBid = lastBid; }
 //    public Bid getLastBid() { return lastBid; }
+
+    public byte[] getImage() {
+        return image;
+    }
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     @Override
     public String toString() {

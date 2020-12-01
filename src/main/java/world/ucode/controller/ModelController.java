@@ -10,14 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import world.ucode.models.Bid;
-import world.ucode.models.Lot;
-import world.ucode.models.Search;
-import world.ucode.models.User;
+import world.ucode.models.*;
 import world.ucode.services.BidService;
 import world.ucode.services.LotService;
 import world.ucode.utils.CreateJSON;
+import world.ucode.utils.ImageHandler;
 import world.ucode.utils.SendMail;
 import world.ucode.utils.Token;
 import world.ucode.services.UserService;
@@ -25,6 +24,11 @@ import world.ucode.services.UserService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -207,10 +211,13 @@ public class ModelController {
     }
 
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
-    public ModelAndView addLot(Lot lot, @CookieValue("login") String login) throws JsonProcessingException {
+    public ModelAndView addLot(Lot lot, @RequestParam("photo") MultipartFile file, @CookieValue("login") String login) throws IOException {
+        User seller = userService.findUser(login);
+        lot.setSeller(seller);
+        lot.setImage(file.getBytes());  // Data truncation: Data too long for column 'image' at row 1
+        ImageHandler.savePicture(file);  // проверка
         System.out.println("HERE");
         System.out.println(login);
-        User seller = userService.findUser(login);
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
         curTime.setTime(curTime.getTime() + (2 * 60 * 60 * 1000));
         lot.setStartTime(curTime);
@@ -276,7 +283,7 @@ public class ModelController {
                 userService.saveUser(user);
                 String json = mapper.writeValueAsString(user);
                 mav.addObject("user",json);
-                mav.setViewName("redirect:/main");
+                mav.setViewName("/main");
                 response.addCookie(new Cookie("login", user.getLogin()));
             }
             return mav;
@@ -295,8 +302,38 @@ public class ModelController {
         System.out.println(search.getDuration());
         System.out.println(search.getStartTime());
         System.out.println(search.getDescription());
+
         return "redirect:/main";
     }
+
+
+//    @RequestMapping(value="/upload", method=RequestMethod.GET)
+//    public @ResponseBody String provideUploadInfo() {
+//        return "Вы можете загружать файл с использованием того же URL.";
+//    }
+
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public String handleFileUpload(@RequestParam("name") String name,
+                                   @RequestParam("file") MultipartFile file){
+        ImageHandler.savePicture(file);
+        return "/main";
+    }
+
+//    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+//    public String uploadFileHandler(@RequestBody JSONObject jsonString)
+////    public @ResponseBody String uploadFileHandler(@RequestParam("imageForm") MultipartFile multipartFile)
+//            throws IOException, ServletException {
+////        System.out.println("Uploaded: " + multipartFile.getSize() + " bytes");
+////        System.out.println("JSON: " + text.toString());
+//        System.out.println("text: " + jsonString.get("text"));
+////        String img = (String) jsonString.get("image");
+//        InputStream in = new ByteArrayInputStream(ImageHandler.serialize(jsonString.get("image")));
+//        // get & process file
+//        BufferedImage image = ImageIO.read(in);
+//        System.out.println("image height: " + image.getHeight());
+////        ImageIO.write(image, type, resp.getOutputStream());
+//        return "/main";
+//    }
     // -----------------------
     @RequestMapping(value = "/errors/404", method = RequestMethod.GET)
     public String error404() {
@@ -307,4 +344,10 @@ public class ModelController {
     public String exceptions() {
         return "/errors/error";
     }
+
+    private void databaseClose(User user) {
+        userService.updateUser(user);
+        context.close();
+    }
+
 }
