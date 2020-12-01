@@ -30,7 +30,7 @@ let personalInfo = {
     let userLogin = document.getElementById("userLogin");
     userLogin.innerHTML = this.info.login;
 
-    gotoAddLot(this.info.login, this.info.id);
+    // gotoAddLot(this.info.login, this.info.id);
     viewFeedbacks(this.info.login);
   },
   changeInfo: function () {
@@ -143,17 +143,6 @@ let sellerFeatures = {
     item.setAttribute('style', 'display = block;');
   }
 }
-
-
-//   success: function (response) {
-//     console.log("SUCCESS : ", data);
-//     var json = JSON.parse(response);
-//     console.log(json);
-//     var newImgPath =  path + "/uploadFiles/" + json.newFile;
-//     $('#newImg').attr("src", newImgPath);
-//     $('#download').attr("href", newImgPath);
-//     $('#load').attr("style", "visibility: visible");
-//     $('#newImgDiv').attr("style", "display: initial");
 
 let lots = {
   items: [

@@ -8,6 +8,7 @@ import world.ucode.models.User;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.List;
 
 public class CreateJSON {
@@ -51,7 +52,7 @@ public class CreateJSON {
                 json.put("price", lot.getStartPrice());
                 json.put("active", lot.getActive());
                 json.put("description", lot.getDescription());
-                json.put("image", "resources/favicon.ico");
+                json.put("image", Base64.getEncoder().encodeToString(lot.getImage()));
 
                 jsonArray.add(json);
             }

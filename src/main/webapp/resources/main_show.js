@@ -47,7 +47,11 @@ let products = {
     p1.className = 'images';
       p = document.createElement('img');
       p.className = 'item_thumb';
-      p.setAttribute('src', item.image);
+      if (item.image) {
+        p.setAttribute('src', "data:image/jpg;base64," + item.image);
+      } else {
+        p.setAttribute('src', 'resources/favicon.ico');
+      }
       p1.appendChild(p);
 
       if (!item.active) {
