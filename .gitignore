@@ -9,6 +9,6 @@
 *.png
 .idea
 /target
-
+.png
 *.html
 ubay.iml
