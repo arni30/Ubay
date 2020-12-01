@@ -30,8 +30,8 @@ public class Lot {
     private Timestamp finishTime;
     @Column(name = "active")
     private boolean active;
-
-//    private BufferedImage image;
+    @Lob()
+    private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sellerId", referencedColumnName = "userId")
@@ -77,6 +77,13 @@ public class Lot {
 
     public void setActive(boolean active) { this.active = active; }
     public boolean getActive() { return active; }
+
+    public byte[] getImage() {
+        return image;
+    }
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     @Override
     public String toString() {

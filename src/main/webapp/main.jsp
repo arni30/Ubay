@@ -1,3 +1,5 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -18,6 +20,9 @@
     <script src="resources/references.js"></script>
     <script src="resources/main.js"></script>
     <script src="resources/main_show.js"></script>
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
 </head>
 
 <body>
@@ -137,6 +142,83 @@
 
                 <input id="formButton" class="button" type="submit" value="Search">
             </form>
+
+            <form method="POST" enctype="multipart/form-data" action="upload">
+                File to upload:
+                <input type="file" name="file">
+                <br/>
+                Name:
+                <input type="text" name="name">
+                <br/><br/>
+                <input type="submit" value="Upload"> Press here to upload the file!
+            </form>
+            <br/><br/>
+
+            <form name="imageForm">
+                <label for="image">Photo</label>
+                <input id="image" class="button" type="file" name="image" value="image"/>
+                <input id="imgButton" class="button" type="submit" value="Upload" onclick="send()">
+
+                <script type="text/javascript">
+
+                    function send() {
+                        let formData = new FormData();
+                        formData.append('file', $('#image')[0].files[0]);
+                        formData.append('name', 'trololo');
+                        // let object = {};
+                        // formData.forEach(function(value, key){
+                        //     object[key] = value;
+                        // });
+                        // let jsonString = JSON.stringify(object);
+                        // console.log(jsonString);
+
+                        // let request = document.getElementById("image").value;
+                        $.ajax({
+                            url : 'upload',
+                            type : 'POST',
+                            enctype: 'multipart/form-data',
+                            // contentType : "application/json; charset=utf-8",
+                            data : formData,
+                            async: false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+                            processData : false,  //To avoid making query String instead of JSON
+                            cache: false, //This will force requested pages not to be cached by the browser
+                            success : function(resposeJsonObject) {
+                                alert("hi stuff worked");
+                                // alert(data);
+                            },
+                            error : function(err) {
+                                alert("nope!");
+                                // alert(err);
+                            }
+                        });
+                    }
+                    function sendTextToServer() {
+                        let formData = new FormData();
+                        formData.append('text', 'trololo');
+                        let object = {};
+                        formData.forEach(function (value, key) {
+                            object[key] = value;
+                        });
+                        let jsonString = JSON.stringify(object);
+                        console.log(jsonString);
+                        $.ajax({
+                            url: 'uploadFile',
+                            type: 'POST',
+                            contentType: "application/json; charset=utf-8",
+                            data: jsonString,
+                            async: false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+                            processData: false,  //To avoid making query String instead of JSON
+                            cache: false, //This will force requested pages not to be cached by the browser
+                            success: function (resposeJsonObject) {
+                                alert("hi stuff worked");
+                            },
+                            error: function (err) {
+                                alert("nope!");
+                            }
+                        });
+                    }
+                </script>
+            </form>
         </div>
         <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script> -->
     </aside>
@@ -156,6 +238,8 @@
     </div>
 </footer>
 
+<%--<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>--%>
+<%--<script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>--%>
 </body>
 
 <script type="text/javascript">

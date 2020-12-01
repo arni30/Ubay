@@ -2,8 +2,6 @@ package world.ucode.models;
 
 public class Search {
     private String title = "";
-//    private float startPrice = 0;
-//    private int duration = 0;
     private String startPrice = "";
     private String duration = "";
     private String startTime = "";
@@ -19,7 +17,7 @@ public class Search {
     }
 
     public float getStartPrice() {
-        if (startPrice == "") {
+        if (startPrice.equals("")) {
             return 0;
         }
         return Float.parseFloat(startPrice);
@@ -30,7 +28,7 @@ public class Search {
     }
 
     public int getDuration() {
-        if (duration == "") {
+        if (duration.equals("")) {
             return 0;
         }
         return Integer.parseInt(duration);
