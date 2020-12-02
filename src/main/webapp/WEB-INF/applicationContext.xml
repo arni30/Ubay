@@ -9,6 +9,8 @@
 
     <bean id="userService" class="world.ucode.services.UserService">
     </bean>
+    <bean id="bidService" class="world.ucode.services.BidService">
+    </bean>
 <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
 <!--        <property name="maxUploadSize" value="10000000"/>-->
 <!--    </bean>-->

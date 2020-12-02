@@ -55,27 +55,3 @@ public class AuthProvider implements AuthenticationProvider
         return true;
     }
 }
-
-
-
-//    ModelAndView mav = new ModelAndView();
-//    ObjectMapper mapper = new ObjectMapper();
-////        try {
-//            if (user.getType().equals("signin")) {
-//                    User newUser = userService.validateUser(user);
-//                    String json = mapper.writeValueAsString(newUser);
-////                List<Lot> lotss = newUser.getLots();
-////                for (Lot lot:lotss) {
-////                    System.out.println(lot.getTitle());
-////                }
-////                List<Bid> bids = userService.findUser("4").getBids();
-////                for (Bid bid:bids) {
-////                    System.out.println(bid.getPrice());
-////                }
-//                    mav.addObject("user", json);
-//                    List<Lot> lots = lotService.findAllLotsByUser(newUser.getLogin());
-//        JSONArray jsonArr = createJSON.mainShowLotsJSON(lots);
-//        mav.addObject("lots", jsonArr);
-//        mav.setViewName("/profile");
-//        response.addCookie(new Cookie("login", user.getLogin()));
-

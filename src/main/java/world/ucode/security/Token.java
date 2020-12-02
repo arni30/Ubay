@@ -1,4 +1,4 @@
-package world.ucode.utils;
+package world.ucode.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

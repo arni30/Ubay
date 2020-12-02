@@ -39,6 +39,10 @@ public class Lot {
     @JoinColumn(name = "sellerId", referencedColumnName = "userId")
     private User seller;
 
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "lastBidId", referencedColumnName = "bidId")
+//    private Bid lastBid;
+
     public Lot() {}
     public Lot(String title, int startPrice) {
         this.title = title;
