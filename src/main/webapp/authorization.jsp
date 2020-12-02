@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="description" content="ubay">
     <meta name="keywords" content="HTML, CSS, JavaScript, java, ucode, unitfactory, cbl, cblworld, ubay">
-<%--    <meta name="author" content="Tetiana Rohalska">--%>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Login</title>
     <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon"/>
@@ -22,8 +21,8 @@
     <div class="frame">
         <div class="nav">
             <ul class="links">
-                <li class="signin-active"><a class="btn">Sign in</a></li>
-                <li class="signup-inactive"><a class="btn">Sign up</a></li>
+                <li class="signin-active"><a class="btn" href="registration">Sign in</a></li>
+                <li class="signup-inactive"><a class="btn" href="registration">Sign up</a></li>
             </ul>
         </div>
         <div>
@@ -43,7 +42,7 @@
 <%--                onclick="signin()"--%>
 <%--                    <a class="btn-signin" onclick="signin()">Sign in</a>--%>
             </form>
-            <form class="form-signup" id="formSignUp" action="authorization" method="POST" name="form">
+            <form class="form-signup" id="formSignUp">
                 <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signup"/>
                 <input class="form-styling" style="display: none" type="text" name="verification" placeholder="" value="not verificated"/>
                 <label for="userRole">Role</label>

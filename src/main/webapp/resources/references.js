@@ -7,6 +7,20 @@
 //     location.replace('http://localhost:8080/ubay/'+str);
 // }
 
+// /**
+//  * delay for registration & authorization pages
+//  */
+//
+// function goto(str) {
+//     location.replace(str);
+// }
+// function gotoSign(str) {
+//     delay(goto, 1500, str);
+// }
+
+/**
+ * add login to url for view profile & feedbacks pages
+ */
 function viewProfile(item) {
     item.setAttribute('href',
         `/ubay/viewProfile?login=${document.querySelector('#aboutProfile').innerHTML}`);
@@ -19,14 +33,17 @@ function viewFeedbacks(login) {
     document.querySelector('#biddersFeedbacks')
         .setAttribute('href',`/ubay/feedbacks?login=${login}`);
 }
-// function gotoAddLot(login, userId) {
-//     document.querySelector('#addLotId')
-//         .setAttribute('href', `/ubay/addLot`);
-// }
+
+/**
+ * add lot id to url for auction pages
+ */
 function gotoAuction(item) {
     location.replace(`/ubay/auction?lotId=${item.id}`);
 }
 
+/**
+ * util for parse url
+ */
 function receiveGetParameters() {
     let param = [];
     let i = 0;

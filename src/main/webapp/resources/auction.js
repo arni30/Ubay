@@ -26,12 +26,19 @@ let auctions = {
   show: function () {
     document.querySelector('#lotId').innerHTML += this.lot.id;
     document.querySelector('#title').innerHTML = this.lot.title;
-    // image
     document.querySelector('#price').innerHTML += '\$' + this.lot.price;
     document.querySelector('#aboutProfile').innerHTML = this.lot.seller;
     document.querySelector('#rate').innerHTML = (this.lot.rate === 0) ? ' - ' : this.lot.rate;
     document.querySelector('#startTime').innerHTML += this.lot.startTime.replace('T', '&emsp;');
     document.querySelector('#description').innerHTML = this.lot.description;
+
+    if (this.lot.image) {
+      document.querySelector('.lot-img img')
+          .setAttribute('src', 'data:image/jpg;base64,' + this.lot.image);
+    } else {
+      document.querySelector('.lot-img img')
+          .setAttribute('src', 'resources/favicon.ico');
+    }
 
     if (this.lot.active) {
       this.activateElement('#addBit-buttons');

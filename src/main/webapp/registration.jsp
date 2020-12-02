@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="description" content="ubay">
     <meta name="keywords" content="HTML, CSS, JavaScript, java, ucode, unitfactory, cbl, cblworld, ubay">
-    <%--    <meta name="author" content="Tetiana Rohalska">--%>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Login</title>
     <link rel="shortcut icon" href="resources/favicon.ico" type="image/x-icon"/>
@@ -18,19 +17,19 @@
 </head>
 
 <body>
-<h1>
-    ${hallo}
-</h1>
+<%--<h1>--%>
+<%--    ${hallo}--%>
+<%--</h1>--%>
 <div class="container">
-    <div class="frame">
+    <div class="frame frame-long">
         <div class="nav">
             <ul class="links">
-                <li class="signin-active"><a class="btn">Sign in</a></li>
-                <li class="signup-inactive"><a class="btn">Sign up</a></li>
+                <li class="signin-inactive signin-inactive"><a class="btn" href="authorization">Sign in</a></li>
+                <li class="signup-active signup-active"><a class="btn" href="authorization">Sign up</a></li>
             </ul>
         </div>
         <div>
-            <form class="form-signin" action="authorization" method="POST" name="form">
+            <form class="form-signin form-signin-left">
                 <input class="form-styling" style="display: none" type="text" name="type" value="signin"/>
                 <label for="loginLogin">Username</label>
                 <input id="loginLogin" class="form-styling" type="text" name="login" required/>
@@ -46,7 +45,7 @@
                 <%--                onclick="signin()"--%>
                 <%--                    <a class="btn-signin" onclick="signin()">Sign in</a>--%>
             </form>
-            <form class="form-signup" id="formSignUp" action="registration" method="POST" name="form">
+            <form class="form-signup form-signup-left" id="formSignUp" action="registration" method="POST" name="form">
                 <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signup"/>
                 <input class="form-styling" style="display: none" type="text" name="verification" placeholder="" value="not verificated"/>
                 <label for="userRole">Role</label>
@@ -88,9 +87,8 @@
                 </svg>
             </div>
 
-            <div class="forgot">
-                <%--                <a href="#">Forgot your password?</a>--%>
-                <a href="#"></a>
+            <div class="forgot forgot-left">
+                <a href="#">Forgot your password?</a>
             </div>
 
             <div class="welcome-block">

@@ -23,7 +23,7 @@ public class CreateJSON {
 
         json.put("active", lot.getActive());
         json.put("id", lot.getId());
-        json.put("image", "");
+        json.put("image", Base64.getEncoder().encodeToString(lot.getImage()));
         json.put("title", lot.getTitle());
         json.put("seller", seller.getLogin());
         json.put("rate", seller.getAvarageRate());
