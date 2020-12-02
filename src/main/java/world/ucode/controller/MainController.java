@@ -2,6 +2,7 @@ package world.ucode.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +16,10 @@ import world.ucode.utils.CreateJSON;
 import java.util.List;
 @Controller
 public class MainController {
-    final private LotService lotService = new LotService();
-    final private CreateJSON createJSON = new CreateJSON();
+    @Autowired
+    private LotService lotService;
+    @Autowired
+    private CreateJSON createJSON;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {

@@ -1,5 +1,6 @@
 package world.ucode.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -9,7 +10,9 @@ import world.ucode.utils.PageModelAndView;
 
 @Controller
 public class ViewProfileController {
-    PageModelAndView pageModelAndView = new PageModelAndView();
+    @Autowired
+    private PageModelAndView pageModelAndView;
+
     @RequestMapping(value = "/viewProfile", method = RequestMethod.GET)
     public ModelAndView viewProfile(@RequestParam String login) {
         return pageModelAndView.pageModelAndView(login, "/viewProfile");

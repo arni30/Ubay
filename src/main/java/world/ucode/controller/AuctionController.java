@@ -15,8 +15,9 @@ import world.ucode.utils.CreateJSON;
 @Controller
 public class AuctionController {
     @Autowired
-    UserService userService;
-    CreateJSON createJSON = new CreateJSON();
+    private UserService userService;
+    @Autowired
+    private CreateJSON createJSON;
     /**
      * requires unique lot id (that auction show).
      * */

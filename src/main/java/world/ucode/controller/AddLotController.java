@@ -22,10 +22,12 @@ import java.util.Calendar;
 @Controller
 public class AddLotController {
     final private ModelAndView mav = new ModelAndView();
-    final private LotService lotService = new LotService();
-    final private PageModelAndView pageModelAndView = new PageModelAndView();
     @Autowired
-    UserService userService;
+    private PageModelAndView pageModelAndView;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private LotService lotService;
 
     /**
      * requires unique seller login (what seller added lot).

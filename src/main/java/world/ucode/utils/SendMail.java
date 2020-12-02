@@ -2,6 +2,9 @@ package world.ucode.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -14,6 +17,7 @@ import world.ucode.models.User;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
 @Component
 public class SendMail {
     @Autowired
@@ -29,13 +33,16 @@ public class SendMail {
 //        SimpleMailMessage templateMessage = context.getBean("templateMessage", SimpleMailMessage.class);
 
         // Создаём потокобезопасную копию шаблона.
+        if (mailSender == null) {
+            System.out.println("HALLLLLLLO");
+        }
         SimpleMailMessage mailMessage = new SimpleMailMessage(templateMessage);
 
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Registration confirmation");
         mailMessage.setText("To confirm your account, please click here : "
                 + "http://" + InetAddress.getLocalHost().getHostAddress() + ":8080/ubay/confirmation/?token=" + user.getToken());
-        mailSender.send(mailMessage);
+         mailSender.send(mailMessage);
         System.out.println("Mail sended");
 
     }

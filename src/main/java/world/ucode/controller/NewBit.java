@@ -19,8 +19,10 @@ public class NewBit {
     @Autowired
     UserService userService;
     ModelAndView mav = new ModelAndView();
-    BidService bidService = new BidService();
-    LotService lotService = new LotService();
+    @Autowired
+    private BidService bidService;
+    @Autowired
+    private LotService lotService;
     @RequestMapping(value = "/newBit", method = RequestMethod.POST)
     public ModelAndView newBid(Bid bid, HttpServletRequest request) throws JsonProcessingException {
         System.out.println(bid.getPrice());

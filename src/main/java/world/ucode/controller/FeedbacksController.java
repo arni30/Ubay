@@ -1,5 +1,6 @@
 package world.ucode.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -9,7 +10,8 @@ import world.ucode.utils.PageModelAndView;
 
 @Controller
 public class FeedbacksController {
-    final private PageModelAndView pageModelAndView = new PageModelAndView();
+    @Autowired
+    private PageModelAndView pageModelAndView;
     /**
      * requires unique seller login (feedbacks about what seller).
      * */

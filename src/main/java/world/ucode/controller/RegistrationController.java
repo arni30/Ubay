@@ -13,6 +13,7 @@ import world.ucode.models.Role;
 import world.ucode.models.User;
 import world.ucode.security.Token;
 import world.ucode.services.UserService;
+import world.ucode.utils.SendMail;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,8 @@ import java.util.Collections;
 public class RegistrationController {
     @Autowired
     UserService userService;
+    @Autowired
+    SendMail sendMail;
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView signup_post(User user, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
@@ -35,12 +38,12 @@ public class RegistrationController {
         Token token = new Token();
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setToken(token.getJWTToken(user.getLogin()));
-//        sendMail.sendMail(user);
+        sendMail.sendMail(user);
         response.addCookie(new Cookie("login", user.getLogin()));
         userService.saveUser(user);
         String json = mapper.writeValueAsString(user);
         mav.addObject("user",json);
-        mav.setViewName("/authorization");
+        mav.setViewName("redirect:/authorization");
         return mav;
     }
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
