@@ -41,7 +41,7 @@
             </div>
             <div class="header-login">
                 <span id="userLogin"></span>
-                <a class="abutton" href="#" onclick="signOut()">Sign out</a>
+                <a class="abutton" href="/ubay/logout">Sign out</a>
             </div>
         </div>
 
@@ -100,7 +100,7 @@
     </div>
 
     <div id="profile-buttons" class="page personal-section__header" style="display: none">
-        <a id="addLotId" class="button" href="#">Add auction</a>
+        <a id="addLotId" class="button" href="/ubay/addLot">Add auction</a>
         <a id="biddersFeedbacks" class="button" href="#">Bidders feedbacks</a>
     </div>
 

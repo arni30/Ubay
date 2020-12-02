@@ -17,32 +17,35 @@
 </head>
 
 <body>
+<%--<h1>--%>
+<%--    ${hallo}--%>
+<%--</h1>--%>
 <div class="container">
-    <div class="frame">
+    <div class="frame frame-long">
         <div class="nav">
             <ul class="links">
-                <li class="signin-active"><a class="btn" href="registration">Sign in</a></li>
-                <li class="signup-inactive"><a class="btn" href="registration">Sign up</a></li>
+                <li class="signin-inactive signin-inactive"><a class="btn" href="authorization">Sign in</a></li>
+                <li class="signup-active signup-active"><a class="btn" href="authorization">Sign up</a></li>
             </ul>
         </div>
         <div>
-            <form class="form-signin" action="authorization" method="POST" name="form">
+            <form class="form-signin form-signin-left">
                 <input class="form-styling" style="display: none" type="text" name="type" value="signin"/>
                 <label for="loginLogin">Username</label>
                 <input id="loginLogin" class="form-styling" type="text" name="login" required/>
                 <label for="passwordLogin">Password</label>
                 <div>
                     <input id="passwordLogin" class="form-styling" type="password" autocomplete="on"
-                       name="password" required/>
+                           name="password" required/>
                     <span toggle="#passwordLogin" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
-<%--                <input type="checkbox" id="checkbox"/>--%>
-<%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
+                <%--                <input type="checkbox" id="checkbox"/>--%>
+                <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
                 <input class="btn-signin" type="submit" value="Sign in">
-<%--                onclick="signin()"--%>
-<%--                    <a class="btn-signin" onclick="signin()">Sign in</a>--%>
+                <%--                onclick="signin()"--%>
+                <%--                    <a class="btn-signin" onclick="signin()">Sign in</a>--%>
             </form>
-            <form class="form-signup" id="formSignUp">
+            <form class="form-signup form-signup-left" id="formSignUp" action="registration" method="POST" name="form">
                 <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signup"/>
                 <input class="form-styling" style="display: none" type="text" name="verification" placeholder="" value="not verificated"/>
                 <label for="userRole">Role</label>
@@ -52,7 +55,7 @@
                 </select>
                 <label for="balance">Balance</label>
                 <input id="balance" class="form-styling" type="number" name="balance"
-                            step="1" min="100" max="50000" value="100" size="5" required/>
+                       step="1" min="100" max="50000" value="100" size="5" required/>
                 <label for="loginSignUp">Username</label>
                 <input id="loginSignUp" class="form-styling" type="text" name="login" required/>
                 <label for="email">Email</label>
@@ -69,7 +72,7 @@
                     <span toggle="#confirmpassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
                 <input class="btn-signup" type="submit" value="Sign up">
-<%--                onclick="signup()"--%>
+                <%--                onclick="signup()"--%>
             </form>
 
             <div class="success">
@@ -84,7 +87,7 @@
                 </svg>
             </div>
 
-            <div class="forgot">
+            <div class="forgot forgot-left">
                 <a href="#">Forgot your password?</a>
             </div>
 

@@ -8,16 +8,14 @@
   <artifactId>ubay</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>ubay Maven Webapp</name>
+  <name>ubay</name>
 <!--  <url>http://www.example.com</url>-->
-
   <properties>
     <project.name>ubay</project.name>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 <!--    <maven.compiler.source>8</maven.compiler.source>-->
 <!--    <maven.compiler.target>8</maven.compiler.target>-->
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.modelmapper</groupId>
@@ -37,7 +35,6 @@
       <version>3.0.1</version>
       <scope>provided</scope>
     </dependency>
-
     <!-- Apache Commons FileUpload -->
     <dependency>
       <groupId>commons-fileupload</groupId>
@@ -99,6 +96,7 @@
       <artifactId>javax.mail</artifactId>
       <version>1.5.4</version>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-core</artifactId>
@@ -109,6 +107,16 @@
       <artifactId>jjwt</artifactId>
       <version>0.9.1</version>
     </dependency>
+    <dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-web</artifactId>
+    <version>5.4.1</version>
+    </dependency>
+    <dependency>
+    <groupId>org.springframework.security.oauth</groupId>
+    <artifactId>spring-security-oauth2</artifactId>
+    <version>2.5.0.RELEASE</version>
+    </dependency>
 
   </dependencies>
 
@@ -116,19 +124,43 @@
     <finalName>${project.name}</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>1.7.6</version>
+                    <configuration>
+                        <container>
+                            <containerId>tomcat9x</containerId>
+                            <type>embedded</type>
+                        </container>
+                        <configuration>
+                          <properties>
+                              <cargo.servlet.port>8080</cargo.servlet.port>
+                              <cargo.tomcat.manager.url>http://localhost:8080/ubay</cargo.tomcat.manager.url>
+                          </properties>
+                        </configuration>
+                        <deployables>
+                            <deployable>
+                                <groupId>org.codehaus.cargo</groupId>
+                                <artifactId>ubay</artifactId>
+                                <type>war</type>
+                                <location>target/ubay.war</location>
+                                <properties>
+                                    <context>ubay</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
 
-        <!-- Tomcat plugin -->
-        <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>2.2</version>
-          <configuration>
-            <uriEncoding>${project.build.sourceEncoding}</uriEncoding>
-            <port>8080</port>
-            <!--<update>true</update>-->
-<!--            <path>/</path>-->
-          </configuration>
-        </plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
