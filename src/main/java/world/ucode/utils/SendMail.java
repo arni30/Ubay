@@ -1,23 +1,32 @@
 package world.ucode.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import world.ucode.models.User;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
+@Component
 public class SendMail {
+    @Autowired
+    JavaMailSender mailSender;
+    @Autowired
+    SimpleMailMessage templateMessage;
     @Async
     public void sendMail(User user) throws UnknownHostException {
-        GenericXmlApplicationContext context = new GenericXmlApplicationContext();
-        context.load("classpath:applicationContext.xml");
-        context.refresh();
-        JavaMailSender mailSender = context.getBean("mailSender", JavaMailSender.class);
-        SimpleMailMessage templateMessage = context.getBean("templateMessage", SimpleMailMessage.class);
+//        GenericXmlApplicationContext context = new GenericXmlApplicationContext();
+//        context.load("classpath:applicationContext.xml");
+//        context.refresh();
+//         = context.getBean("mailSender", JavaMailSender.class);
+//        SimpleMailMessage templateMessage = context.getBean("templateMessage", SimpleMailMessage.class);
 
         // Создаём потокобезопасную копию шаблона.
         SimpleMailMessage mailMessage = new SimpleMailMessage(templateMessage);
