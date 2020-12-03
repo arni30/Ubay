@@ -85,7 +85,7 @@
             </div>
 
             <div class="forgot">
-                <a href="#">Forgot your password?</a>
+                <a href="forgotPassword">Forgot your password?</a>
             </div>
 
             <div class="welcome-block">
