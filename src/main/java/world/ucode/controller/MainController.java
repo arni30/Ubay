@@ -12,6 +12,11 @@ import world.ucode.models.Search;
 import world.ucode.services.LotService;
 import world.ucode.utils.CreateJSON;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.List;
 @Controller
 public class MainController {
@@ -24,7 +29,8 @@ public class MainController {
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
-    public ModelAndView main(ModelMap model) {
+    public ModelAndView main(ModelMap model) throws UnknownHostException {
+        System.out.println(InetAddress.getLocalHost().getHostAddress());
         if (!model.containsAttribute("search")) {
             model.addAttribute("search", new Search());
         }
@@ -41,8 +47,8 @@ public class MainController {
             mav.setViewName("/main");
 
             return mav;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception en) {
+            en.printStackTrace();
             System.out.println("Bad JSON");
             mav.setViewName("/errors/error");
             return mav;

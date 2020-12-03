@@ -35,7 +35,7 @@ public class Lot {
     @Lob()
     private byte[] image;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sellerId", referencedColumnName = "userId")
     private User seller;
 

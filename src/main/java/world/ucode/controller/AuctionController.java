@@ -31,11 +31,17 @@ public class AuctionController {
             Lot lot = userService.findLotById(Integer.parseInt(lotId));
             User user = lot.getSeller();
             JSONObject json = createJSON.auctionJSON(user, lot);
-            Bid lastBid = bidService.findLast(Integer.parseInt(lotId));
-            System.out.println(lastBid.getBidder().getLogin());
-            JSONObject winnerJson = createJSON.winnerJSON(lastBid);
+            if (!lot.getActive()) {
+                try {
+                    Bid lastBid = bidService.findLast(Integer.parseInt(lotId));
+                    System.out.println(lastBid.getBidder().getLogin());
+                    JSONObject winnerJson = createJSON.winnerJSON(lastBid);
+                    mav.addObject("winner", winnerJson);
+                } catch (Exception ignored) {}
+            }
+            else
+                mav.addObject("winner", json);
             mav.addObject("lot", json);
-            mav.addObject("winner", winnerJson);
             mav.setViewName("/auction");
             return mav;
         } catch (Exception e) {

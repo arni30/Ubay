@@ -8,7 +8,6 @@ import world.ucode.models.User;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.List;
 
@@ -18,7 +17,14 @@ public class CreateJSON {
         JSONObject json = new JSONObject();
 
         json.put("bidder", lastBid.getBidder().getLogin());
-        json.put("feedback", "feedback");
+        json.put("feedback", "");
+        return json;
+    }
+
+    public static JSONObject addFeedbackJSON(int lotId) {
+        JSONObject json = new JSONObject();
+
+        json.put("lotId", lotId);
         return json;
     }
 

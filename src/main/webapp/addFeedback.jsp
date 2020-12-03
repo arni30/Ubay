@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="resources/reset.css"/>
     <link rel="stylesheet" href="resources/main.css"/>
     <link rel="stylesheet" href="resources/addLot.css"/>
+    <script src="http://code.jquery.com/jquery-2.2.4.js"
+            type="text/javascript"></script>
     <script src="resources/references.js"></script>
 </head>
 
@@ -50,11 +52,10 @@
 </body>
 <script>
     function send() {
-        let form = $('#form')[0];
-        let formData = new FormData(form);
-        // formData.append('rate', document.getElementById("newRate").value);
-        // formData.append('description', document.getElementById("newFeedback").value);
-        <%--formData.append('lotId', ${lot.id});--%>
+        let formData = new FormData();
+        formData.append('lotId', ${lot.lotId});
+        formData.append('rate', document.getElementById("newRate").value);
+        formData.append('description', document.getElementById("newFeedback").value);
         let object = {};
         formData.forEach(function(value, key){
             object[key] = value;

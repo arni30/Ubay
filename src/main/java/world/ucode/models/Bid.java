@@ -14,11 +14,11 @@ public class Bid {
     @Column(name = "active")
     private boolean active;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "auctionId", referencedColumnName = "lotId")
     private Lot lot;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bidderId", referencedColumnName = "userId")
     private User bidder;
 

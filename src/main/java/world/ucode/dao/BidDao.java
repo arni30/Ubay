@@ -49,9 +49,9 @@ public class BidDao {
         List<Bid> bids =  (List<Bid>)session.createQuery("SELECT bid FROM Bid bid WHERE bid.lot.id = :lotId").setParameter("lotId", lotId).list();
         System.out.println("SIZE");
         System.out.println(bids.size());
-        int index = bids.size() - 1;
-        Bid bid = bids.get(index);
+        Bid bid = bids.get(bids.size() - 1);
         session.close();
+        System.out.println(bid.getBidder().getLogin());
         return bid;
     }
 }
