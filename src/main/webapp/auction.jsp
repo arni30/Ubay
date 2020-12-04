@@ -1,4 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String authorizedLogin = null;
+    if (request.getUserPrincipal() != null) {
+        authorizedLogin = request.getUserPrincipal().getName();
+    }
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +26,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="resources/references.js"></script>
     <script src="resources/auction.js"></script>
+    <script src="http://code.jquery.com/jquery-2.2.4.js"
+            type="text/javascript">
+    </script>
 </head>
 
 <body>
@@ -41,9 +50,12 @@
                     <li><a href="#">Contacts</a></li>
                 </ul>
             </div>
-            <div class="header-login">
+            <div id="header-login-first" class="header-login">
                 <a class="abutton" href="${pageContext.request.contextPath}/authorization">Sign in</a>
-                <a class="abutton" href="${pageContext.request.contextPath}/profile">Profile</a>
+            </div>
+            <div id="header-login-second" class="header-login" style="display: none">
+                <a id="authorizedLogin" class="abutton" href="${pageContext.request.contextPath}/profile"></a>
+                <a class="abutton" href="${pageContext.request.contextPath}/logout">Sign out</a>
             </div>
         </div>
 
@@ -88,11 +100,11 @@
 
             <div class="personal-section__header">
                 <div>
-                    <form action="newBit" method="POST" name="form" style="display: none">
+                    <form id="newBit" name="form" style="display: none">
                         <label for="newPrice">New price </label>
-                        <input id="newPrice" class="button" type="number" name="price" required
+                        <input id="newPrice" class="button" type="number" name="price"
                                min=".01" step=".01">
-                        <input class="button" type="submit" value="Submit new bit">
+                        <button id="butSubmit" type="button" class="button" onclick="send()" >Submit new bit</button>
                         <a class="button" href="#" onclick="location.reload()">Return</a>
                     </form>
                 </div>
@@ -129,8 +141,45 @@
 </body>
 
 <script type="text/javascript">
-    if (${lot}) {
+    if (${lot})
         auctions.lot = ${lot};
+    auctions.userType = '${userType}';
+    if (<%= authorizedLogin%>) {
+        setAuthorizedUser(<%= authorizedLogin%>);
+    }
+    if (!${lot.active} && ${winner}) {
+        auctions.winner = ${winner};
+    }
+    function send(){
+        let formData = new FormData();
+        if (!document.getElementById("newPrice").value)
+            return;
+        formData.append('price', document.getElementById("newPrice").value);
+        formData.append('lotId', ${lot.id});
+        let object = {};
+        formData.forEach(function(value, key){
+            object[key] = value;
+        });
+        let jsonString = JSON.stringify(object);
+        console.log(jsonString);
+
+        $.ajax({
+            url : 'newBit',
+            type : 'POST',
+            contentType : "application/json; charset=utf-8",
+            data : jsonString,
+            async: false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+            processData : false,  //To avoid making query String instead of JSON
+            cache: false, //This will force requested pages not to be cached by the browser
+            success : function(resposeJsonObject) {
+                auctions.hideElement('#newBit');
+                auctions.activateElement('#addBit-buttons');
+            },
+            error : function(err) {
+                alert("nope!");
+                // alert(err);
+            }
+        });
     }
 </script>
 

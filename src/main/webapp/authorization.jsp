@@ -85,7 +85,14 @@
             </div>
 
             <div class="forgot">
-                <a href="forgotPassword">Forgot your password?</a>
+                <a class="forgot-button" href="#">Forgot your password?</a>
+                <form class="forgot-form hidden" action="forgotPassword" method="POST" name="form" style="margin-top: 20px">
+                    <input id="emailRestorePass" class="form-styling" style="width: 75%"
+                           type="email" name="email" required placeholder="enter your email">
+                    <input class="" type="submit" value="Restore">
+
+<%--                    <a class="forgot-button" href="#" onclick="location.reload()">Return</a>--%>
+                </form>
             </div>
 
             <div class="welcome-block">

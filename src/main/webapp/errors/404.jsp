@@ -13,7 +13,7 @@
 </head>
 <body style="text-align: center; font-family: 'Montserrat', sans-serif">
     <h2 style="color: burlywood; position: relative; margin-top: 40vh">404 Not Found</h2>
-    <h2 style="color: burlywood; position: relative; margin-top: 40vh">Ubay developers say:</h2>
+    <h2 style="color: burlywood; position: relative;">Ubay developers say:</h2>
     <h1 style="color: darkred">Resource not found!</h1>
 </body>
 </html>

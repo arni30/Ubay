@@ -1,4 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String authorizedLogin = null;
+    if (request.getUserPrincipal() != null) {
+        authorizedLogin = request.getUserPrincipal().getName();
+    }
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,9 +46,12 @@
                     <li><a href="#">Contacts</a></li>
                 </ul>
             </div>
-            <div class="header-login">
+            <div id="header-login-first" class="header-login">
                 <a class="abutton" href="${pageContext.request.contextPath}/authorization">Sign in</a>
-                <a class="abutton" href="${pageContext.request.contextPath}/profile">Profile</a>
+            </div>
+            <div id="header-login-second" class="header-login" style="display: none">
+                <a id="authorizedLogin" class="abutton" href="${pageContext.request.contextPath}/profile"></a>
+                <a class="abutton" href="${pageContext.request.contextPath}/logout">Sign out</a>
             </div>
         </div>
 
@@ -89,26 +98,23 @@
 
                         </li>
                     </ul>
-                    <!---->
                 </div>
             </form>
         </section>
     </div>
 
     <div id="profile-buttons" class="page personal-section__header">
-        <a href="#"></a>
-        <!--js: add feedback button-->
+        <a id="biddersFeedbacks" class="button" href="#">Bidders feedbacks</a>
     </div>
 
-    <main class="page">
-        <!-- <div id="main-overlay"></div> -->
+    <main class="page" id="activeBox" style="display: none">
         <aside>
             <h3 class="personal-section__heading">Active auctions</h3>
         </aside>
         <div class="container active-lots"></div>
     </main>
 
-    <main class="page">
+    <main class="page" id="closedBox" style="display: none">
         <aside>
             <h3 class="personal-section__heading">Closed auctions</h3>
         </aside>
@@ -131,38 +137,15 @@
 
 </body>
 <script type="text/javascript">
-
-    function showInfo() {
-        let response = ${user};
-        if (!response) {
-            alert('user not found');
-            window.history.back();
-        } else {
-            // console.log(response);
-            let jsonString = JSON.parse(JSON.stringify(response));
-            console.log(jsonString);
-            let elem, p;
-            elem = document.querySelectorAll('.personal-data__item');
-            for (let i = 0; elem[i]; ++i) {
-                p = document.createElement('p');
-                p.className = 'personal-data__value';
-                if (i === 0) {
-                    p.innerHTML = jsonString.userRole;
-                    if (jsonString.userRole === 'seller') {
-                        sellerFeatures.addSellersFeatures(p, jsonString.rate);
-                    }
-                } else if (i === 1) {
-                    p.innerHTML = jsonString.login;
-                } else if (i === 2) {
-                    p.innerHTML = jsonString.email;
-                } else {
-                    p.innerHTML = jsonString.balance;
-                }
-                elem[i].appendChild(p);
-            }
-        }
+    if (${user}) {
+        personalInfo.info = ${user};
     }
-    showInfo();
+    if (${lots}) {
+        lots.items = ${lots};
+    }
+    if (<%= authorizedLogin%>) {
+        setAuthorizedUser(<%= authorizedLogin%>);
+    }
 </script>
 
 </html>
