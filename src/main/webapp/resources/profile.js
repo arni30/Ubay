@@ -27,8 +27,6 @@ let personalInfo = {
       }
       elem[i].appendChild(p);
     }
-    let userLogin = document.getElementById("userLogin");
-    userLogin.innerHTML = this.info.login;
 
     // gotoAddLot(this.info.login, this.info.id);
     viewFeedbacks(this.info.login);

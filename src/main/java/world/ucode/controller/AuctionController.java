@@ -50,7 +50,7 @@ public class AuctionController {
                 } catch (Exception ignored) {}
             }
             else
-                mav.addObject("winner", "");
+                mav.addObject("winner", json);//redo!!!!
             if (request.getUserPrincipal() != null) {
                 user = userService.findUserByLogin(request.getUserPrincipal().getName());
             }
