@@ -13,11 +13,11 @@ import java.util.List;
 
 public class CreateJSON {
 
-    public JSONObject winnerJSON(Bid lastBid) {
+    public JSONObject winnerJSON(Bid lastBid, String description) {
         JSONObject json = new JSONObject();
 
         json.put("bidder", lastBid.getBidder().getLogin());
-        json.put("feedback", "");
+        json.put("feedback", description);
         return json;
     }
 
@@ -71,7 +71,6 @@ public class CreateJSON {
 
                 jsonArray.add(json);
             }
-
         return jsonArray;
     }
 }
