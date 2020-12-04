@@ -97,8 +97,9 @@
 
 </body>
 <script type="text/javascript">
-    if (<%= authorizedLogin%>) {
-        setAuthorizedUser(<%= authorizedLogin%>);
+    let authorizedLogin = `<%= authorizedLogin%>`;
+    if (authorizedLogin !== 'null') {
+        setAuthorizedUser(authorizedLogin);
     }
 </script>
 

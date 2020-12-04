@@ -44,11 +44,11 @@
 
             <label for="startPrice">Start price</label>
             <input id="startPrice" class="button" type="number" name="startPrice" required
-                   min=".01" step=".01"/>
+                   min=".01" step=".01" max="10000"/>
 
             <label for="bidStep">Bid step</label>
             <input id="bidStep" class="button" type="number" name="bidStep" required
-                   min=".01" step=".01"/>
+                   min=".01" step=".01" max="1000"/>
 
             <label for="description">Description</label>
             <textarea id="description" class="button" type="text" name="description"

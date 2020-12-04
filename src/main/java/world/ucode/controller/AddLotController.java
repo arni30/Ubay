@@ -42,7 +42,7 @@ public class AddLotController {
         User seller = userService.findUser(request.getUserPrincipal().getName());
         lot.setSeller(seller);
         lot.setImage(file.getBytes());  // Data truncation: Data too long for column 'image' at row 1
-        ImageHandler.savePicture(file);  // проверка
+//        ImageHandler.savePicture(file);  // проверка
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
         curTime.setTime(curTime.getTime() + (2 * 60 * 60 * 1000));
         lot.setStartTime(curTime);

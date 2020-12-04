@@ -8,7 +8,8 @@ let auctions = {
     price: 1, priceStep: 1, description: '',
     startTime: '2020-11-18T10:18:00', endTime: '2020-11-28T10:18:00'},
   userType: null,
-  winner: {bidder: 'Olga', feedback: ''},
+  authorizedUser: null,
+  winner: {bidder: null, feedback: null},
 
   hideElement: function (str) {
     let buttons = document.querySelector(str);
@@ -63,8 +64,14 @@ let auctions = {
   addClosedContent: function () {
     this.flexElement('#winner');
     let label = document.querySelector('#winner p');
-    label.innerHTML = `Winner: <span>${this.winner.bidder}</span>`;
-    if (this.winner.feedback !== '') {
+    if (this.winner.bidder) {
+      label.innerHTML = `Winner: <span>${this.winner.bidder}</span>`;
+      if (this.winner.bidder === this.authorizedUser) {
+        document.querySelector('#add-feedback-button')
+            .setAttribute('style', 'display: block;');
+      }
+    }
+    if (this.winner.feedback) {
       document.querySelector('#feedback').innerHTML += `Feedback: ${this.winner.feedback}`;
       this.hideElement('#winner a');
     } else {

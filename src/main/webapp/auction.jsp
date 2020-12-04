@@ -100,7 +100,7 @@
                     <form action="newBit" method="POST" name="form" style="display: none">
                         <label for="newPrice">New price </label>
                         <input id="newPrice" class="button" type="number" name="price" required
-                               min=".01" step=".01">
+                               min=".01" step=".01" max="10000">
                         <input class="button" type="submit" value="Submit new bit">
                         <a class="button" href="#" onclick="location.reload()">Return</a>
                     </form>
@@ -112,8 +112,8 @@
             </div>
 
             <div class="personal-section__header" id="winner" style="display: none">
-                <p>Winner: </p>
-                <p id="add-feedback-button">
+                <p>Winner: -</p>
+                <p id="add-feedback-button" style="display: none">
                     <a class="button" href="#" onclick="auctions.addFeedback(this)">Add feedback</a>
                 </p>
             </div>
@@ -140,10 +140,12 @@
 <script type="text/javascript">
     if (${lot})
         auctions.lot = ${lot};
-    auctions.userType = `'${userType}'`;
-    if (<%= authorizedLogin%>) {
-        setAuthorizedUser(<%= authorizedLogin%>);
+    auctions.userType = `${userType}`;
+    let authorizedLogin = `<%= authorizedLogin%>`;
+    if (authorizedLogin !== 'null') {
+        setAuthorizedUser(authorizedLogin);
     }
+    auctions.authorizedUser = authorizedLogin;
 </script>
 
 

@@ -178,8 +178,9 @@
     if (${lots}) {
         products.items = ${lots};
     }
-    if (<%= authorizedLogin%>) {
-        setAuthorizedUser(<%= authorizedLogin%>);
+    let authorizedLogin = `<%= authorizedLogin%>`;
+    if (authorizedLogin !== 'null') {
+        setAuthorizedUser(authorizedLogin);
     }
 </script>
 
