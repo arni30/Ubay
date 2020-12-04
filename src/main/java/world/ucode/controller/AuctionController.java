@@ -12,6 +12,8 @@ import world.ucode.models.User;
 import world.ucode.services.UserService;
 import world.ucode.utils.CreateJSON;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class AuctionController {
     @Autowired
@@ -22,13 +24,17 @@ public class AuctionController {
      * requires unique lot id (that auction show).
      * */
     @RequestMapping(value = "/auction", method = RequestMethod.GET)
-    public ModelAndView auction(@RequestParam String lotId) {
+    public ModelAndView auction(@RequestParam String lotId, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         try {
             Lot lot = userService.findLotById(Integer.parseInt(lotId));
             User user = lot.getSeller();
             JSONObject json = createJSON.auctionJSON(user, lot);
             mav.addObject("lot", json);
+            if (request.getUserPrincipal() != null) {
+                user = userService.findUserByLogin(request.getUserPrincipal().getName());
+            }
+            mav.addObject("userType", user.getUserRole());
             mav.setViewName("/auction");
             return mav;
         } catch (Exception e) {

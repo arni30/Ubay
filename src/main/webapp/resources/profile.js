@@ -27,9 +27,6 @@ let personalInfo = {
       }
       elem[i].appendChild(p);
     }
-    let userLogin = document.getElementById("userLogin");
-    userLogin.innerHTML = this.info.login;
-
     // gotoAddLot(this.info.login, this.info.id);
     viewFeedbacks(this.info.login);
   },
@@ -141,6 +138,12 @@ let sellerFeatures = {
   addButtonsFeatures: function() {
     let item = document.querySelector('#profile-buttons');
     item.setAttribute('style', 'display = block;');
+
+    if (personalInfo.info.login === document.querySelector('#authorizedLogin').innerHTML) {
+      item = document.querySelector('#addLotId');
+      item.setAttribute('style', 'display = block;');
+
+    }
   }
 }
 
@@ -202,20 +205,6 @@ function changePassword() {
 function cancelChanges() {
   location.reload();
   this.changes = false;
-}
-/**
- *  ------------------------- ДОПИСАТЬ submitChanges / отправка на сервер
- * */
-function submitChanges() {
-  console.log('submit');
-  location.reload();
-  this.changes = false;
-}
-/**
- *  ------------------------- ДОПИСАТЬ signOut / отправка на сервер
- * */
-function signOut() {
-  console.log('Log out');
 }
 
 let init = () => {

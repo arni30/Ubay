@@ -1,4 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String authorizedLogin = null;
+    if (request.getUserPrincipal() != null) {
+        authorizedLogin = request.getUserPrincipal().getName();
+    }
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,9 +47,12 @@
                     <li><a href="#">Contacts</a></li>
                 </ul>
             </div>
-            <div class="header-login">
+            <div id="header-login-first" class="header-login">
                 <a class="abutton" href="${pageContext.request.contextPath}/authorization">Sign in</a>
-                <a class="abutton" href="${pageContext.request.contextPath}/profile">Profile</a>
+            </div>
+            <div id="header-login-second" class="header-login" style="display: none">
+                <a id="authorizedLogin" class="abutton" href="${pageContext.request.contextPath}/profile"></a>
+                <a class="abutton" href="${pageContext.request.contextPath}/logout">Sign out</a>
             </div>
         </div>
 
@@ -129,8 +138,11 @@
 </body>
 
 <script type="text/javascript">
-    if (${lot}) {
+    if (${lot})
         auctions.lot = ${lot};
+    auctions.userType = `'${userType}'`;
+    if (<%= authorizedLogin%>) {
+        setAuthorizedUser(<%= authorizedLogin%>);
     }
 </script>
 

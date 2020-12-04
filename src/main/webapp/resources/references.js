@@ -18,6 +18,7 @@
 //     delay(goto, 1500, str);
 // }
 
+
 /**
  * add login to url for view profile & feedbacks pages
  */
@@ -52,4 +53,10 @@ function receiveGetParameters() {
             param[i++] = item.split("=");
         })
     return param;
+}
+
+setAuthorizedUser = (user) => {
+    document.querySelector('#header-login-first').setAttribute('style', 'display: none;');
+    document.querySelector('#header-login-second').setAttribute('style', 'display: block;');
+    document.querySelector('#authorizedLogin').innerHTML = user;
 }
