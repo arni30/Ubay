@@ -44,7 +44,7 @@ public class AddLotController {
         lot.setImage(file.getBytes());  // Data truncation: Data too long for column 'image' at row 1
         ImageHandler.savePicture(file);  // проверка
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
-        curTime.setTime(curTime.getTime() + (2 * 60 * 60 * 1000));
+//        curTime.setTime(curTime.getTime() + (2 * 60 * 60 * 1000));
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lot.setActive(true);

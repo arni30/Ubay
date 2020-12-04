@@ -1,6 +1,7 @@
 package world.ucode.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,12 +35,9 @@ public class PageModelAndView {
     }
     public ModelAndView pageModelAndView(int lotId, String page) {
         ModelAndView mav = new ModelAndView();
-        System.out.println(lotId);
         try {
-            ObjectMapper mapper = new ObjectMapper();
-//            Lot lot = userService.findLotById(lotId);
-//            String json = mapper.writeValueAsString(lot);
-//            mav.addObject("lot", json);
+            JSONObject json = CreateJSON.addFeedbackJSON(lotId);
+            mav.addObject("lot", json);
             mav.setViewName(page);
             return mav;
         } catch (Exception e) {

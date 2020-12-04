@@ -17,6 +17,10 @@ public class FeedbackService {
         return feedbackDao.findById(id);
     }
 
+    public Feedback findFeedbackByLot(int lotId) {
+        return feedbackDao.findByLot(lotId);
+    }
+
     public void saveFeedback(Feedback feedback) { feedbackDao.save(feedback); }
 
     public void deleteFeedback(Feedback feedback) {
