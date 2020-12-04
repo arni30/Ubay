@@ -15,16 +15,6 @@ import java.util.Set;
 @Entity
 @Table (name = "users")
 public class User implements UserDetails {
-    private String type;
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
-    }
-
     @Id
     @Column(name="userId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
