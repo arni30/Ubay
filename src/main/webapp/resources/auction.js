@@ -51,8 +51,8 @@ let auctions = {
   },
   addBit: function() {
     this.hideElement('#addBit-buttons');
-    this.activateElement('form[action=newBit]');
-    let label = document.querySelector('form[action=newBit] label');
+    this.activateElement('#newBit');
+    let label = document.querySelector('#newBit label');
     label.innerHTML += `(step \$${this.lot.priceStep})`;
 
     let newPrice = document.querySelector('#newPrice');

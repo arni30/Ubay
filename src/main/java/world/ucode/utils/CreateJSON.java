@@ -2,43 +2,57 @@ package world.ucode.utils;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import world.ucode.models.Bid;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.List;
 
 public class CreateJSON {
 
+    public JSONObject winnerJSON(Bid lastBid, String description) {
+        JSONObject json = new JSONObject();
+
+        json.put("bidder", lastBid.getBidder().getLogin());
+        json.put("feedback", description);
+        return json;
+    }
+
+    public static JSONObject addFeedbackJSON(int lotId) {
+        JSONObject json = new JSONObject();
+
+        json.put("lotId", lotId);
+        return json;
+    }
+
     public JSONObject auctionJSON(User seller, Lot lot) {
         JSONObject json = new JSONObject();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        Timestamp startTime = lot.getStartTime();
-        startTime.setTime(startTime.getTime() - (2 * 60 * 60 * 1000));
-        Timestamp finishTime = lot.getFinishTime();
-        finishTime.setTime(finishTime.getTime() - (2 * 60 * 60 * 1000));
+//        Timestamp startTime = lot.getStartTime();
+//        startTime.setTime(startTime.getTime() - (2 * 60 * 60 * 1000));
+//        Timestamp finishTime = lot.getFinishTime();
+//        finishTime.setTime(finishTime.getTime() - (2 * 60 * 60 * 1000));
 
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
-        curTime.setTime(curTime.getTime());
         //потом уберу - проверка на активность аукциона (@натся)
         if (lot.getFinishTime().before(curTime))
             lot.setActive(false);
 
         json.put("active", lot.getActive());
         json.put("id", lot.getId());
-        json.put("image", Base64.getEncoder().encodeToString(lot.getImage()));
         json.put("title", lot.getTitle());
         json.put("seller", seller.getLogin());
         json.put("rate", seller.getAvarageRate());
         json.put("price", lot.getStartPrice());
         json.put("priceStep", lot.getBidStep());
         json.put("description", lot.getDescription());
-        json.put("startTime", formatter.format(startTime).replace(' ','T'));
-        json.put("endTime", formatter.format(finishTime).replace(' ','T'));
+        json.put("startTime", formatter.format(lot.getStartTime()).replace(' ','T'));
+        json.put("endTime", formatter.format(lot.getFinishTime()).replace(' ','T'));
+        json.put("image", Base64.getEncoder().encodeToString(lot.getImage()));
 
         return json;
     }
@@ -63,7 +77,6 @@ public class CreateJSON {
 
                 jsonArray.add(json);
             }
-
         return jsonArray;
     }
 }
