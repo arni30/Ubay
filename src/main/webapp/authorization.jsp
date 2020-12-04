@@ -39,8 +39,6 @@
 <%--                <input type="checkbox" id="checkbox"/>--%>
 <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
                 <input class="btn-signin" type="submit" value="Sign in">
-<%--                onclick="signin()"--%>
-<%--                    <a class="btn-signin" onclick="signin()">Sign in</a>--%>
             </form>
             <form class="form-signup" id="formSignUp">
                 <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signup"/>
@@ -69,7 +67,6 @@
                     <span toggle="#confirmpassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
                 <input class="btn-signup" type="submit" value="Sign up">
-<%--                onclick="signup()"--%>
             </form>
 
             <div class="success">
@@ -88,7 +85,7 @@
                 <a class="forgot-button" href="#">Forgot your password?</a>
                 <form class="forgot-form hidden" action="forgotPassword" method="POST" name="form" style="margin-top: 20px">
                     <input id="emailRestorePass" class="form-styling" style="width: 75%"
-                           type="email" name="email" required placeholder="enter your email">
+                           type="text" name="login" required placeholder="enter your password">
                     <input class="" type="submit" value="Restore">
 
 <%--                    <a class="forgot-button" href="#" onclick="location.reload()">Return</a>--%>

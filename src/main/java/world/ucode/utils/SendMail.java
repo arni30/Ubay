@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import world.ucode.models.User;
 import world.ucode.services.UserService;
 
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Random;
@@ -29,7 +30,7 @@ public class SendMail {
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Registration confirmation");
         mailMessage.setText("To confirm your account, please click here : "
-                + "http://" + "192.168.0.106" + ":8080/ubay/confirmation/?token=" + user.getToken());
+                + "http://" + InetAddress.getLocalHost().getHostAddress() + ":8080/ubay/confirmation/?token=" + user.getToken());
          mailSender.send(mailMessage);
     }
     public void sendMailPassword(String login) throws UnknownHostException {
