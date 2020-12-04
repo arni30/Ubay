@@ -9,8 +9,17 @@
 
     <bean id="userService" class="world.ucode.services.UserService">
     </bean>
+    <bean id="lotService" class="world.ucode.services.LotService">
+    </bean>
     <bean id="bidService" class="world.ucode.services.BidService">
     </bean>
+    <bean id="createJSON" class="world.ucode.utils.CreateJSON">
+    </bean>
+    <bean id="pageModelAndView" class="world.ucode.utils.PageModelAndView">
+    </bean>
+    <bean id="sendMail" class="world.ucode.utils.SendMail">
+    </bean>
+
 <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
 <!--        <property name="maxUploadSize" value="10000000"/>-->
 <!--    </bean>-->
@@ -19,7 +28,6 @@
 <!--    </bean>-->
     <context:property-placeholder location="classpath:gmail.com.properties"
                                   ignore-unresolvable="true" />
-
     <!-- Класс для отправки писем. -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="javaMailProperties">

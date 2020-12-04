@@ -16,6 +16,8 @@ import world.ucode.services.FeedbackService;
 import world.ucode.services.UserService;
 import world.ucode.utils.CreateJSON;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class AuctionController {
     @Autowired
@@ -29,7 +31,7 @@ public class AuctionController {
      * requires unique lot id (that auction show).
      * */
     @RequestMapping(value = "/auction", method = RequestMethod.GET)
-    public ModelAndView auction(@RequestParam String lotId) {
+    public ModelAndView auction(@RequestParam String lotId, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
         try {
             int LotId = Integer.parseInt(lotId);
@@ -49,6 +51,10 @@ public class AuctionController {
             }
             else
                 mav.addObject("winner", "");
+            if (request.getUserPrincipal() != null) {
+                user = userService.findUserByLogin(request.getUserPrincipal().getName());
+            }
+            mav.addObject("userType", user.getUserRole());
             mav.addObject("lot", json);
             mav.setViewName("/auction");
             return mav;

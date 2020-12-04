@@ -38,6 +38,9 @@ public class AuthProvider implements AuthenticationProvider
 
         if(user != null && (user.getLogin().equals(username)))
         {
+            if (!user.getVerification().equals("verificated")) {
+                throw new BadCredentialsException("Not verificated");
+            }
             if(!BCrypt.checkpw(password, user.getPassword()))
             {
                 throw new BadCredentialsException("Wrong password");

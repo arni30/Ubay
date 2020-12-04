@@ -543,9 +543,9 @@ html, body {
   width: 100%;
 }
 .help_footer {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
+  min-height: 95%;
+  /*height: auto !important;*/
+  /*height: 100%;*/
 }
 footer {
   /* position: absolute;
@@ -553,8 +553,7 @@ footer {
   left: 0;
   right: 0; */
   height: 40px;
-  margin-top: -50px;
-  padding: 5px 0;
+  padding: 8px 0;
   background: #e5eaf5;
 
   /* position:fixed;

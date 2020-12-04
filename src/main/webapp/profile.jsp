@@ -1,4 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String authorizedLogin = null;
+    if (request.getUserPrincipal() != null) {
+        authorizedLogin = request.getUserPrincipal().getName();
+    }
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,9 +45,12 @@
                     <li><a href="#">Contacts</a></li>
                 </ul>
             </div>
-            <div class="header-login">
-                <span id="userLogin"></span>
-                <a class="abutton" href="/ubay/logout">Sign out</a>
+            <div id="header-login-first" class="header-login">
+                <a class="abutton" href="${pageContext.request.contextPath}/authorization">Sign in</a>
+            </div>
+            <div id="header-login-second" class="header-login" style="display: none">
+                <a id="authorizedLogin" class="abutton" href="${pageContext.request.contextPath}/profile"></a>
+                <a class="abutton" href="${pageContext.request.contextPath}/logout">Sign out</a>
             </div>
         </div>
 
@@ -99,9 +108,9 @@
         </section>
     </div>
 
-    <div id="profile-buttons" class="page personal-section__header" style="display: none">
-        <a id="addLotId" class="button" href="/ubay/addLot">Add auction</a>
+    <div id="profile-buttons" class="page personal-section__header">
         <a id="biddersFeedbacks" class="button" href="#">Bidders feedbacks</a>
+        <a id="addLotId" class="button" href="${pageContext.request.contextPath}addLot" style="display: none">Add auction</a>
     </div>
 
     <main class="page" id="activeBox" style="display: none">
@@ -140,6 +149,9 @@
     }
     if (${lots}) {
         lots.items = ${lots};
+    }
+    if (<%= authorizedLogin%>) {
+        setAuthorizedUser(<%= authorizedLogin%>);
     }
 </script>
 

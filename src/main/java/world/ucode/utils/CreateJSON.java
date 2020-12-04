@@ -31,6 +31,12 @@ public class CreateJSON {
     public JSONObject auctionJSON(User seller, Lot lot) {
         JSONObject json = new JSONObject();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+//        Timestamp startTime = lot.getStartTime();
+//        startTime.setTime(startTime.getTime() - (2 * 60 * 60 * 1000));
+//        Timestamp finishTime = lot.getFinishTime();
+//        finishTime.setTime(finishTime.getTime() - (2 * 60 * 60 * 1000));
+
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
         //потом уберу - проверка на активность аукциона (@натся)
         if (lot.getFinishTime().before(curTime))

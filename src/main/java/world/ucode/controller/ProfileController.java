@@ -19,10 +19,12 @@ import java.util.List;
 
 @Controller
 public class ProfileController {
-    final private LotService lotService = new LotService();
-    final private CreateJSON createJSON = new CreateJSON();
+    @Autowired
+    private CreateJSON createJSON;
     @Autowired
     UserService userService;
+    @Autowired
+    private LotService lotService;
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView profile(ModelMap model, HttpServletRequest request) {

@@ -7,7 +7,7 @@ let auctions = {
   lot: {active: true, id: 125, image: 'image', title: '', seller: 'trohalska', rate: 4.8,
     price: 1, priceStep: 1, description: '',
     startTime: '2020-11-18T10:18:00', endTime: '2020-11-28T10:18:00'},
-
+  userType: null,
   winner: {bidder: 'Olga', feedback: ''},
 
   hideElement: function (str) {
@@ -41,7 +41,8 @@ let auctions = {
     }
 
     if (this.lot.active) {
-      this.activateElement('#addBit-buttons');
+      if (this.userType && this.userType === 'bidder')
+        this.activateElement('#addBit-buttons');
     } else {
       this.setClosedTimer();
       this.addClosedContent();
