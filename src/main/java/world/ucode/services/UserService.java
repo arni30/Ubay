@@ -13,10 +13,7 @@ import world.ucode.models.Role;
 import world.ucode.models.User;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service("userService")
 public class UserService implements UserDetailsService {
@@ -121,4 +118,19 @@ public class UserService implements UserDetailsService {
 
         return new ArrayList<GrantedAuthority>(setAuths);
     }
+
+//    public HashMap<Lot, Bid> getListOfBiddersLastBids() {
+//        HashMap<Lot, Bid> lotBidsList = new HashMap<>();
+//
+//        for (Bid b : bids) {
+//            lotBidsList.put(b.getLot(), b);
+//        }
+//
+////        ListIterator bidsIterator = bids.listIterator(bids.size());
+////        while (bidsIterator.hasPrevious()) {
+////            Bid b = (Bid) bidsIterator.previous();
+////            lotBidsList.put(b.getLot(), b);
+////        }
+//        return lotBidsList;
+//    }
 }

@@ -1,11 +1,8 @@
 'use strict';
 
 let auctions = {
-  // lot: {active: false, id: 125, image: 'image', title: 'Book "Harry Hotter"', seller: 'trohalska', rate: 4.8,
-  //   price: 17.5, priceStep:2.5, description: 'ololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololoololo trololo',
-  //   startTime: '2020-11-18T10:18:00', endTime: '2020-11-20T10:18:00'},
-  lot: {active: true, id: 125, image: 'image', title: '', seller: 'trohalska', rate: 4.8,
-    price: 1, priceStep: 1, description: '',
+  lot: {active: true, id: 0, image: 'image', title: '', seller: 'null', rate: 0,
+    startPrice: 0, priceStep: 0, description: '', lastBidPrice: 0,
     startTime: '2020-11-18T10:18:00', endTime: '2020-11-28T10:18:00'},
   userType: null,
   authorizedUser: null,
@@ -25,12 +22,19 @@ let auctions = {
   },
 
   show: function () {
-    document.querySelector('#lotId').innerHTML += this.lot.id;
+    if (this.lot.lastBidPrice) {
+      this.lot.startPrice = this.lot.lastBidPrice;
+    }
+    document.querySelector('#lotId').innerHTML = `Lot# ${this.lot.id}`;
     document.querySelector('#title').innerHTML = this.lot.title;
-    document.querySelector('#price').innerHTML += '\$' + this.lot.price;
+    document.querySelector('#price').innerHTML = '\$' + this.lot.startPrice;
+    // let lastBid = document.querySelector('#lastBid');
+    // if (this.lot.lastBidPrice !== 0) {
+    //   lastBid.innerHTML = '\$' + this.lot.lastBidPrice;
+    // }
     document.querySelector('#aboutProfile').innerHTML = this.lot.seller;
     document.querySelector('#rate').innerHTML = (this.lot.rate === 0) ? ' - ' : this.lot.rate;
-    document.querySelector('#startTime').innerHTML += this.lot.startTime.replace('T', '&emsp;');
+    document.querySelector('#startTime').innerHTML = this.lot.startTime.replace('T', '&emsp;');
     document.querySelector('#description').innerHTML = this.lot.description;
 
     if (this.lot.image) {
@@ -53,10 +57,10 @@ let auctions = {
     this.hideElement('#addBit-buttons');
     this.activateElement('#newBit');
     let label = document.querySelector('#newBit label');
-    label.innerHTML += `(step \$${this.lot.priceStep})`;
+    label.innerHTML = `New price (step \$${this.lot.priceStep})`;
 
     let newPrice = document.querySelector('#newPrice');
-    let np = `${this.lot.price + this.lot.priceStep}`;
+    let np = `${this.lot.startPrice + this.lot.priceStep}`;
     newPrice.setAttribute('placeholder', np);
     newPrice.setAttribute('min', np);
     newPrice.setAttribute('step', this.lot.priceStep);

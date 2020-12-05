@@ -3,7 +3,7 @@
 let products = {
   items: [
     { id: 0, title: '', category: 'other',
-      price: 0, active: true, description: 'NONE',
+      startPrice: 0,  lastBidPrice: 0, lastBidder: '', active: true, description: 'NONE',
       image: 'resources/favicon.ico'
     }
   ],
@@ -38,6 +38,9 @@ let products = {
   showItem: function(elem, item) {
     let node, shelf, p, p1;
 
+    if (item.lastBidPrice) {
+      item.startPrice = item.lastBidPrice;
+    }
     node = document.createElement('div');
     node.className = 'one-third column';
     shelf = document.createElement('div');
@@ -77,13 +80,13 @@ let products = {
     p.className = 'shelfDescribe';
     p1 = document.createElement('span');
     p1.className = 'item_price';
-    p1.innerHTML = '\$' + item.price;
+    p1.innerHTML = '\$' + item.startPrice;
     p.appendChild(p1);
 
     p1 = document.createElement('input');
     p1.setAttribute('id', item.id);
     p1.setAttribute('value', 'show details');
-    if (item.price !== 0) {
+    if (item.startPrice !== 0) {
       p1.setAttribute('type', 'button');
       p1.setAttribute('onclick', 'gotoAuction(this)');
       p1.className = 'item_add button';

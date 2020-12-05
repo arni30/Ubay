@@ -3,8 +3,10 @@ package world.ucode.utils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import world.ucode.models.Bid;
+import world.ucode.models.Feedback;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
+import world.ucode.services.BidService;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -12,6 +14,7 @@ import java.util.Base64;
 import java.util.List;
 
 public class CreateJSON {
+    private BidService bidService = new BidService();
 
     public JSONObject winnerJSON(Bid lastBid, String description) {
         JSONObject json = new JSONObject();
@@ -21,10 +24,10 @@ public class CreateJSON {
         return json;
     }
 
-    public static JSONObject addFeedbackJSON(int lotId) {
+    public static JSONObject addFeedbackJSON(Lot lot) {
         JSONObject json = new JSONObject();
-
-        json.put("lotId", lotId);
+        json.put("lotId", lot.getId());
+        json.put("title", lot.getTitle());
         return json;
     }
 
@@ -42,12 +45,17 @@ public class CreateJSON {
         if (lot.getFinishTime().before(curTime))
             lot.setActive(false);
 
+        Bid lastBid = bidService.findLast(lot.getId());
+        if (lastBid != null) {
+            json.put("lastBidPrice", lastBid.getPrice());
+        }
+
         json.put("active", lot.getActive());
         json.put("id", lot.getId());
         json.put("title", lot.getTitle());
         json.put("seller", seller.getLogin());
         json.put("rate", seller.getAvarageRate());
-        json.put("price", lot.getStartPrice());
+        json.put("startPrice", lot.getStartPrice());
         json.put("priceStep", lot.getBidStep());
         json.put("description", lot.getDescription());
         json.put("startTime", formatter.format(lot.getStartTime()).replace(' ','T'));
@@ -58,25 +66,44 @@ public class CreateJSON {
     }
 
     public JSONArray mainShowLotsJSON(List<Lot> lots) {
-
         JSONArray jsonArray = new JSONArray();
             for (Lot lot : lots) {
                 //потом уберу - проверка на активность аукциона (@натся)
                 Timestamp curTime = new Timestamp(System.currentTimeMillis());
                 if (lot.getFinishTime().before(curTime))
                     lot.setActive(false);
+                Bid lastBid = bidService.findLast(lot.getId());
                 JSONObject json = new JSONObject();
 
                 json.put("id", lot.getId());
                 json.put("title", lot.getTitle());
                 json.put("category", lot.getCategory());
-                json.put("price", lot.getStartPrice());
+                json.put("startPrice", lot.getStartPrice());
+                if (lastBid != null) {
+                    json.put("lastBidPrice", lastBid.getPrice());
+                    json.put("lastBidder", lastBid.getBidder().getLogin());
+                }
                 json.put("active", lot.getActive());
                 json.put("description", lot.getDescription());
                 json.put("image", Base64.getEncoder().encodeToString(lot.getImage()));
 
                 jsonArray.add(json);
             }
+        return jsonArray;
+    }
+
+    public JSONArray feedbacksJSON(List<Feedback> fs) {
+        JSONArray jsonArray = new JSONArray();
+        for (Feedback f : fs) {
+            JSONObject json = new JSONObject();
+
+            json.put("title", f.getLot().getTitle());
+//            json.put("bidder", );
+            json.put("rate", f.getRate());
+            json.put("feedback", f.getDescription());
+
+            jsonArray.add(json);
+        }
         return jsonArray;
     }
 }

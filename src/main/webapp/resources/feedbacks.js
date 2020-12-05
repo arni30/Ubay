@@ -4,16 +4,17 @@ let feedbacks = {
   sellerInfo: {username: 'trohalska', rate: 4.8},
 
   feedbackList:[
-    {title: 'book "Harry Potter"', bidder: 'Vasya Petechkin', rate: '5.0', feedback: 'All good'},
-    {title: 'Cactus', bidder: '124', rate: '3.5', feedback: 'Terrible quality but fast delivery'}
+    {title: 'book "Harry Potter"', bidder: 'Vasya Petechkin', rate: '5.0', feedback: 'All good'}
   ],
 
   showInfo: function () {
     let elem = document.querySelector('.feedbacks-header a');
     elem.firstChild.innerHTML = this.sellerInfo.username;
 
-    elem = document.querySelector('#rate');
-    elem.innerHTML = this.sellerInfo.rate;
+    if (this.sellerInfo.rate !== 0) {
+      document.querySelector('#rate').innerHTML = this.sellerInfo.rate;
+    }
+
   },
   showItems: function () {
     let elem = document.querySelector('.feedbacks-container');

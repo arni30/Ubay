@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
+import world.ucode.services.BidService;
 import world.ucode.services.LotService;
 import world.ucode.services.UserService;
 import world.ucode.utils.CreateJSON;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -25,6 +27,8 @@ public class ProfileController {
     UserService userService;
     @Autowired
     private LotService lotService;
+    @Autowired
+    private BidService bidService;
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView profile(ModelMap model, HttpServletRequest request) {
@@ -38,6 +42,15 @@ public class ProfileController {
                 mav.addObject("user", json);
 
                 List<Lot> lots = lotService.findAllLotsByUser(login);
+//                List<Bid> bids = bidService.findAllBidsByUser(login);
+                System.out.println("----------------");
+
+//                System.out.println(user.getBids());
+//                if (user.getUserRole() == "bidder") {
+//                    HashMap<Lot, Bid> b = user.getListOfBiddersLastBids();
+//                    System.out.println(b);
+//                }
+
                 JSONArray jsonArr = createJSON.mainShowLotsJSON(lots);
                 mav.addObject("lots", jsonArr);
             }

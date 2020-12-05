@@ -25,7 +25,6 @@ public class AuctionController {
     @Autowired
     BidService bidService;
     FeedbackService feedbackService = new FeedbackService();
-
     CreateJSON createJSON = new CreateJSON();
     /**
      * requires unique lot id (that auction show).
@@ -38,6 +37,7 @@ public class AuctionController {
             Lot lot = userService.findLotById(LotId);
             User user = lot.getSeller();
             JSONObject json = createJSON.auctionJSON(user, lot);
+            mav.addObject("lot", json);
             if (!lot.getActive()) {
                 try {
                     Bid lastBid = bidService.findLast(LotId);
@@ -47,15 +47,11 @@ public class AuctionController {
                         description = feedback.getDescription();
                     JSONObject winnerJson = createJSON.winnerJSON(lastBid, description);
                     mav.addObject("winner", winnerJson);
+//                    System.out.println(winnerJson);
                 } catch (Exception ignored) {}
             }
             else
                 mav.addObject("winner", json);//redo!!!!
-            if (request.getUserPrincipal() != null) {
-                user = userService.findUserByLogin(request.getUserPrincipal().getName());
-            }
-            mav.addObject("userType", user.getUserRole());
-            mav.addObject("lot", json);
             if (request.getUserPrincipal() != null) {
                 user = userService.findUserByLogin(request.getUserPrincipal().getName());
             }

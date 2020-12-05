@@ -57,4 +57,13 @@ public class FeedbackDao {
                 .openSession().createQuery("From Feedback").list();
         return feedbacks;
     }
+
+    public List<Feedback> findAllByUser(String login) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("SELECT feedback FROM Feedback feedback WHERE feedback.seller.login = :login")
+                .setParameter("login", login);
+        List<Feedback> fs = (List<Feedback>) query.getResultList();
+        session.close();
+        return fs;
+    }
 }

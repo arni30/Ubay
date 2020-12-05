@@ -93,7 +93,8 @@
                     <a id="biddersFeedbacks" class="button" href="#" onclick="viewFeedbacks(this)">feedbacks</a>
                 </div>
             </div>
-            <p>Current price:&emsp;<span id="price"></span></p>
+            <p>Start price:&emsp;<span id="price"></span></p>
+<%--            <p>Last bid:&emsp;<span id="lastBid"> -</span></p>--%>
             <p>Start time:&emsp;<span id="startTime"></span></p>
             <p>Time left to closure:&emsp;<span id="timer"></span></p>
             <p id="description"></p>
@@ -103,7 +104,7 @@
                     <form id="newBit" name="form" style="display: none">
                         <label for="newPrice">New price </label>
                         <input id="newPrice" class="button" type="number" name="price"
-                               min=".01" step=".01" max="10000">
+                               min=".01" step=".01" max="10000" required>
                         <button id="butSubmit" type="button" class="button" onclick="send()" >Submit new bit</button>
                         <a class="button" href="#" onclick="location.reload()">Return</a>
                     </form>
@@ -141,22 +142,32 @@
 </body>
 
 <script type="text/javascript">
-    if (${lot})
+    if (${lot}) {
         auctions.lot = ${lot};
+    }
     auctions.userType = `${userType}`;
     let authorizedLogin = `<%= authorizedLogin%>`;
     if (authorizedLogin !== 'null') {
         setAuthorizedUser(authorizedLogin);
     }
     auctions.authorizedUser = authorizedLogin;
-    if (!${lot.active} && ${winner}) {
-        auctions.winner = ${winner};
+    if (!${lot.active}) {
+        if (${winner})
+            auctions.winner = ${winner};
     }
     function send(){
-        let formData = new FormData();
-        if (!document.getElementById("newPrice").value)
+        let newPrice = document.querySelector('#newPrice');
+        if (newPrice.value <= newPrice.min) {
+            newPrice.value = newPrice.min;
+            alert('Invalid input!');
             return;
-        formData.append('price', document.getElementById("newPrice").value);
+        }
+        document.querySelector('#price').innerHTML = '\$' + newPrice.value;
+
+        let formData = new FormData();
+        // if (!document.getElementById("newPrice").value)
+        //     return;
+        formData.append('price', newPrice.value);
         formData.append('lotId', ${lot.id});
         let object = {};
         formData.forEach(function(value, key){
