@@ -7,6 +7,7 @@ import world.ucode.models.Feedback;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.services.BidService;
+import world.ucode.services.LotService;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class CreateJSON {
     private BidService bidService = new BidService();
+    LotService lotService = new LotService();
 
     public JSONObject winnerJSON(Bid lastBid, String description, boolean exist) {
         JSONObject json = new JSONObject();
@@ -45,8 +47,12 @@ public class CreateJSON {
 
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
         //потом уберу - проверка на активность аукциона (@натся)
-        if (lot.getFinishTime().before(curTime))
+//        if (lot.getFinishTime().before(curTime))
+//            lot.setActive(false);
+        if (lot.getActive() && lot.getFinishTime().before(curTime)) {
             lot.setActive(false);
+            lotService.updateLot(lot);
+        }
 
         Bid lastBid = bidService.findLast(lot.getId());
         if (lastBid != null) {
@@ -73,8 +79,12 @@ public class CreateJSON {
             for (Lot lot : lots) {
                 //потом уберу - проверка на активность аукциона (@натся)
                 Timestamp curTime = new Timestamp(System.currentTimeMillis());
-                if (lot.getFinishTime().before(curTime))
+//                if (lot.getFinishTime().before(curTime))
+//                    lot.setActive(false);
+                if (lot.getActive() && lot.getFinishTime().before(curTime)) {
                     lot.setActive(false);
+                    lotService.updateLot(lot);
+                }
                 Bid lastBid = bidService.findLast(lot.getId());
                 JSONObject json = new JSONObject();
 

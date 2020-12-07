@@ -37,23 +37,26 @@ public class ProfileController {
     public ModelAndView profile(ModelMap model, HttpServletRequest request) {
         String login = request.getUserPrincipal().getName();
         ModelAndView mav = new ModelAndView();
+        List<Lot> lots;
         try {
             if (login != null && !login.equals("")) {
                 ObjectMapper mapper = new ObjectMapper();
                 User user = userService.findUserByLogin(login);
                 String json = mapper.writeValueAsString(user);
                 mav.addObject("user", json);
-
-                List<Lot> lots = lotService.findAllLotsByUser(login);
+//                if (user.getUserRole().equals("seller")) {
+                    lots = lotService.findAllLotsByUser(login);
 //                List<Bid> bids = bidService.findAllBidsByUser(login);
-                System.out.println("----------------");
-
+                    System.out.println("----------------");
 //                System.out.println(user.getBids());
 //                if (user.getUserRole() == "bidder") {
 //                    HashMap<Lot, Bid> b = user.getListOfBiddersLastBids();
 //                    System.out.println(b);
 //                }
-
+//                }
+//                else {
+//
+//                }
                 JSONArray jsonArr = createJSON.mainShowLotsJSON(lots);
                 mav.addObject("lots", jsonArr);
             }
