@@ -56,6 +56,10 @@ public class AuctionController {
             }
             mav.addObject("userType", user.getUserRole());
             mav.addObject("lot", json);
+            if (request.getUserPrincipal() != null) {
+                user = userService.findUserByLogin(request.getUserPrincipal().getName());
+            }
+            mav.addObject("userType", user.getUserRole());
             mav.setViewName("/auction");
             return mav;
         } catch (Exception e) {

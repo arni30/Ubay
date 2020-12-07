@@ -27,7 +27,6 @@ let personalInfo = {
       }
       elem[i].appendChild(p);
     }
-
     // gotoAddLot(this.info.login, this.info.id);
     viewFeedbacks(this.info.login);
   },
