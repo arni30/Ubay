@@ -3,6 +3,7 @@ package world.ucode.dao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import world.ucode.models.Bid;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.utils.HibernateSessionFactoryUtil;
@@ -60,9 +61,32 @@ public class UserDao {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Lot.class, id);
     }
 
+    public Bid findLastBitByLot(String login, int lotId) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Bid> bids = (List<Bid>)session.createQuery
+                ("SELECT bid FROM Bid bid WHERE bid.bidder = :login AND bid.lot.id = :lotId")
+                .setParameter("login", login).setParameter("lotId", lotId).list();
+        if (bids.size() == 0) {
+            session.close();
+            return null;
+        }
+        Bid bid = bids.get(bids.size() - 1);
+        session.close();
+        return bid;
+    }
+
+
+//        for (Bid b : bids) {
+//        if (b.getLot().getId() == lotId) {
+//            last = b;
+//        }
+//    }
+
     public List<User> findAll() {
         List<User> users = (List<User>)HibernateSessionFactoryUtil.getSessionFactory()
                 .openSession().createQuery("From User").list();
         return users;
     }
+
+
 }

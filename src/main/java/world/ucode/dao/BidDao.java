@@ -44,9 +44,22 @@ public class BidDao {
         return bids;
     }
 
-    public Bid findLast(int lotId) throws IndexOutOfBoundsException{
+    public List<Bid> findAllByUser(String login) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        List<Bid> bids =  (List<Bid>)session.createQuery("SELECT bid FROM Bid bid WHERE bid.lot.id = :lotId").setParameter("lotId", lotId).list();
+        Query query = session.createQuery("SELECT bid FROM Bid bid WHERE bid.bidder = :login")
+                .setParameter("login", login);
+        List<Bid> bids = (List<Bid>) query.getResultList();
+        session.close();
+        return bids;
+    }
+
+    public Bid findLast(int lotId) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Bid> bids = (List<Bid>)session.createQuery("SELECT bid FROM Bid bid WHERE bid.lot.id = :lotId").setParameter("lotId", lotId).list();
+        if (bids.size() == 0) {
+            session.close();
+            return null;
+        }
         Bid bid = bids.get(bids.size() - 1);
         session.close();
         return bid;

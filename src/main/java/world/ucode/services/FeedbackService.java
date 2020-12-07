@@ -34,4 +34,8 @@ public class FeedbackService {
     public List<Feedback> findAllFeedbacks() {
         return feedbackDao.findAll();
     }
+
+    public List<Feedback> findAllByUser(String login) {
+        return feedbackDao.findAllByUser(login);
+    }
 }

@@ -108,7 +108,7 @@
         </section>
     </div>
 
-    <div id="profile-buttons" class="page personal-section__header">
+    <div id="profile-buttons" class="page personal-section__header" style="display: none">
         <a id="biddersFeedbacks" class="button" href="#">Bidders feedbacks</a>
         <a id="addLotId" class="button" href="${pageContext.request.contextPath}/addLot" style="display: none">Add auction</a>
     </div>

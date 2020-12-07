@@ -26,9 +26,8 @@
 <div class="addLot">
     <div id="window" class="shadow-large">
         <div class="page-header addLot-header">Add feedback</div>
-        <form id="form" class="addLot-form" action="addFeedback" >
-
-            <h4 id="lot" style="text-align: center">Title</h4>
+        <form id="form" class="addLot-form">
+            <div id="lot" class="page-header" style="color: #8458B3; padding-bottom: 15px"></div>
 
             <label for="newRate">Rate seller&nbsp;</label>
             <input id="newRate" class="button" type="number" name="rate" required
@@ -39,7 +38,8 @@
                       rows="4" maxlength="200" placeholder="200 symbols"></textarea>
 
             <div class="addLot-controls">
-                <input class="button" value="Add feedback" onclick="send()">
+                <button id="butSubmit" type="button" class="button" onclick="send()">Add feedback</button>
+<%--                <input class="button" type="submit" value="Add feedback" onclick="send()">--%>
                 <div>
                     <a class="abutton" href="#" onclick="window.history.back()">back</a>
                     <a class="abutton" href="${pageContext.request.contextPath}/main">main</a>
@@ -51,6 +51,9 @@
 
 </body>
 <script>
+    if (${lot}) {
+        document.querySelector('#lot').innerHTML = `${lot.title}`;
+    }
     function send() {
         let formData = new FormData();
         formData.append('lotId', ${lot.lotId});
@@ -68,12 +71,11 @@
             type : 'POST',
             contentType : "application/json; charset=utf-8",
             data : jsonString,
-            async: false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+            async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
             processData : false,  //To avoid making query String instead of JSON
             cache: false, //This will force requested pages not to be cached by the browser
             success : function(resposeJsonObject) {
-                alert("hi stuff worked");
-                // alert(data);
+               location.replace(`/ubay/auction?lotId=${lot.lotId}`);
             },
             error : function(err) {
                 alert("nope!");

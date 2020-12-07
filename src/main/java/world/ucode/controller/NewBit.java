@@ -36,7 +36,8 @@ public class NewBit {
         bidder.addBid(bid);
 //        bid.setBidder(bidder);
         bidService.saveBid(bid);
-        mav.setViewName("redirect:/main");
+
+        mav.setViewName("redirect:/main"); // отета все одно не працює
         return mav;
     }
 }

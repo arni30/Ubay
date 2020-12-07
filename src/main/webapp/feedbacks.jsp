@@ -75,7 +75,7 @@
 
     <h3 class="page feedbacks-header">
         <a style="color: #494d5f" href="#" onclick="viewProfile(this)"><span id="aboutProfile"></span>
-            <span class="seller-rating seller-rating fa fa-fw fa-star field-icon"></span><span id="rate" class="seller-rating"></span>
+            <span class="seller-rating seller-rating fa fa-fw fa-star field-icon"></span><span id="rate" class="seller-rating"> -</span>
         </a>
     </h3>
 
@@ -100,6 +100,11 @@
     let authorizedLogin = `<%= authorizedLogin%>`;
     if (authorizedLogin !== 'null') {
         setAuthorizedUser(authorizedLogin);
+    }
+    if (${fs})
+        feedbacks.feedbackList = ${fs};
+    if (${sellerInfo}) {
+        feedbacks.sellerInfo = ${sellerInfo};
     }
 </script>
 
