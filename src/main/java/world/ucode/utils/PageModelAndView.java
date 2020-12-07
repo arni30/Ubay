@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ModelAndView;
+import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.services.UserService;
 
@@ -33,10 +34,10 @@ public class PageModelAndView {
             return mav;
         }
     }
-    public ModelAndView pageModelAndView(int lotId, String page) {
+    public ModelAndView pageModelAndView(Lot lot, String page) {
         ModelAndView mav = new ModelAndView();
         try {
-            JSONObject json = CreateJSON.addFeedbackJSON(lotId);
+            JSONObject json = CreateJSON.addFeedbackJSON(lot);
             mav.addObject("lot", json);
             mav.setViewName(page);
             return mav;

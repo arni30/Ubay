@@ -29,7 +29,7 @@
             <form class="form-signin" action="authorization" method="POST" name="form">
                 <input class="form-styling" style="display: none" type="text" name="type" value="signin"/>
                 <label for="loginLogin">Username</label>
-                <input id="loginLogin" class="form-styling" type="text" name="login" required/>
+                <input id="loginLogin" class="form-styling" type="text" name="login" required autofocus/>
                 <label for="passwordLogin">Password</label>
                 <div>
                     <input id="passwordLogin" class="form-styling" type="password" autocomplete="on"
