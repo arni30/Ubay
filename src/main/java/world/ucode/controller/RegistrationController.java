@@ -36,6 +36,7 @@ public class RegistrationController {
         else
             user.setRoles(Collections.singleton(Role.BIDDER));
         Token token = new Token();
+        user.setAvarageRate(0);
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         user.setToken(token.getJWTToken(user.getLogin()));
         sendMail.sendMail(user);

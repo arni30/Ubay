@@ -23,10 +23,10 @@ public class BidService {
             Bid prevBid = this.findLast(bid.getLot().getId());
             if (prevBid != null) {
                 prevBid.setActive(false);
+                this.updateBid(prevBid);
             }
-            this.updateBid(prevBid);
         }
-        catch (IndexOutOfBoundsException ignored){}
+        catch (Exception ignored){}
         finally {
             bidDao.save(bid);
         }

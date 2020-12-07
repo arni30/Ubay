@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Controller
+
 public class ProfileController {
     @Autowired
     private CreateJSON createJSON;

@@ -12,7 +12,10 @@ import java.util.List;
 
 public class LotDao {
     public Lot findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Lot.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Lot lot = session.get(Lot.class, id);
+        session.close();
+        return lot;
     }
 
     public Lot findByTitle(String title) {
@@ -48,8 +51,9 @@ public class LotDao {
     }
 
     public List<Lot> findAll() {
-        List<Lot> lots = (List<Lot>)HibernateSessionFactoryUtil.getSessionFactory()
-                .openSession().createQuery("From Lot").list();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Lot> lots = (List<Lot>)session.createQuery("From Lot").list();
+        session.close();
         return lots;
     }
 

@@ -15,7 +15,10 @@ import java.util.List;
 public class UserDao {
 
     public User findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(User.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        User user = session.get(User.class, id);
+        session.close();
+        return user;
     }
 
     public User findByLogin(String login) {
@@ -58,7 +61,10 @@ public class UserDao {
     }
 
     public Lot findLotById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Lot.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Lot lot = session.get(Lot.class, id);
+        session.close();
+        return lot;
     }
 
     public Bid findLastBitByLot(String login, int lotId) {
