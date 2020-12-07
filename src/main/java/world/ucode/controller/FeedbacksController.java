@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import world.ucode.models.Feedback;
+import world.ucode.models.Lot;
+import world.ucode.models.User;
 import world.ucode.services.BidService;
 import world.ucode.services.FeedbackService;
 import world.ucode.services.LotService;
@@ -68,14 +70,33 @@ public class FeedbacksController {
     @RequestMapping(value = "/addFeedback", method = RequestMethod.POST)
     public ModelAndView addFeedbackPost(HttpServletRequest request, @RequestBody JSONObject json) {
         Feedback feedback = new Feedback();
-        feedback.setSeller(userService.findUser(request.getUserPrincipal().getName()));
+        Lot lot = lotService.findLot(Integer.parseInt(json.get("lotId").toString()));
+        User seller = lot.getSeller();
+        feedback.setBidder(userService.findUser(request.getUserPrincipal().getName()));
+        feedback.setSeller(seller);
         feedback.setDescription(json.get("description").toString());
         feedback.setRate(Double.parseDouble(json.get("rate").toString()));
-        feedback.setLot(lotService.findLot(Integer.parseInt(json.get("lotId").toString())));
+        feedback.setLot(lot);
         feedbackService.saveFeedback(feedback);
+        seller.setAvarageRate(CountRate(seller.getUsername()));
+        userService.updateUser(seller);
 
         ModelAndView mav = new ModelAndView();  /// мені здається що це все одно не працює
         mav.setViewName("redirect:/auction?lotId="+json.get("lotId"));
         return mav;
+    }
+
+    public float CountRate(String login) {
+        List<Feedback> list = feedbackService.findAllByUser(login);
+        if (list == null)
+            return 0;
+        float rates = 0;
+        float count = list.size();
+        for ( Feedback feedback : list) {
+            rates += feedback.getRate();
+        }
+        System.out.println("Rate");
+        System.out.println(rates);
+        return rates/count;
     }
 }

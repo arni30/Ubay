@@ -23,9 +23,9 @@ public class Feedback {
     @JoinColumn(name = "auctionId", referencedColumnName = "lotId")
     private Lot lot;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "bidderId", referencedColumnName = "userId")
-//    private User bidder;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bidderId", referencedColumnName = "userId")
+    private User bidder;
 //
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sellerId", referencedColumnName = "userId")
@@ -33,8 +33,8 @@ public class Feedback {
 
     public int getId() { return id; }
 
-//    public void setBidder(User bidder) { this.bidder = bidder; }
-//    public User getBidder() { return bidder; }
+    public void setBidder(User bidder) { this.bidder = bidder; }
+    public User getBidder() { return bidder; }
 
     public void setLot(Lot lot) { this.lot = lot; }
     public Lot getLot() { return lot; }
