@@ -25,7 +25,10 @@ public class FeedbackDao {
     }
 
     public Feedback findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Feedback.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Feedback feedback = session.get(Feedback.class, id);
+        session.close();
+        return feedback;
     }
 
     public void save(Feedback feedback) {
@@ -53,8 +56,9 @@ public class FeedbackDao {
     }
 
     public List<Feedback> findAll() {
-        List<Feedback> feedbacks = (List<Feedback>)HibernateSessionFactoryUtil.getSessionFactory()
-                .openSession().createQuery("From Feedback").list();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Feedback> feedbacks = (List<Feedback>)session.createQuery("From Feedback").list();
+        session.close();
         return feedbacks;
     }
 

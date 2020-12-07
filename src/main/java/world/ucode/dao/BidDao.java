@@ -11,7 +11,10 @@ import java.util.List;
 
 public class BidDao {
     public Bid findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Bid.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Bid bid = session.get(Bid.class, id);
+        session.close();
+        return bid;
     }
 
     public void save(Bid bid) {
@@ -39,8 +42,9 @@ public class BidDao {
     }
 
     public List<Bid> findAll() {
-        List<Bid> bids = (List<Bid>)HibernateSessionFactoryUtil.getSessionFactory()
-                .openSession().createQuery("From Bid").list();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Bid> bids = (List<Bid>)session.createQuery("From Bid").list();
+        session.close();
         return bids;
     }
 

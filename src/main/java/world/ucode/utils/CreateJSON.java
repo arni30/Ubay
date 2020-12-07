@@ -16,11 +16,14 @@ import java.util.List;
 public class CreateJSON {
     private BidService bidService = new BidService();
 
-    public JSONObject winnerJSON(Bid lastBid, String description) {
+    public JSONObject winnerJSON(Bid lastBid, String description, boolean exist) {
         JSONObject json = new JSONObject();
 
-        json.put("bidder", lastBid.getBidder().getLogin());
-        json.put("feedback", description);
+        json.put("exist", exist);
+        if (exist) {
+            json.put("bidder", lastBid.getBidder().getLogin());
+            json.put("feedback", description);
+        }
         return json;
     }
 

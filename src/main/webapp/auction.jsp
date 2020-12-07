@@ -157,7 +157,7 @@
     }
     function send(){
         let newPrice = document.querySelector('#newPrice');
-        if (newPrice.value <= newPrice.min) {
+        if (newPrice.value < newPrice.min) {
             newPrice.value = newPrice.min;
             alert('Invalid input!');
             return;
