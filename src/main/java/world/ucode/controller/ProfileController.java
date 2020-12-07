@@ -2,9 +2,11 @@ package world.ucode.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -62,5 +64,28 @@ public class ProfileController {
             mav.setViewName("/errors/error");
             return mav;
         }
+    }
+    @RequestMapping(value = "/changePersonalInfo", method = RequestMethod.POST)
+    public ModelAndView changePersonalInfo(HttpServletRequest request, @RequestBody JSONObject json) {
+//        String login = request.getUserPrincipal().getName();
+
+        System.out.println(json.get("newEmail"));
+        System.out.println(json.get("newBalance"));
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/profile"); // отета якось не працює
+        return new ModelAndView();
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public ModelAndView changePassword(HttpServletRequest request, @RequestBody JSONObject json) {
+//        String login = request.getUserPrincipal().getName();
+
+        System.out.println(json.get("oldPassword"));
+        System.out.println(json.get("newPassword"));
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/profile"); // отета якось не працює
+        return new ModelAndView();
     }
 }

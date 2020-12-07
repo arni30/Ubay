@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="resources/main.css"/>
     <link rel="stylesheet" href="resources/profile.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script src="resources/references.js"></script>
     <script src="resources/profile.js"></script>
     <script src="resources/main_show.js"></script>
@@ -78,27 +79,27 @@
                 <h3 class="personal-section__heading">Personal info</h3>
                 <!---->
                 <div class="personal-section__buttons">
-                    <input type="button" class="button" value="Change personal info" onclick="changeInfo()">
-                    <input type="button" class="button" value="Change password" onclick="changePassword()">
+                    <input type="button" class="button" value="Change personal info" onclick="personalInfo.changeInfo()">
+                    <input type="button" class="button" value="Change password" onclick="personalInfo.changePassword()">
                 </div>
             </div>
             <form>
                 <div class="personal-data">
                     <ul class="personal-data__list">
                         <li class="personal-data__item">
-                            <label class="personal-data__label form__label" id="role"> Role </label>
+                            <label class="personal-data__label form__label" for="role"> Role </label>
                             <%--                        ${user.userRole}--%>
                         </li>
                         <li class="personal-data__item">
-                            <label class="personal-data__label form__label" id="aboutProfile"> Login </label>
+                            <label class="personal-data__label form__label" for="aboutProfile"> Login </label>
                             <%--                        ${user.login}--%>
                         </li>
                         <li class="personal-data__item">
-                            <label class="personal-data__label form__label" id="email"> Email </label>
+                            <label class="personal-data__label form__label" for="email"> Email </label>
                             <%--                        ${user.email}--%>
                         </li>
                         <li class="personal-data__item">
-                            <label  class="personal-data__label form__label" id="balance"> Balance </label>
+                            <label  class="personal-data__label form__label" for="balance"> Balance </label>
                             <%--                        ${user.balance}--%>
                         </li>
                     </ul>

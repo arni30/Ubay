@@ -36,17 +36,18 @@ let personalInfo = {
     if (this.changes) return; else this.changes = true;
 
     elem = document.querySelectorAll('.personal-data__item');
-    for (let i = 1; elem[i]; ++i) {
+    for (let i = 2; elem[i]; ++i) {
       p = document.createElement('input');
       p.className = 'personal-data__value';
       p.placeholder = elem[i].lastChild.innerHTML;
-      if (i === 1) {
-        p.setAttribute('id', 'aboutProfile');
-        p.setAttribute('type', 'text');
-      } else if (i === 2) {
+      // if (i === 1) {
+      //   p.setAttribute('id', 'aboutProfile');
+      //   p.setAttribute('type', 'text');
+      // } else
+      if (i === 2) {
         p.setAttribute('id', 'email');
         p.setAttribute('type', 'email');
-      } else {
+      } else if (i === 3) {
         p.setAttribute('id', 'balance');
         p.setAttribute('type', 'number');
         p.setAttribute('size', '5');
@@ -57,16 +58,67 @@ let personalInfo = {
       elem[i].removeChild(elem[i].lastChild);
       elem[i].appendChild(p);
     }
-    this.addSubmitCancel();
+    this.addSubmitCancel('personalInfo.submitChangeInfo()');
+  },
+  submitChangeInfo: function () {
+    let email = document.querySelector('#email');
+    let balance = document.querySelector('#balance');
+
+    if (!email.value && !balance.value) {
+      return;
+    } else if (!email.value) {
+      email.value = this.info.email;
+    } else if (!balance.value) {
+      balance.value = this.info.balance;
+    }
+
+    let formData = new FormData();
+    formData.append('newEmail', email.value);
+    formData.append('newBalance', balance.value);
+    let object = {};
+    formData.forEach(function(value, key){
+      object[key] = value;
+    });
+    let jsonString = JSON.stringify(object);
+    console.log(jsonString);
+
+    $.ajax({
+      url : 'changePersonalInfo',
+      type : 'POST',
+      contentType : "application/json; charset=utf-8",
+      data : jsonString,
+      async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+      processData : false,  //To avoid making query String instead of JSON
+      cache: false, //This will force requested pages not to be cached by the browser
+      success : function(resposeJsonObject) {
+        alert("Yes");
+        location.reload();
+      },
+      error : function(err) {
+        alert("nope!");
+        // alert(err);
+      }
+    });
   },
   changePassword: function () {
     let elem, p;
 
     if (this.changes) return; else this.changes = true;
 
-    document.querySelector('#aboutProfile').innerHTML = 'Old password';
-    document.querySelector('#email').innerHTML = 'New password';
-    document.querySelector('#balance').innerHTML = 'Confirm new password';
+    elem = document.querySelectorAll('.personal-data__label');
+    for (let i = 1; elem[i]; ++i) {
+      if (i === 1) {
+        p = 'Old password';
+      } else if (i === 2) {
+        p = 'New password';
+      } else if (i === 3) {
+        p = 'Confirm new password';
+      }
+      elem[i].innerHTML = p;
+    }
+    // document.querySelector('#aboutProfile').innerHTML = 'Old password';
+    // document.querySelector('#email').innerHTML = 'New password';
+    // document.querySelector('#balance').innerHTML = 'Confirm new password';
 
     elem = document.querySelectorAll('.personal-data__item');
     for (let i = 1; elem[i]; ++i) {
@@ -85,9 +137,50 @@ let personalInfo = {
       elem[i].removeChild(elem[i].lastChild);
       elem[i].appendChild(p);
     }
-    this.addSubmitCancel();
+    this.addSubmitCancel('personalInfo.submitChangePassword()');
   },
-  addSubmitCancel: function () {
+  submitChangePassword: function () {
+    let oldPas = document.querySelector('#oldPassword');
+    let newPas = document.querySelector('#newPassword');
+    let confirm = document.querySelector('#confirmNewPassword');
+
+    if (newPas.value && newPas.value !== confirm.value) {
+      confirm.value = '';
+      alert('Passwords do not match!');
+      return;
+    }
+    else if (!oldPas.value) {
+      return;
+    }
+    let formData = new FormData();
+    formData.append('oldPassword', oldPas.value);
+    formData.append('newPassword', newPas.value);
+    let object = {};
+    formData.forEach(function(value, key){
+      object[key] = value;
+    });
+    let jsonString = JSON.stringify(object);
+    console.log(jsonString);
+
+    $.ajax({
+      url : 'changePassword',
+      type : 'POST',
+      contentType : "application/json; charset=utf-8",
+      data : jsonString,
+      async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+      processData : false,  //To avoid making query String instead of JSON
+      cache: false, //This will force requested pages not to be cached by the browser
+      success : function(resposeJsonObject) {
+        alert("Yes");
+        location.reload();
+      },
+      error : function(err) {
+        alert("nope!");
+        // alert(err);
+      }
+    });
+  },
+  addSubmitCancel: function (submitButton) {
     let elem = document.querySelector('.personal-section');
       let header = document.createElement('div');
       header.className = 'personal-section__header';
@@ -101,7 +194,7 @@ let personalInfo = {
           in1.className = 'button';
           in1.setAttribute('value', 'Submit');
           in1.setAttribute('type', 'button');
-          in1.setAttribute('onclick', 'submitChanges()');
+          in1.setAttribute('onclick', submitButton);
           let in2 = document.createElement('input');
           in2.className = 'button';
           in2.setAttribute('value', 'Cancel');
@@ -194,14 +287,6 @@ let lots = {
   },
 }
 
-function changeInfo() {
-  // location.reload();
-  personalInfo.changeInfo();
-}
-function changePassword() {
-  // location.reload();
-  personalInfo.changePassword();
-}
 function cancelChanges() {
   location.reload();
   this.changes = false;
