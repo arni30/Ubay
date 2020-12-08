@@ -37,32 +37,34 @@ public class RegistrationController {
     SendMail sendMail;
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public RedirectView signup_post(User user, HttpServletResponse response) throws Exception {
-        ModelAndView mav = new ModelAndView();
         ObjectMapper mapper = new ObjectMapper();
-        if (user.getUserRole().equals("seller"))
-            user.setRoles(Collections.singleton(Role.SELLER));
-        else
-            user.setRoles(Collections.singleton(Role.BIDDER));
-        Token token = new Token();
-        user.setAvarageRate(0);
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-        user.setToken(token.getJWTToken(user.getLogin()));
-        sendMail.sendMailConfirmation(user);
-        response.addCookie(new Cookie("login", user.getLogin()));
-        userService.saveUser(user);
-        String json = mapper.writeValueAsString(user);
+        RedirectView rv = null;
+        String json = "";
+        if (userService.findUser(user.getLogin()) == null) {
+            if (user.getUserRole().equals("seller"))
+                user.setRoles(Collections.singleton(Role.SELLER));
+            else
+                user.setRoles(Collections.singleton(Role.BIDDER));
+            Token token = new Token();
+            user.setAvarageRate(0);
+            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            user.setToken(token.getJWTToken(user.getLogin()));
+            sendMail.sendMailConfirmation(user);
+            response.addCookie(new Cookie("login", user.getLogin()));
+            userService.saveUser(user);
+            json = mapper.writeValueAsString(user);
+            rv = new RedirectView("authorization");
 //        mav.addObject("user",json);
-        RedirectView rv = new RedirectView("authorization");
+        } else {
+            rv = new RedirectView("registration");
+            rv.addStaticAttribute("error", "Login is busy");
+        }
         rv.setExposeModelAttributes(false);
         rv.addStaticAttribute("user", json);
-//        mav.setViewName("redirect:/authorization");
         return rv;
     }
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String signup(ModelMap model, HttpServletRequest request) throws UnknownHostException {
-//        model.addAttribute("hallo", request.getUserPrincipal().getName());
-//        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-//        model.addAttribute("form", new User());
         return "/registration";
     }
 

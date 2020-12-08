@@ -22,8 +22,6 @@ import java.util.Collection;
 
 @Controller
 public class ChangePersonalInfoController {
-//    @Autowired
-//    private SendMail sendMail;
     @Autowired
     UserService userService;
     @Autowired
@@ -38,11 +36,6 @@ public class ChangePersonalInfoController {
         newUser.setEmail(json.get("newEmail").toString());
         newUser.setBalance(Double.parseDouble(json.get("newBalance").toString()));
         userService.updateUser(newUser);
-//        Collection<? extends GrantedAuthority> authorities = newUser.getAuthorities();
-//        Authentication request = new UsernamePasswordAuthenticationToken(newUser.getLogin(), newUser.getPassword(), authorities);
-//        Authentication result = authProvider.authenticate(request);
-//        SecurityContextHolder.getContext().setAuthentication(result);
         return "profile";
     }
-//    http://192.168.0.106:8080/ubay/changeProfile?login=2&email=arni@gmail.com&balance=101
 }
