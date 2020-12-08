@@ -93,8 +93,7 @@
                     <a id="biddersFeedbacks" class="button" href="#" onclick="viewFeedbacks(this)">feedbacks</a>
                 </div>
             </div>
-            <p>Start price:&emsp;<span id="price"></span></p>
-<%--            <p>Last bid:&emsp;<span id="lastBid"> -</span></p>--%>
+            <p>Current price:&emsp;<span id="price"></span></p>
             <p>Start time:&emsp;<span id="startTime"></span></p>
             <p>Time left to closure:&emsp;<span id="timer"></span></p>
             <p id="description"></p>

@@ -10,7 +10,7 @@ public class Bid {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "price")
-    private int price;
+    private double price;
     @Column(name = "active")
     private boolean active;
 
@@ -41,10 +41,10 @@ public class Bid {
         return bidder;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
