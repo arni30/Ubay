@@ -69,27 +69,15 @@ public class ProfileController {
             return mav;
         }
     }
-    @RequestMapping(value = "/changePersonalInfo", method = RequestMethod.POST)
-    public ModelAndView changePersonalInfo(HttpServletRequest request, @RequestBody JSONObject json) {
-//        String login = request.getUserPrincipal().getName();
-
-        System.out.println(json.get("newEmail"));
-        System.out.println(json.get("newBalance"));
-
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("redirect:/profile"); // отета якось не працює
-        return new ModelAndView();
-    }
-
-    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-    public ModelAndView changePassword(HttpServletRequest request, @RequestBody JSONObject json) {
-//        String login = request.getUserPrincipal().getName();
-
-        System.out.println(json.get("oldPassword"));
-        System.out.println(json.get("newPassword"));
-
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("redirect:/profile"); // отета якось не працює
-        return new ModelAndView();
-    }
+//    @RequestMapping(value = "/changePersonalInfo", method = RequestMethod.POST)
+//    public ModelAndView changePersonalInfo(HttpServletRequest request, @RequestBody JSONObject json) {
+////        String login = request.getUserPrincipal().getName();
+//
+//        System.out.println(json.get("newEmail"));
+//        System.out.println(json.get("newBalance"));
+//
+//        ModelAndView mav = new ModelAndView();
+//        mav.setViewName("redirect:/profile"); // отета якось не працює
+//        return new ModelAndView();
+//    }
 }
