@@ -27,7 +27,6 @@
         </div>
         <div>
             <form class="form-signin" action="authorization" method="POST" name="form">
-                <input class="form-styling" style="display: none" type="text" name="type" value="signin"/>
                 <label for="loginLogin">Username</label>
                 <input id="loginLogin" class="form-styling" type="text" name="login" required autofocus/>
                 <label for="passwordLogin">Password</label>
@@ -38,10 +37,10 @@
                 </div>
 <%--                <input type="checkbox" id="checkbox"/>--%>
 <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
-                <input class="btn-signin" type="submit" value="Sign in" onclick="sendAuthorizationRequest()">
+<%--                <input class="btn-signin" type="submit" value="Sign in">--%>
+                <button class="btn-signin" type="button" onclick="sendAuthorizationRequest()">Sign in</button>
             </form>
             <form class="form-signup" id="formSignUp">
-                <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signup"/>
                 <input class="form-styling" style="display: none" type="text" name="verification" placeholder="" value="not verificated"/>
                 <label for="userRole">Role</label>
                 <select id="userRole" class="form-styling" name="userRole">
