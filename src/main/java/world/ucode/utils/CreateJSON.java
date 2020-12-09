@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.List;
+import java.util.Set;
 
 public class CreateJSON {
     private BidService bidService = new BidService();
@@ -102,6 +103,37 @@ public class CreateJSON {
 
                 jsonArray.add(json);
             }
+        return jsonArray;
+    }
+
+    public JSONArray profileBidderShowLotsJSON(Set<Bid> bids) {
+        JSONArray jsonArray = new JSONArray();
+        for (Bid bid : bids) {
+            //потом уберу - проверка на активность аукциона (@натся)
+            Timestamp curTime = new Timestamp(System.currentTimeMillis());
+//                if (lot.getFinishTime().before(curTime))
+//                    lot.setActive(false);
+            if (bid.getLot().getActive() && bid.getLot().getFinishTime().before(curTime)) {
+                bid.getLot().setActive(false);
+                lotService.updateLot(bid.getLot());
+            }
+            Bid lastBid = bidService.findLast(bid.getLot().getId());
+            JSONObject json = new JSONObject();
+
+            json.put("id", bid.getLot().getId());
+            json.put("title", bid.getLot().getTitle());
+            json.put("category", bid.getLot().getCategory());
+            json.put("startPrice", bid.getLot().getStartPrice());
+            json.put("lastBidPrice", lastBid.getPrice());
+            json.put("lastBidder", lastBid.getBidder().getLogin());
+            json.put("active", bid.getLot().getActive());
+            json.put("description", bid.getLot().getDescription());
+            json.put("image", Base64.getEncoder().encodeToString(bid.getLot().getImage()));
+            json.put("bidderPrice", bid.getPrice());
+            json.put("bidderPriceActive", bid.getActive());
+
+            jsonArray.add(json);
+        }
         return jsonArray;
     }
 

@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // If no login, it will redirect to /login page.
         http.authorizeRequests().antMatchers("/profile/**").hasAnyAuthority("BIDDER", "SELLER");
         http.authorizeRequests().antMatchers("/addLot/**").hasAnyAuthority("SELLER");
+        http.authorizeRequests().antMatchers("/addFeedback/**").hasAnyAuthority("BIDDER");
 
         // For ADMIN only.
 //        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
@@ -46,14 +47,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // When the user has logged in as XX.
         // But access a page that requires role YY,
         // AccessDeniedException will throw.
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/aaa").accessDeniedHandler(new AccessDeniedExceptions());
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/accessDenied").accessDeniedHandler(new AccessDeniedExceptions());
         // Config for Login Form
 
         http.authorizeRequests().and().formLogin()//
                 // Submit URL of login page.
                 .loginProcessingUrl("/authorization").permitAll() // Submit URL
                 .loginPage("/authorization")//
-                .failureUrl("/403")
+                .failureUrl("/accessDenied")
                 .failureHandler(new AuthExceptions())
                 .defaultSuccessUrl("/main")//
                 .usernameParameter("login") //the username parameter in the queryString, default is 'username'

@@ -10,7 +10,10 @@ import world.ucode.utils.HibernateSessionFactoryUtil;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserDao {
 
@@ -72,13 +75,20 @@ public class UserDao {
         List<Bid> bids = (List<Bid>)session.createQuery
                 ("SELECT bid FROM Bid bid WHERE bid.bidder = :login AND bid.lot.id = :lotId")
                 .setParameter("login", login).setParameter("lotId", lotId).list();
-        if (bids.size() == 0) {
-            session.close();
-            return null;
-        }
-        Bid bid = bids.get(bids.size() - 1);
+        Bid bid = bids.size() == 0 ? null : bids.get(bids.size() - 1);
         session.close();
         return bid;
+    }
+
+    public Set<Bid> findBidsByBidder(String login) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Bid> bids = (List<Bid>)session.createQuery
+                ("SELECT bid FROM Bid bid WHERE bid.bidder.login = :login")
+                .setParameter("login", login).list();
+//        Bid bid = bids.size() == 0 ? null : bids.get(bids.size() - 1);
+        session.close();
+        Set<Bid> uniqueLots = new HashSet<Bid>(bids);
+        return uniqueLots;
     }
 
 

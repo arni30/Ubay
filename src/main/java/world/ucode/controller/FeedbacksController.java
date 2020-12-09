@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import world.ucode.models.Bid;
 import world.ucode.models.Feedback;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
@@ -51,8 +52,6 @@ public class FeedbacksController {
             mav.setViewName("/feedbacks");
             return mav;
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Bad JSON");
             mav.setViewName("/errors/error");
             return mav;
         }
@@ -62,9 +61,16 @@ public class FeedbacksController {
      * requires unique lot id (to what lot was added feedback).
      * */
     @RequestMapping(value = "/addFeedback", method = RequestMethod.GET)
-    public ModelAndView addFeedback(@RequestParam String lotId) {
-        return pageModelAndView.pageModelAndView(
-                lotService.findLot(Integer.parseInt(lotId)), "/addFeedback");
+    public ModelAndView addFeedback(@RequestParam String lotId, HttpServletRequest request) {
+        Lot lot = lotService.findLot(Integer.parseInt(lotId));
+        Bid lastBid = bidService.findLast(lot.getId());
+        ModelAndView mav = new ModelAndView();
+        if (lastBid != null && !lot.getActive() && lastBid.getBidder().getLogin().equals(request.getUserPrincipal().getName())) {
+            return pageModelAndView.pageModelAndView(
+                    lotService.findLot(Integer.parseInt(lotId)), "/addFeedback");
+        }
+        mav.setViewName("redirect:/main");
+        return mav;
     }
 
     @RequestMapping(value = "/addFeedback", method = RequestMethod.POST)
