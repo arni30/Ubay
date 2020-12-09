@@ -25,8 +25,6 @@ public class SendMail {
     @Async
     public void sendMailConfirmation(User user) throws UnknownHostException {
         SimpleMailMessage mailMessage = new SimpleMailMessage(templateMessage);
-        // Создаём потокобезопасную копию шаблона.
-//        InetAddress.getLocalHost().getHostAddress()
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Registration confirmation");
         mailMessage.setText("To confirm your account, please click here : "
@@ -35,10 +33,8 @@ public class SendMail {
     }
     public void sendMailPassword(String login) throws UnknownHostException {
         SimpleMailMessage mailMessage = new SimpleMailMessage(templateMessage);
-        // Создаём потокобезопасную копию шаблона.
-//        InetAddress.getLocalHost().getHostAddress()
         String newPassword = generatePassword();
-        User user = userService.findUser("arni");
+        User user = userService.findUser(login);
         user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
         userService.updateUser(user);
         mailMessage.setTo(user.getEmail());

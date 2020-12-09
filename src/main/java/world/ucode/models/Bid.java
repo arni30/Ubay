@@ -28,7 +28,6 @@ public class Bid {
 
     public void setLot(Lot lot) {
         this.lot = lot;
-//        lot.setLastBid(this);
     }
     public Lot getLot() {
         return lot;

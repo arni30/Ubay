@@ -18,14 +18,6 @@ public class LotDao {
         return lot;
     }
 
-    public Lot findByTitle(String title) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Query query =  session.createQuery("SELECT lot FROM Lot lot WHERE lot.title = :title").setParameter("title", title);
-        Lot lot = (Lot) query.uniqueResult();
-        session.close();
-        return lot;
-    }
-
     public void save(Lot lot) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
@@ -65,16 +57,4 @@ public class LotDao {
         session.close();
         return lots;
     }
-//
-//    public void findAllClosure() {
-//        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-//        Query query = session.createQuery("SELECT lot FROM Lot lot WHERE lot.startTime >= lot.finishTime");
-//        List<Lot> lots = (List<Lot>) query.getResultList();
-//        session.close();
-//
-//        for (Lot lot : lots) {
-////            lot.setActive(false);
-////            update(lot);
-//        }
-//    }
 }

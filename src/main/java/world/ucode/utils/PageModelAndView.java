@@ -11,12 +11,9 @@ import world.ucode.services.UserService;
 
 public class PageModelAndView {
     UserService userService = new UserService();
-
     /**
      * ----------------------- helpful functional
      */
-
-
     public ModelAndView pageModelAndView(String login, String page) {
         ModelAndView mav = new ModelAndView();
         System.out.println(login);
@@ -28,8 +25,6 @@ public class PageModelAndView {
             mav.setViewName(page);
             return mav;
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Bad JSON");
             mav.setViewName("/errors/error");
             return mav;
         }
@@ -42,8 +37,6 @@ public class PageModelAndView {
             mav.setViewName(page);
             return mav;
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Bad JSON");
             mav.setViewName("/errors/error");
             return mav;
         }

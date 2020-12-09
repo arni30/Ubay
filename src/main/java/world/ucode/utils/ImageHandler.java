@@ -11,15 +11,12 @@ public class ImageHandler {
             try {
                 System.out.println(file.getOriginalFilename());
                 System.out.println(file.getContentType());
-
-
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream =
                         new BufferedOutputStream(new FileOutputStream(
                                 new File("uploaded_" + file.getOriginalFilename())));
                 stream.write(bytes);
                 stream.close();
-                System.out.println("Вы удачно загрузили " + file.getName() + " в " + "uploaded_" + file.getOriginalFilename());
             } catch (Exception e) {
                 System.out.println("Вам не удалось загрузить " + file.getName() + " => " + e.getMessage());
             }

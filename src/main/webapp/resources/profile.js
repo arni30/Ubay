@@ -176,7 +176,6 @@ let personalInfo = {
     } else {
       console.log(response);
       alert("Can't change password. Old password is wrong!");
-      location.reload();
     }
   },
   addSubmitCancel: function (submitButton) {

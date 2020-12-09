@@ -13,11 +13,6 @@ public class Feedback {
     private String description;
     @Column(name = "rate")
     private double rate;
-//    @Column(name = "finalPrice")
-//    private double finalPrice;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "finalBid", referencedColumnName = "bidId")
-//    private Bid finalBid;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "auctionId", referencedColumnName = "lotId")
@@ -47,7 +42,4 @@ public class Feedback {
 
     public void setRate(double rate) { this.rate = rate; }
     public double getRate() { return rate; }
-
-//    public void setFinalPrice(double finalPrice) { this.finalPrice = finalPrice; }
-//    public double getFinalPrice() { return finalPrice; }
 }

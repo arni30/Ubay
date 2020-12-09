@@ -10,9 +10,6 @@ import java.util.List;
 public class LotService {
     private final LotDao lotDao = new LotDao();
 
-    public LotService() {
-    }
-
     public Lot findLot(int id) {
         return lotDao.findById(id);
     }

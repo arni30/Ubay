@@ -70,33 +70,15 @@ public class UserDao {
         return lot;
     }
 
-    public Bid findLastBitByLot(String login, int lotId) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        List<Bid> bids = (List<Bid>)session.createQuery
-                ("SELECT bid FROM Bid bid WHERE bid.bidder = :login AND bid.lot.id = :lotId")
-                .setParameter("login", login).setParameter("lotId", lotId).list();
-        Bid bid = bids.size() == 0 ? null : bids.get(bids.size() - 1);
-        session.close();
-        return bid;
-    }
-
     public Set<Bid> findBidsByBidder(String login) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         List<Bid> bids = (List<Bid>)session.createQuery
                 ("SELECT bid FROM Bid bid WHERE bid.bidder.login = :login")
                 .setParameter("login", login).list();
-//        Bid bid = bids.size() == 0 ? null : bids.get(bids.size() - 1);
         session.close();
         Set<Bid> uniqueLots = new HashSet<Bid>(bids);
         return uniqueLots;
     }
-
-
-//        for (Bid b : bids) {
-//        if (b.getLot().getId() == lotId) {
-//            last = b;
-//        }
-//    }
 
     public List<User> findAll() {
         List<User> users = (List<User>)HibernateSessionFactoryUtil.getSessionFactory()

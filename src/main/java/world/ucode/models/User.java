@@ -41,15 +41,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Lot> lots;
-
-    @OneToMany(mappedBy = "bidder", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Bid> bids;
-
     public int getId() {
         return id;
     }
@@ -62,9 +53,6 @@ public class User implements UserDetails {
     }
 
     public void setPassword(String password) {
-//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-//        this.password = bCryptPasswordEncoder.encode(password);
-//        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.password = password;
     }
 
@@ -133,38 +121,4 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
-
-
-    public void addLot(Lot lot) {
-        lot.setSeller(this);
-//        lots.add(lot);
-    }
-    public void removeLot(Lot lot) { lots.remove(lot); }
-
-    public List<Lot> getLots() { return lots; }
-    public void setLots(ArrayList<Lot> lots) { this.lots = lots; }
-
-    public void addBid(Bid bid) {
-        bid.setBidder(this);
-//        bids.add(bid);
-    }
-    public void removeBid(Bid bid) { bids.remove(bid); }
-
-    public List<Bid> getBids() { return bids; }
-    public void setBids(ArrayList<Bid> bids) { this.bids = bids; }
-    //    @Override
-//    public String toString() {
-//        String res = "models.User{ " +
-//                "id=" + id +
-//                ", login='" + login + '\'' +
-//                ", password=" + password +
-//                ", role=";
-//        if (userRole.equals("seller")) {
-//            res += "seller";
-//        } else {
-//            res += "bitter";
-//        }
-//        res += "(" + userRole + ") }";
-//        return res;
-//    }
 }

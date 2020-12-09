@@ -48,8 +48,7 @@ public class AddLotController {
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lot.setActive(true);
-        seller.addLot(lot);
-//        lot.setSeller(seller);
+        lot.setSeller(seller);
         lotService.saveLot(lot);
         mav.setViewName("redirect:/profile");
         return mav;

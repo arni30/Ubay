@@ -33,8 +33,8 @@ public class NewBit {
         User bidder = userService.findUser(request.getUserPrincipal().getName());
         bid.setLot(lotService.findLot(Integer.parseInt(json.get("lotId").toString())));
         bid.setActive(true);
-        bidder.addBid(bid);
-//        bid.setBidder(bidder);
+//        bidder.addBid(bid);
+        bid.setBidder(bidder);
         bidService.saveBid(bid);
 
         mav.setViewName("redirect:/main"); // отета все одно не працює
