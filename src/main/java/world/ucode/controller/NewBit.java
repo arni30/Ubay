@@ -29,7 +29,7 @@ public class NewBit {
     @RequestMapping(value = "/newBit", method = RequestMethod.POST)
     public ModelAndView newBid(HttpServletRequest request, @RequestBody JSONObject json) throws JsonProcessingException {
         Bid bid = new Bid();
-        bid.setPrice(Integer.parseInt(json.get("price").toString()));
+        bid.setPrice(Double.parseDouble(json.get("price").toString()));
         User bidder = userService.findUser(request.getUserPrincipal().getName());
         bid.setLot(lotService.findLot(Integer.parseInt(json.get("lotId").toString())));
         bid.setActive(true);

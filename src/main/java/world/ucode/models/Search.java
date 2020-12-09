@@ -16,11 +16,11 @@ public class Search {
         this.title = title;
     }
 
-    public float getStartPrice() {
+    public double getStartPrice() {
         if (startPrice.equals("")) {
             return 0;
         }
-        return Float.parseFloat(startPrice);
+        return Double.parseDouble(startPrice);
     }
 
     public void setStartPrice(String startPrice) {

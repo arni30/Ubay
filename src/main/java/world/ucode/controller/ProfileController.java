@@ -53,7 +53,7 @@ public class ProfileController {
                 }
                 JSONArray jsonLotsSeller = createJSON.mainShowLotsJSON(lots);
                 JSONArray jsonLotsBidder = createJSON.profileBidderShowLotsJSON(bids);
-                System.out.println(jsonLotsBidder);
+//                System.out.println(jsonLotsBidder);
                 mav.addObject("lots", user.getUserRole().equals("seller") ? jsonLotsSeller : jsonLotsBidder);
             }
             mav.setViewName("/profile");

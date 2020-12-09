@@ -1,5 +1,3 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String authorizedLogin = null;
@@ -24,11 +22,9 @@
     <link rel="stylesheet" href="resources/reset.css"/>
     <link rel="stylesheet" href="resources/main.css"/>
     <script src="resources/references.js"></script>
-    <script src="resources/main.js"></script>
     <script src="resources/main_show.js"></script>
-
+    <script src="resources/main.js"></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>
 </head>
 
 <body>
@@ -149,7 +145,8 @@
                 <input id="searchByDescription" class="form-styling" type="text"
                        name="description"/>
 
-                <input id="formButton" class="button" type="submit" value="Search">
+<%--                <a id="formButton" class="button" href="#" onclick="auctions.addBit()">Search</a>--%>
+                <input id="formButton" class="button" value="Search" onclick="view.submitSearch()">
             </form>
         </div>
         <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script> -->

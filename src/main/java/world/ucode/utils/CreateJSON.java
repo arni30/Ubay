@@ -143,7 +143,7 @@ public class CreateJSON {
             JSONObject json = new JSONObject();
 
             json.put("title", f.getLot().getTitle());
-//            json.put("bidder", );
+            json.put("bidder", f.getBidder().getLogin());
             json.put("rate", f.getRate());
             json.put("feedback", f.getDescription());
 

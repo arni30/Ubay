@@ -40,6 +40,8 @@ let products = {
 
     if (item.lastBidPrice) {
       item.startPrice = item.lastBidPrice;
+    } else {
+      item.lastBidPrice = item.startPrice;
     }
     node = document.createElement('div');
     node.className = 'one-third column';

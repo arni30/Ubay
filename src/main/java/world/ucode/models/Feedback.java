@@ -23,7 +23,7 @@ public class Feedback {
     @JoinColumn(name = "auctionId", referencedColumnName = "lotId")
     private Lot lot;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bidderId", referencedColumnName = "userId")
     private User bidder;
 //

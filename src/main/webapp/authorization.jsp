@@ -38,7 +38,7 @@
                 </div>
 <%--                <input type="checkbox" id="checkbox"/>--%>
 <%--                <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>--%>
-                <input class="btn-signin" type="submit" value="Sign in">
+                <input class="btn-signin" type="submit" value="Sign in" onclick="sendAuthorizationRequest()">
             </form>
             <form class="form-signup" id="formSignUp">
                 <input class="form-styling" style="display: none" type="text" name="type" placeholder="" value="signup"/>
