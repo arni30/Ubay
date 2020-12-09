@@ -14,4 +14,9 @@ public class ErrorsController {
     public String exceptions() {
         return "/errors/error";
     }
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    public String accessDenied() {
+        return "/errors/403";
+    }
 }
+

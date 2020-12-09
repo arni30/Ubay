@@ -47,14 +47,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // When the user has logged in as XX.
         // But access a page that requires role YY,
         // AccessDeniedException will throw.
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/aaa").accessDeniedHandler(new AccessDeniedExceptions());
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/accessDenied").accessDeniedHandler(new AccessDeniedExceptions());
         // Config for Login Form
 
         http.authorizeRequests().and().formLogin()//
                 // Submit URL of login page.
                 .loginProcessingUrl("/authorization").permitAll() // Submit URL
                 .loginPage("/authorization")//
-                .failureUrl("/403")
+                .failureUrl("/accessDenied")
                 .failureHandler(new AuthExceptions())
                 .defaultSuccessUrl("/main")//
                 .usernameParameter("login") //the username parameter in the queryString, default is 'username'
