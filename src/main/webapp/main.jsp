@@ -119,7 +119,7 @@
 
         <div class="search">
             <p>Search:</p>
-            <form action="search" method="POST" name="search">
+            <form>
                 <label for="searchByTitle">Title</label>
                 <input id="searchByTitle" class="form-styling" type="text"
                        name="title"/>
@@ -145,8 +145,7 @@
                 <input id="searchByDescription" class="form-styling" type="text"
                        name="description"/>
 
-<%--                <a id="formButton" class="button" href="#" onclick="auctions.addBit()">Search</a>--%>
-                <input id="formButton" class="button" value="Search" onclick="view.submitSearch()">
+                <input class="button" type="button" value="Search" onclick="view.submitSearch()">
             </form>
         </div>
         <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script> -->

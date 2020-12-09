@@ -3,12 +3,12 @@ package world.ucode.controller;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import world.ucode.models.Lot;
-import world.ucode.models.Search;
 import world.ucode.services.LotService;
 import world.ucode.utils.CreateJSON;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class SearchController {
     CreateJSON createJSON = new CreateJSON();
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public void search_post(@RequestBody JSONObject json) {
+    public void search_post(@RequestBody JSONObject json, HttpServletResponse response) {
         String title = json.get("title") != "" ?
                 json.get("title").toString() : null;
         double price = json.get("price") != "" ?
@@ -56,12 +56,16 @@ public class SearchController {
                 newList.add(l);
             }
         }
-        for (Lot l : newList) {
-            System.out.println(l.getTitle());
-        }
-//        response.addHeader("json", createJSON.mainShowLotsJSON(newList).toJSONString());
 
-//        return createJSON.mainShowLotsJSON(newList);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        try {
+            PrintWriter writer = response.getWriter();
+            writer.print(createJSON.mainShowLotsJSON(newList).toJSONString());
+            writer.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
