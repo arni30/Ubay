@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // If no login, it will redirect to /login page.
         http.authorizeRequests().antMatchers("/profile/**").hasAnyAuthority("BIDDER", "SELLER");
         http.authorizeRequests().antMatchers("/addLot/**").hasAnyAuthority("SELLER");
+        http.authorizeRequests().antMatchers("/addFeedback/**").hasAnyAuthority("BIDDER");
 
         // For ADMIN only.
 //        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
@@ -53,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Submit URL of login page.
                 .loginProcessingUrl("/authorization").permitAll() // Submit URL
                 .loginPage("/authorization")//
+                .failureUrl("/403")
                 .failureHandler(new AuthExceptions())
                 .defaultSuccessUrl("/main")//
                 .usernameParameter("login") //the username parameter in the queryString, default is 'username'

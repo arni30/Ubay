@@ -1,22 +1,18 @@
 package world.ucode.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.support.GenericXmlApplicationContext;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import world.ucode.models.User;
+import world.ucode.services.UserService;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.Random;
 
 @Component
 public class SendMail {
@@ -24,26 +20,50 @@ public class SendMail {
     JavaMailSender mailSender;
     @Autowired
     SimpleMailMessage templateMessage;
+    @Autowired
+    private UserService userService;
     @Async
-    public void sendMail(User user) throws UnknownHostException {
-//        GenericXmlApplicationContext context = new GenericXmlApplicationContext();
-//        context.load("classpath:applicationContext.xml");
-//        context.refresh();
-//         = context.getBean("mailSender", JavaMailSender.class);
-//        SimpleMailMessage templateMessage = context.getBean("templateMessage", SimpleMailMessage.class);
-
-        // Создаём потокобезопасную копию шаблона.
-        if (mailSender == null) {
-            System.out.println("HALLLLLLLO");
-        }
+    public void sendMailConfirmation(User user) throws UnknownHostException {
         SimpleMailMessage mailMessage = new SimpleMailMessage(templateMessage);
-
+        // Создаём потокобезопасную копию шаблона.
+//        InetAddress.getLocalHost().getHostAddress()
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Registration confirmation");
         mailMessage.setText("To confirm your account, please click here : "
                 + "http://" + InetAddress.getLocalHost().getHostAddress() + ":8080/ubay/confirmation/?token=" + user.getToken());
          mailSender.send(mailMessage);
-        System.out.println("Mail sended");
+    }
+    public void sendMailPassword(String login) throws UnknownHostException {
+        SimpleMailMessage mailMessage = new SimpleMailMessage(templateMessage);
+        // Создаём потокобезопасную копию шаблона.
+//        InetAddress.getLocalHost().getHostAddress()
+        String newPassword = generatePassword();
+        User user = userService.findUser("arni");
+        user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+        userService.updateUser(user);
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Forgot password");
+        mailMessage.setText("Your new password is: "
+                + newPassword);
+        mailSender.send(mailMessage);
+    }
+    private String generatePassword() {
+        String capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+        String specialCharacters = "!@#$";
+        String numbers = "1234567890";
+        String combinedChars = capitalCaseLetters + lowerCaseLetters + specialCharacters + numbers;
+        Random random = new Random();
+        StringBuilder password = new StringBuilder("        ");
 
+        password.setCharAt(0, lowerCaseLetters.charAt(random.nextInt(lowerCaseLetters.length())));
+        password.setCharAt(1, capitalCaseLetters.charAt(random.nextInt(capitalCaseLetters.length())));
+        password.setCharAt(2, specialCharacters.charAt(random.nextInt(specialCharacters.length())));
+        password.setCharAt(3, numbers.charAt(random.nextInt(numbers.length())));
+
+        for(int i = 4; i< 8; i++) {
+            password.setCharAt(i, combinedChars.charAt(random.nextInt(combinedChars.length())));
+        }
+        return password.toString();
     }
 }

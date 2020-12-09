@@ -83,9 +83,9 @@
 
             <div class="forgot">
                 <a class="forgot-button" href="#">Forgot your password?</a>
-                <form class="forgot-form hidden" action="restorePassword" method="POST" name="form" style="margin-top: 20px">
+                <form class="forgot-form hidden" action="forgotPassword" method="POST" name="form" style="margin-top: 20px">
                     <input id="emailRestorePass" class="form-styling" style="width: 75%"
-                           type="email" name="email" required placeholder="enter your email">
+                           type="text" name="login" required placeholder="enter your password">
                     <input class="" type="submit" value="Restore">
 
 <%--                    <a class="forgot-button" href="#" onclick="location.reload()">Return</a>--%>

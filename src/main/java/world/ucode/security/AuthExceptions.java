@@ -33,8 +33,6 @@ public class AuthExceptions
             data.put(
                     "exception",
                     exception.getMessage());
-
-            response.getOutputStream()
-                    .println(objectMapper.writeValueAsString(data));
+            response.getWriter().write(objectMapper.writeValueAsString(data));
         }
     }
