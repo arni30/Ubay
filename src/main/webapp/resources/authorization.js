@@ -97,24 +97,9 @@ async function sendAuthorizationRequest() {
     let pass = document.getElementById("passwordLogin").value;
     formData.append('login', login);
     formData.append('password', pass);
-    let object = {};
-    formData.forEach(function(value, key){
-        object[key] = value;
-    });
-    let jsonString = JSON.stringify(object);
     let response = await fetch('authorization',{
         method: 'POST',
-        // mode: 'cors', // no-cors, *cors, same-origin
-        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: 'same-origin', // include, *same-origin, omit
-        // headers: {
-        //     contentType : 'application/json'
-        // },
-        // referrerPolicy: 'no-referrer', // no-referrer, *client
         body : formData,
-        // async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
-        // processData : true,  //To avoid making query String instead of JSON
-        // cache: false, //This will force requested pages not to be cached by the browser
     });
     if (response.ok) {
         location.replace(response.url);

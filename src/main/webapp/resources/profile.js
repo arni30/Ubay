@@ -60,7 +60,7 @@ let personalInfo = {
     }
     this.addSubmitCancel('personalInfo.submitChangeInfo()');
   },
-  submitChangeInfo: function () {
+  submitChangeInfo: async function () {
     let email = document.querySelector('#email');
     let balance = document.querySelector('#balance');
 
@@ -76,29 +76,29 @@ let personalInfo = {
     formData.append('newEmail', email.value);
     formData.append('newBalance', balance.value);
     let object = {};
-    formData.forEach(function(value, key){
+    formData.forEach(function (value, key) {
       object[key] = value;
     });
     let jsonString = JSON.stringify(object);
     console.log(jsonString);
 
-    $.ajax({
-      url : 'changePersonalInfo',
-      type : 'POST',
-      contentType : "application/json; charset=utf-8",
-      data : jsonString,
-      async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
-      processData : false,  //To avoid making query String instead of JSON
-      cache: false, //This will force requested pages not to be cached by the browser
-      success : function(resposeJsonObject) {
-        alert("Yes");
-        location.reload();
+    let response = await fetch('changePersonalInfo', {
+      method: 'POST',
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'Content-Type': 'application/json'
       },
-      error : function(err) {
-        alert("nope!");
-        // alert(err);
-      }
+      async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+      processData: false,  //To avoid making query String instead of JSON
+      body: jsonString
     });
+    if (response.ok) {
+      location.reload();
+    } else {
+      console.log(response);
+      alert("Can't change personal info");
+      location.reload();
+    }
   },
   changePassword: function () {
     let elem, p;
@@ -139,7 +139,7 @@ let personalInfo = {
     }
     this.addSubmitCancel('personalInfo.submitChangePassword()');
   },
-  submitChangePassword: function () {
+  submitChangePassword: async function () {
     let oldPas = document.querySelector('#oldPassword');
     let newPas = document.querySelector('#newPassword');
     let confirm = document.querySelector('#confirmNewPassword');
@@ -148,37 +148,36 @@ let personalInfo = {
       confirm.value = '';
       alert('Passwords do not match!');
       return;
-    }
-    else if (!oldPas.value) {
+    } else if (!oldPas.value) {
       return;
     }
     let formData = new FormData();
     formData.append('oldPassword', oldPas.value);
     formData.append('newPassword', newPas.value);
     let object = {};
-    formData.forEach(function(value, key){
+    formData.forEach(function (value, key) {
       object[key] = value;
     });
     let jsonString = JSON.stringify(object);
     console.log(jsonString);
 
-    $.ajax({
-      url : 'changePassword',
-      type : 'POST',
-      contentType : "application/json; charset=utf-8",
-      data : jsonString,
-      async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
-      processData : false,  //To avoid making query String instead of JSON
-      cache: false, //This will force requested pages not to be cached by the browser
-      success : function(resposeJsonObject) {
-        alert("Yes");
-        location.reload();
+    let response = await fetch('changePassword', {
+      method: 'POST',
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'Content-Type': 'application/json'
       },
-      error : function(err) {
-        alert("nope!");
-        // alert(err);
-      }
+      async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+      processData: false,  //To avoid making query String instead of JSON
+      body: jsonString
     });
+    if (response.ok) {
+      location.reload();
+    } else {
+      console.log(response);
+      alert("Can't change password. Old password is wrong!");
+      location.reload();
+    }
   },
   addSubmitCancel: function (submitButton) {
     let elem = document.querySelector('.personal-section');
