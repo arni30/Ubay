@@ -51,8 +51,6 @@ public class FeedbacksController {
             mav.setViewName("/feedbacks");
             return mav;
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Bad JSON");
             mav.setViewName("/errors/error");
             return mav;
         }
@@ -63,6 +61,7 @@ public class FeedbacksController {
      * */
     @RequestMapping(value = "/addFeedback", method = RequestMethod.GET)
     public ModelAndView addFeedback(@RequestParam String lotId) {
+//        if (!lotService.findLot(Integer.parseInt(lotId)).getActive() && )
         return pageModelAndView.pageModelAndView(
                 lotService.findLot(Integer.parseInt(lotId)), "/addFeedback");
     }
