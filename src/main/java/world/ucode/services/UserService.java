@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import world.ucode.dao.UserDao;
+import world.ucode.models.Bid;
 import world.ucode.models.Lot;
 import world.ucode.models.Role;
 import world.ucode.models.User;
@@ -70,6 +71,10 @@ public class UserService implements UserDetailsService {
 
     public Lot findLotById(int id) {
         return usersDao.findLotById(id);
+    }
+
+    public Set<Bid> findBidsByBidder(String login) {
+        return usersDao.findBidsByBidder(login);
     }
 
 //    @Override

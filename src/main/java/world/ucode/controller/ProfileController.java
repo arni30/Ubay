@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import world.ucode.models.Bid;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.services.BidService;
@@ -20,6 +21,7 @@ import world.ucode.utils.CreateJSON;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 
@@ -44,21 +46,15 @@ public class ProfileController {
                 User user = userService.findUserByLogin(login);
                 String json = mapper.writeValueAsString(user);
                 mav.addObject("user", json);
-//                if (user.getUserRole().equals("seller")) {
                     lots = lotService.findAllLotsByUser(login);
-//                List<Bid> bids = bidService.findAllBidsByUser(login);
-                    System.out.println("----------------");
-//                System.out.println(user.getBids());
-//                if (user.getUserRole() == "bidder") {
-//                    HashMap<Lot, Bid> b = user.getListOfBiddersLastBids();
-//                    System.out.println(b);
-//                }
-//                }
-//                else {
-//
-//                }
-                JSONArray jsonArr = createJSON.mainShowLotsJSON(lots);
-                mav.addObject("lots", jsonArr);
+                Set<Bid> bids = userService.findBidsByBidder(login);
+                for (Bid bid:bids) {
+                    System.out.println(bid.getLot().getTitle());
+                }
+                JSONArray jsonLotsSeller = createJSON.mainShowLotsJSON(lots);
+                JSONArray jsonLotsBidder = createJSON.profileBidderShowLotsJSON(bids);
+                System.out.println(jsonLotsBidder);
+                mav.addObject("lots", user.getUserRole().equals("seller") ? jsonLotsSeller : jsonLotsBidder);
             }
             mav.setViewName("/profile");
             return mav;
