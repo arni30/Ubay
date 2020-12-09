@@ -92,12 +92,19 @@ function checkPasswordMatch() {
 
 
 async function sendAuthorizationRequest() {
+    const formData = new FormData();
+    let login = document.getElementById("loginLogin").value;
+    let pass = document.getElementById("passwordLogin").value;
+    formData.append('login', login);
+    formData.append('password', pass);
     let response = await fetch('authorization',{
-        method: 'POST'
+        method: 'POST',
+        body : formData,
     });
     if (response.ok) {
-        // alert('ok');
+        location.replace(response.url);
     } else {
+        console.log( response);
         alert("Wrong password or login not found");
         location.reload();
     }
