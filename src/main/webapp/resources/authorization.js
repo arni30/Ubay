@@ -89,3 +89,16 @@ function checkPasswordMatch() {
         return;
     }
 }
+
+
+async function sendAuthorizationRequest() {
+    let response = await fetch('authorization',{
+        method: 'POST'
+    });
+    if (response.ok) {
+        // alert('ok');
+    } else {
+        alert("Wrong password or login not found");
+        location.reload();
+    }
+}
