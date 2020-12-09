@@ -54,34 +54,35 @@
     if (${lot}) {
         document.querySelector('#lot').innerHTML = `${lot.title}`;
     }
-    function send() {
+    async function send() {
         let formData = new FormData();
         formData.append('lotId', ${lot.lotId});
         formData.append('rate', document.getElementById("newRate").value);
         formData.append('description', document.getElementById("newFeedback").value);
         let object = {};
-        formData.forEach(function(value, key){
+        formData.forEach(function (value, key) {
             object[key] = value;
         });
         let jsonString = JSON.stringify(object);
         console.log(jsonString);
 
-        $.ajax({
-            url : 'addFeedback',
-            type : 'POST',
-            contentType : "application/json; charset=utf-8",
-            data : jsonString,
-            async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
-            processData : false,  //To avoid making query String instead of JSON
-            cache: false, //This will force requested pages not to be cached by the browser
-            success : function(resposeJsonObject) {
-               location.replace(`/ubay/auction?lotId=${lot.lotId}`);
+        let response = await fetch('addFeedback', {
+            method: 'POST',
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            headers: {
+                'Content-Type' : 'application/json'
             },
-            error : function(err) {
-                alert("nope!");
-                // alert(err);
-            }
+            async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+            processData: false,  //To avoid making query String instead of JSON
+            body: jsonString
         });
+        if (response.ok) {
+            location.replace(response.url);
+        } else {
+            console.log( response);
+            alert("Can't add feedback");
+            location.reload();
+        }
     }
 </script>
 

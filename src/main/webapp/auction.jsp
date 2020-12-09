@@ -154,7 +154,7 @@
         if (${winner})
             auctions.winner = ${winner};
     }
-    function send(){
+    async function send(){
         let newPrice = document.querySelector('#newPrice');
         if (newPrice.value < newPrice.min) {
             newPrice.value = newPrice.min;

@@ -16,6 +16,8 @@ import world.ucode.security.AuthProvider;
 import world.ucode.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Collection;
 
@@ -27,7 +29,8 @@ public class ChangePasswordController {
     AuthProvider authProvider;
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public String changePassword(@RequestBody JSONObject json,
-                                HttpServletRequest httpServletRequest) throws UnknownHostException {
+                                 HttpServletRequest httpServletRequest,
+                                 HttpServletResponse response) throws IOException {
         User newUser = userService.findUser(httpServletRequest.getUserPrincipal().getName());
         if(BCrypt.checkpw(json.get("oldPassword").toString(), newUser.getPassword())) {
             newUser.setPassword(BCrypt.hashpw(json.get("newPassword").toString(), BCrypt.gensalt()));
@@ -37,6 +40,8 @@ public class ChangePasswordController {
 //            Authentication result = authProvider.authenticate(request);
 //            SecurityContextHolder.getContext().setAuthentication(result);
         }
+        else
+            response.sendError(401);
         return "profile";
     }
 }
