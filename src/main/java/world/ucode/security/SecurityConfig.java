@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Submit URL of login page.
                 .loginProcessingUrl("/authorization").permitAll() // Submit URL
                 .loginPage("/authorization")//
+                .failureUrl("/403")
                 .failureHandler(new AuthExceptions())
                 .defaultSuccessUrl("/main")//
                 .usernameParameter("login") //the username parameter in the queryString, default is 'username'

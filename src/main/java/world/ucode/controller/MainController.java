@@ -13,6 +13,8 @@ import world.ucode.models.Search;
 import world.ucode.services.LotService;
 import world.ucode.utils.CreateJSON;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 @Controller
 public class MainController {
@@ -27,7 +29,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
-    public ModelAndView main(ModelMap model) {
+    public ModelAndView main(ModelMap model) throws UnknownHostException {
         if (!model.containsAttribute("search")) {
             model.addAttribute("search", new Search());
         }
