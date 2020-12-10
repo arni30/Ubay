@@ -29,7 +29,7 @@ let auctions = {
     document.querySelector('#title').innerHTML = this.lot.title;
     document.querySelector('#price').innerHTML = '\$' + this.lot.startPrice;
     document.querySelector('#aboutProfile').innerHTML = this.lot.seller;
-    document.querySelector('#rate').innerHTML = (this.lot.rate === 0) ? ' - ' : this.lot.rate;
+    document.querySelector('#rate').innerHTML = (this.lot.rate === 0) ? ' - ' : this.lot.rate.toFixed(1);
     document.querySelector('#startTime').innerHTML = this.lot.startTime.replace('T', '&emsp;');
     document.querySelector('#description').innerHTML = this.lot.description;
 
@@ -119,6 +119,7 @@ let timer = setInterval(function () {
 
 let init = () => {
   auctions.show();
+  viewFeedbacks();
 }
 
 window.onload = init;

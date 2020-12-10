@@ -81,8 +81,13 @@ let products = {
         p.setAttribute('style', 'color: red;');
       }
     } else {
-      p.innerHTML = item.description;
+      if (item.description.length > 45) {
+        p.innerHTML = item.description.substring(0, 40) + "...";
+      } else {
+        p.innerHTML = item.description;
+      }
     }
+
     shelf.appendChild(p);
 
     p = document.createElement('div');

@@ -12,7 +12,7 @@ let feedbacks = {
     elem.firstChild.innerHTML = this.sellerInfo.username;
 
     if (this.sellerInfo.rate !== 0) {
-      document.querySelector('#rate').innerHTML = this.sellerInfo.rate;
+      document.querySelector('#rate').innerHTML = this.sellerInfo.rate.toFixed(1);
     }
 
   },

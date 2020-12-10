@@ -86,7 +86,8 @@
                     <a style="color: #494d5f" href="#" onclick="viewProfile(this)"><span id="aboutProfile">seller</span>
                         <span class="seller-rating seller-rating fa fa-fw fa-star field-icon"></span><span id="rate" class="seller-rating"></span>
                     </a>
-                    <a id="biddersFeedbacks" class="button" href="#" onclick="viewFeedbacks(this)">feedbacks</a>
+                    <a id="biddersFeedbacks" class="button" href="#"
+                       onclick="viewFeedbacks(document.querySelector('#aboutProfile').innerHTML)">feedbacks</a>
                 </div>
             </div>
             <p>Current price:&emsp;<span id="price"></span></p>
