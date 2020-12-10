@@ -20,28 +20,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
         .cors().disable()
                 .csrf().disable();
-
-        // The pages does not require login
         http.authorizeRequests().antMatchers("/", "/main", "/authorization").permitAll();
-
-        // /userInfo page requires login as USER or ADMIN.
-        // If no login, it will redirect to /login page.
         http.authorizeRequests().antMatchers("/profile/**").hasAnyAuthority("BIDDER", "SELLER");
         http.authorizeRequests().antMatchers("/addLot/**").hasAnyAuthority("SELLER");
         http.authorizeRequests().antMatchers("/addFeedback/**").hasAnyAuthority("BIDDER");
-        // When the user has logged in as XX.
-        // But access a page that requires role YY,
-        // AccessDeniedException will throw.
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/accessDenied").accessDeniedHandler(new AccessDeniedExceptions());
-        // Config for Login Form
         http.authorizeRequests().and().formLogin()//
                 // Submit URL of login page.
-                .loginProcessingUrl("/authorization").permitAll() // Submit URL
-                .loginPage("/authorization")//
+                .loginProcessingUrl("/authorization").permitAll()
+                .loginPage("/authorization")
                 .failureUrl("/accessDenied")
                 .failureHandler(new AuthExceptions())
-                .defaultSuccessUrl("/main")//
-                .usernameParameter("login") //the username parameter in the queryString, default is 'username'
+                .defaultSuccessUrl("/main")
+                .usernameParameter("login")
                 .passwordParameter("password");
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

@@ -6,15 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import world.ucode.services.UserService;
 import world.ucode.utils.PageModelAndView;
 
 @Controller
 public class ViewProfileController {
     @Autowired
-    PageModelAndView pageModelAndView;
-    @Autowired
-    UserService userService;
+    private PageModelAndView pageModelAndView;
 
     @RequestMapping(value = "/viewProfile", method = RequestMethod.GET)
     public ModelAndView viewProfile(@RequestParam String login) {

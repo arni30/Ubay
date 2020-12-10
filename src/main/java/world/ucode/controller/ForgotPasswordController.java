@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 public class ForgotPasswordController {
     @Autowired
     private SendMail sendMail;
+
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
     public String forgotPassword(@RequestParam("login") String login) throws UnknownHostException {
         sendMail.sendMailPassword(login);
