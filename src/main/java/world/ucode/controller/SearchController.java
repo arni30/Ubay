@@ -16,7 +16,8 @@ import java.util.List;
 public class SearchController {
     @Autowired
     private LotService lotService;
-    CreateJSON createJSON = new CreateJSON();
+    @Autowired
+    CreateJSON createJSON;
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public void search_post(@RequestBody JSONObject json, HttpServletResponse response) {

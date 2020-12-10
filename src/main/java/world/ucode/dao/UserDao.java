@@ -10,10 +10,7 @@ import world.ucode.utils.HibernateSessionFactoryUtil;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class UserDao {
 
@@ -76,6 +73,7 @@ public class UserDao {
                 ("SELECT bid FROM Bid bid WHERE bid.bidder.login = :login")
                 .setParameter("login", login).list();
         session.close();
+        Collections.reverse(bids);
         Set<Bid> uniqueLots = new HashSet<Bid>(bids);
         return uniqueLots;
     }
@@ -85,6 +83,4 @@ public class UserDao {
                 .openSession().createQuery("From User").list();
         return users;
     }
-
-
 }

@@ -21,8 +21,6 @@ public class AuthProvider implements AuthenticationProvider {
     {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
-        System.out.println(username);
-        System.out.println(password);
         User user = (User) userService.findUserByLogin(username);
 
         if(user != null && (user.getLogin().equals(username)))

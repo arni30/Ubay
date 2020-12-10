@@ -13,6 +13,8 @@
     </bean>
     <bean id="bidService" class="world.ucode.services.BidService">
     </bean>
+    <bean id="feedbackService" class="world.ucode.services.FeedbackService">
+    </bean>
     <bean id="createJSON" class="world.ucode.utils.CreateJSON">
     </bean>
     <bean id="pageModelAndView" class="world.ucode.utils.PageModelAndView">
@@ -22,13 +24,6 @@
     <bean id="authProvider" class="world.ucode.security.AuthProvider">
     </bean>
 
-
-    <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-<!--        <property name="maxUploadSize" value="10000000"/>-->
-<!--    </bean>-->
-<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-<!--        <property name="maxUploadSize" value="31457280"/>-->
-<!--    </bean>-->
     <context:property-placeholder location="classpath:gmail.com.properties"
                                   ignore-unresolvable="true" />
     <!-- Класс для отправки писем. -->

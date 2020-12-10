@@ -15,19 +15,11 @@ import world.ucode.models.User;
 import world.ucode.security.Token;
 import world.ucode.services.UserService;
 import world.ucode.utils.SendMail;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Enumeration;
 
 @Controller
 public class RegistrationController {
@@ -54,7 +46,6 @@ public class RegistrationController {
             userService.saveUser(user);
             json = mapper.writeValueAsString(user);
             rv = new RedirectView("authorization");
-//        mav.addObject("user",json);
         } else {
             rv = new RedirectView("registration");
             rv.addStaticAttribute("error", "Login is busy");
@@ -64,7 +55,7 @@ public class RegistrationController {
         return rv;
     }
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String signup(ModelMap model, HttpServletRequest request) throws UnknownHostException {
+    public String signup() {
         return "/registration";
     }
 
