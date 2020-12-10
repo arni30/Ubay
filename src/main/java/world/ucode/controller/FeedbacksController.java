@@ -1,6 +1,5 @@
 package world.ucode.controller;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import world.ucode.services.BidService;
 import world.ucode.services.FeedbackService;
 import world.ucode.services.LotService;
 import world.ucode.services.UserService;
-import world.ucode.utils.CreateJSON;
 import world.ucode.utils.PageModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,33 +24,24 @@ import java.util.List;
 @Controller
 public class FeedbacksController {
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    BidService bidService;
+    private BidService bidService;
     @Autowired
-    LotService lotService;
+    private LotService lotService;
     @Autowired
-    FeedbackService feedbackService;
+    private FeedbackService feedbackService;
     @Autowired
-    CreateJSON createJSON;
-    @Autowired
-    PageModelAndView pageModelAndView;
+    private PageModelAndView pageModelAndView;
     /**
      * requires unique seller login (feedbacks about what seller).
      * */
     @RequestMapping(value = "/feedbacks", method = RequestMethod.GET)
     public ModelAndView feedbacks(@RequestParam String login) {
         ModelAndView mav = new ModelAndView();
+
         try {
-            List<Feedback> fs = feedbackService.findAllByUser(login);
-            JSONArray json = createJSON.feedbacksJSON(fs);
-            mav.addObject("fs", json);
-            JSONObject sellerInfo = new JSONObject();
-            sellerInfo.put("username", login);
-            sellerInfo.put("rate", userService.findUser(login).getAvarageRate());
-            mav.addObject("sellerInfo", sellerInfo);
-            mav.setViewName("/feedbacks");
-            return mav;
+            return pageModelAndView.pageModelAndViewFeedback(login);
         } catch (Exception e) {
             mav.setViewName("/errors/error");
             return mav;
@@ -67,6 +56,7 @@ public class FeedbacksController {
         Lot lot = lotService.findLot(Integer.parseInt(lotId));
         Bid lastBid = bidService.findLast(lot.getId());
         ModelAndView mav = new ModelAndView();
+
         if (lastBid != null && !lot.getActive() && lastBid.getBidder().getLogin().equals(request.getUserPrincipal().getName())) {
             return pageModelAndView.pageModelAndView(
                     lotService.findLot(Integer.parseInt(lotId)), "/addFeedback");
@@ -76,10 +66,11 @@ public class FeedbacksController {
     }
 
     @RequestMapping(value = "/addFeedback", method = RequestMethod.POST)
-    public ModelAndView addFeedbackPost(HttpServletRequest request, @RequestBody JSONObject json) {
+    public String addFeedbackPost(HttpServletRequest request, @RequestBody JSONObject json) {
         Feedback feedback = new Feedback();
         Lot lot = lotService.findLot(Integer.parseInt(json.get("lotId").toString()));
         User seller = lot.getSeller();
+
         feedback.setBidder(userService.findUser(request.getUserPrincipal().getName()));
         feedback.setSeller(seller);
         feedback.setDescription(json.get("description").toString());
@@ -88,10 +79,7 @@ public class FeedbacksController {
         feedbackService.saveFeedback(feedback);
         seller.setAvarageRate(CountRate(seller.getUsername()));
         userService.updateUser(seller);
-
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("redirect:/auction?lotId="+json.get("lotId"));
-        return mav;
+        return "redirect:/auction?lotId="+json.get("lotId");
     }
 
     public float CountRate(String login) {
@@ -100,11 +88,8 @@ public class FeedbacksController {
             return 0;
         float rates = 0;
         float count = list.size();
-        for ( Feedback feedback : list) {
+        for ( Feedback feedback : list)
             rates += feedback.getRate();
-        }
-        System.out.println("Rate");
-        System.out.println(rates);
         return rates/count;
     }
 }

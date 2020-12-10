@@ -38,9 +38,9 @@ public class AddLotController {
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
     public ModelAndView addLot(Lot lot, @RequestParam("photo") MultipartFile file, HttpServletRequest request) throws IOException {
         User seller = userService.findUser(request.getUserPrincipal().getName());
+        Timestamp curTime = new Timestamp(System.currentTimeMillis());
         lot.setSeller(seller);
         lot.setImage(file.getBytes());
-        Timestamp curTime = new Timestamp(System.currentTimeMillis());
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lot.setActive(true);
@@ -49,7 +49,7 @@ public class AddLotController {
         mav.setViewName("redirect:/profile");
         return mav;
     }
-    public static Timestamp addDays(Timestamp date, int days) {
+    private Timestamp addDays(Timestamp date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.DATE, days);

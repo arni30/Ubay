@@ -17,7 +17,7 @@ public class SearchController {
     @Autowired
     private LotService lotService;
     @Autowired
-    CreateJSON createJSON;
+    private CreateJSON createJSON;
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public void search_post(@RequestBody JSONObject json, HttpServletResponse response) {

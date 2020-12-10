@@ -15,13 +15,14 @@ import world.ucode.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 @Controller
-public class NewBit {
+public class AddBid {
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    BidService bidService;
+    private BidService bidService;
     @Autowired
-    LotService lotService;
+    private LotService lotService;
+
     @RequestMapping(value = "/newBit", method = RequestMethod.POST)
     public ModelAndView newBid(HttpServletRequest request, @RequestBody JSONObject json){
         ModelAndView mav = new ModelAndView();

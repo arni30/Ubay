@@ -2,12 +2,14 @@ package world.ucode.utils;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import world.ucode.models.Bid;
 import world.ucode.models.Feedback;
 import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.services.BidService;
 import world.ucode.services.LotService;
+import world.ucode.services.UserService;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -16,8 +18,20 @@ import java.util.List;
 import java.util.Set;
 
 public class CreateJSON {
-    private BidService bidService = new BidService();
-    LotService lotService = new LotService();
+    @Autowired
+    private BidService bidService;
+    @Autowired
+    private LotService lotService;
+    @Autowired
+    private UserService userService;
+
+    public JSONObject sellerInfoJson(String login) {
+        JSONObject json = new JSONObject();
+
+        json.put("username", login);
+        json.put("rate", userService.findUser(login).getAvarageRate());
+        return  json;
+    }
 
     public JSONObject winnerJSON(Bid lastBid, String description, boolean exist) {
         JSONObject json = new JSONObject();
