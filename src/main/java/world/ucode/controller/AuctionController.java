@@ -24,8 +24,6 @@ public class AuctionController {
         try {
             return pageModelAndView.pageModelAndView(Integer.parseInt(lotId), request);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Bad JSON");
             mav.setViewName("/errors/error");
             return mav;
         }

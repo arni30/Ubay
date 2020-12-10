@@ -3,11 +3,7 @@ package world.ucode.models;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import javax.persistence.*;
-import java.awt.image.BufferedImage;
-import java.security.PublicKey;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "lots")
