@@ -11,7 +11,6 @@ import world.ucode.models.Lot;
 import world.ucode.models.User;
 import world.ucode.services.LotService;
 import world.ucode.services.UserService;
-import world.ucode.utils.ImageHandler;
 import world.ucode.utils.PageModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,13 +37,10 @@ public class AddLotController {
     }
     @RequestMapping(value = "/addLot", method = RequestMethod.POST)
     public ModelAndView addLot(Lot lot, @RequestParam("photo") MultipartFile file, HttpServletRequest request) throws IOException {
-        System.out.println("ADDLOT");
         User seller = userService.findUser(request.getUserPrincipal().getName());
         lot.setSeller(seller);
-        lot.setImage(file.getBytes());  // Data truncation: Data too long for column 'image' at row 1
-//        ImageHandler.savePicture(file);  // проверка
+        lot.setImage(file.getBytes());
         Timestamp curTime = new Timestamp(System.currentTimeMillis());
-//        curTime.setTime(curTime.getTime() + (2 * 60 * 60 * 1000));
         lot.setStartTime(curTime);
         lot.setFinishTime(addDays(curTime, lot.getDuration()));
         lot.setActive(true);
@@ -55,8 +51,8 @@ public class AddLotController {
     }
     public static Timestamp addDays(Timestamp date, int days) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);// w ww.  j ava  2  s  .co m
-        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days);
         return new Timestamp(cal.getTime().getTime());
 
     }

@@ -24,8 +24,10 @@ public class AuctionController {
     UserService userService;
     @Autowired
     BidService bidService;
-    FeedbackService feedbackService = new FeedbackService();
-    CreateJSON createJSON = new CreateJSON();
+    @Autowired
+    FeedbackService feedbackService;
+    @Autowired
+    CreateJSON createJSON;
     /**
      * requires unique lot id (that auction show).
      * */
@@ -38,33 +40,27 @@ public class AuctionController {
             User user = lot.getSeller();
             JSONObject json = createJSON.auctionJSON(user, lot);
             mav.addObject("lot", json);
-            System.out.println(lot.getActive());
-//            if (!lot.getActive()) {
-                try {
-                    System.out.println("BID");
-                    Bid lastBid = bidService.findLast(LotId);
-                    if (lastBid != null) {
-                        System.out.println("IF");
-                        String description = "";
-                        Feedback feedback = feedbackService.findFeedbackByLot(LotId);
-                        if (feedback != null)
-                            description = feedback.getDescription();
-                        JSONObject winnerJson = createJSON.winnerJSON(lastBid, description, true);
-                        mav.addObject("winner", winnerJson);
-                    }
-                    else {
-                        JSONObject winnerJson = createJSON.winnerJSON(null, null, false);
-                        mav.addObject("winner", winnerJson);//redo!!!!
-                        System.out.println("ELSE");
-                        System.out.println(winnerJson);
-                    }
-                } catch (Exception ignored) {
-                    System.out.println("problem with bids");
+            try {
+                System.out.println("BID");
+                Bid lastBid = bidService.findLast(LotId);
+                if (lastBid != null) {
+                    System.out.println("IF");
+                    String description = "";
+                    Feedback feedback = feedbackService.findFeedbackByLot(LotId);
+                    if (feedback != null)
+                        description = feedback.getDescription();
+                    JSONObject winnerJson = createJSON.winnerJSON(lastBid, description, true);
+                    mav.addObject("winner", winnerJson);
                 }
-//            }
-            if (request.getUserPrincipal() != null) {
-                user = userService.findUserByLogin(request.getUserPrincipal().getName());
+                else {
+                    JSONObject winnerJson = createJSON.winnerJSON(null, null, false);
+                    mav.addObject("winner", winnerJson);//redo!!!!
+                }
+            } catch (Exception ignored) {
+                System.out.println("problem with bids");
             }
+            if (request.getUserPrincipal() != null)
+                user = userService.findUserByLogin(request.getUserPrincipal().getName());
             mav.addObject("userType", user.getUserRole());
             mav.setViewName("/auction");
             return mav;

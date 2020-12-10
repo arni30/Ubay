@@ -29,10 +29,14 @@ public class FeedbacksController {
     UserService userService;
     @Autowired
     BidService bidService;
-    LotService lotService = new LotService();
-    FeedbackService feedbackService = new FeedbackService();
-    CreateJSON createJSON = new CreateJSON();
-    final private PageModelAndView pageModelAndView = new PageModelAndView();
+    @Autowired
+    LotService lotService;
+    @Autowired
+    FeedbackService feedbackService;
+    @Autowired
+    CreateJSON createJSON;
+    @Autowired
+    PageModelAndView pageModelAndView;
     /**
      * requires unique seller login (feedbacks about what seller).
      * */
@@ -43,12 +47,10 @@ public class FeedbacksController {
             List<Feedback> fs = feedbackService.findAllByUser(login);
             JSONArray json = createJSON.feedbacksJSON(fs);
             mav.addObject("fs", json);
-
             JSONObject sellerInfo = new JSONObject();
             sellerInfo.put("username", login);
             sellerInfo.put("rate", userService.findUser(login).getAvarageRate());
             mav.addObject("sellerInfo", sellerInfo);
-
             mav.setViewName("/feedbacks");
             return mav;
         } catch (Exception e) {
@@ -87,7 +89,7 @@ public class FeedbacksController {
         seller.setAvarageRate(CountRate(seller.getUsername()));
         userService.updateUser(seller);
 
-        ModelAndView mav = new ModelAndView();  /// мені здається що це все одно не працює
+        ModelAndView mav = new ModelAndView();
         mav.setViewName("redirect:/auction?lotId="+json.get("lotId"));
         return mav;
     }

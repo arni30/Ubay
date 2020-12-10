@@ -1,5 +1,7 @@
 package world.ucode.models;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 import javax.persistence.*;
 import java.awt.image.BufferedImage;
 import java.security.PublicKey;
@@ -78,5 +80,18 @@ public class Lot {
     }
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Lot) {
+            final Lot lot = (Lot) obj;
+
+            return new EqualsBuilder()
+                    .append(id, lot.id)
+                    .isEquals();
+        } else {
+            return false;
+        }
     }
 }
