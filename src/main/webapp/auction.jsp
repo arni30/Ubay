@@ -97,13 +97,13 @@
 
             <div class="personal-section__header">
                 <div>
-                    <form id="newBit" name="form" style="display: none">
+                    <div id="newBit" style="display: none">
                         <label for="newPrice">New price </label>
                         <input id="newPrice" class="button" type="number" name="price"
                                min=".01" step=".01" max="10000" required>
                         <button id="butSubmit" type="button" class="button" onclick="send()" >Submit new bit</button>
                         <a class="button" href="#" onclick="location.reload()">Return</a>
-                    </form>
+                    </div>
                 </div>
                 <div id="addBit-buttons" style="display: none">
                     <a class="button" href="#" onclick="auctions.addBit()">Add bit</a>
