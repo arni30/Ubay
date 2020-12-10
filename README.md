@@ -23,5 +23,21 @@ You need to have installed MySQL server
 6. open in browser website: http://localhost:8080/ubay
 ```
 
-### Specification:
-![view game](https://raw.githubusercontent.com/trohalska/pixelizator/main/src/main/resources/pix01.png)
+### View:
+![view game](https://raw.githubusercontent.com/arni30/Ubay/main/src/main/resources/01.png)
+
+![view game](https://raw.githubusercontent.com/arni30/Ubay/main/src/main/resources/02.png)
+
+![view game](https://raw.githubusercontent.com/arni30/Ubay/main/src/main/resources/03-1.png)
+
+![view game](https://raw.githubusercontent.com/arni30/Ubay/main/src/main/resources/03.png)
+
+![view game](https://raw.githubusercontent.com/arni30/Ubay/main/src/main/resources/04.png)
+
+![view game](https://raw.githubusercontent.com/arni30/Ubay/main/src/main/resources/05.png)
+
+![view game](https://raw.githubusercontent.com/arni30/Ubay/main/src/main/resources/06.png)
+
+![view game](https://raw.githubusercontent.com/arni30/Ubay/main/src/main/resources/07.png)
+
+
