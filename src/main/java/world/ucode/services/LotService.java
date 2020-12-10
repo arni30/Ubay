@@ -1,9 +1,7 @@
 package world.ucode.services;
 
 import world.ucode.dao.LotDao;
-import world.ucode.dao.UserDao;
 import world.ucode.models.Lot;
-import world.ucode.models.User;
 
 import java.util.List;
 

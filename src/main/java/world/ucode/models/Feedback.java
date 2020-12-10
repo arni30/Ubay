@@ -21,7 +21,7 @@ public class Feedback {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bidderId", referencedColumnName = "userId")
     private User bidder;
-//
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sellerId", referencedColumnName = "userId")
     private User seller;

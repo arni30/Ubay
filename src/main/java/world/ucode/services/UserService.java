@@ -5,15 +5,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import world.ucode.dao.UserDao;
 import world.ucode.models.Bid;
 import world.ucode.models.Lot;
 import world.ucode.models.Role;
 import world.ucode.models.User;
-
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Service("userService")

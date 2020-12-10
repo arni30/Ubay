@@ -23,8 +23,6 @@ public class ProfileController {
             return mav;
         } catch (Exception e) {
             mav = new ModelAndView();
-            e.printStackTrace();
-            System.out.println("Bad JSON");
             mav.setViewName("/errors/error");
             return mav;
         }

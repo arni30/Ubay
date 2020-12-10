@@ -69,9 +69,7 @@ public class SearchController {
             PrintWriter writer = response.getWriter();
             writer.print(createJSON.mainShowLotsJSON(newList).toJSONString());
             writer.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
     }
 
 }
