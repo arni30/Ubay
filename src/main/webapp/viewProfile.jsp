@@ -56,20 +56,16 @@
         </div>
 
         <div class="header-middle page">
-            <div class="header-contact">
-                <!--        <span>(044) 044 04 04</span>-->
-            </div>
+            <div class="header-contact"></div>
             <div title="internet shop" class="logo">UBAY</div>
-            <div class="header-basket">
-                <!--         <a>cart<span class="front-cart">(0)</span></a>-->
-            </div>
+            <div class="header-basket"></div>
         </div>
     </header>
 
     <nav class="breadcrumps">
         <ul class="page crumbs">
             <li><a class="abutton" href="${pageContext.request.contextPath}/main">Home</a></li>
-            <li><a href="">Profile</a></li>
+            <li><a>View Profile</a></li>
         </ul>
     </nav>
 
@@ -105,6 +101,7 @@
 
     <div id="profile-buttons" class="page personal-section__header">
         <a id="biddersFeedbacks" class="button" href="#">Bidders feedbacks</a>
+        <a id="addLotId" href="#" style="display: none"></a>
     </div>
 
     <main class="page" id="activeBox" style="display: none">

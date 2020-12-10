@@ -27,7 +27,6 @@ let personalInfo = {
       }
       elem[i].appendChild(p);
     }
-    // gotoAddLot(this.info.login, this.info.id);
     viewFeedbacks(this.info.login);
   },
   changeInfo: function () {
@@ -116,9 +115,6 @@ let personalInfo = {
       }
       elem[i].innerHTML = p;
     }
-    // document.querySelector('#aboutProfile').innerHTML = 'Old password';
-    // document.querySelector('#email').innerHTML = 'New password';
-    // document.querySelector('#balance').innerHTML = 'Confirm new password';
 
     elem = document.querySelectorAll('.personal-data__item');
     for (let i = 1; elem[i]; ++i) {
@@ -277,12 +273,19 @@ let lots = {
 
     for (let i in this.items) {
       if (this.items[i].active) {
-        products.showItem(elemActive, this.items[i]);
+        products.showItem(elemActive, this.items[i], this.isAuthorizedBidderBids());
       } else {
-        products.showItem(elem, this.items[i]);
+        products.showItem(elem, this.items[i], false);
       }
     }
   },
+  isAuthorizedBidderBids: function() {
+    if (personalInfo.info.userRole === 'bidder' &&
+        personalInfo.info.login === document.querySelector('#authorizedLogin').innerHTML) {
+      return true;
+    }
+    return false;
+  }
 }
 
 function cancelChanges() {

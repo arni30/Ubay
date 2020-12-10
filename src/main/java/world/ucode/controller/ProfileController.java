@@ -46,7 +46,8 @@ public class ProfileController {
                 User user = userService.findUserByLogin(login);
                 String json = mapper.writeValueAsString(user);
                 mav.addObject("user", json);
-                    lots = lotService.findAllLotsByUser(login);
+
+                lots = lotService.findAllLotsByUser(login);
                 Set<Bid> bids = userService.findBidsByBidder(login);
                 for (Bid bid:bids) {
                     System.out.println(bid.getLot().getTitle());
@@ -65,15 +66,4 @@ public class ProfileController {
             return mav;
         }
     }
-//    @RequestMapping(value = "/changePersonalInfo", method = RequestMethod.POST)
-//    public ModelAndView changePersonalInfo(HttpServletRequest request, @RequestBody JSONObject json) {
-////        String login = request.getUserPrincipal().getName();
-//
-//        System.out.println(json.get("newEmail"));
-//        System.out.println(json.get("newBalance"));
-//
-//        ModelAndView mav = new ModelAndView();
-//        mav.setViewName("redirect:/profile"); // отета якось не працює
-//        return new ModelAndView();
-//    }
 }

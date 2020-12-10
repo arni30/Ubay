@@ -56,13 +56,9 @@
     </div>
 
     <div class="header-middle page">
-        <div class="header-contact">
-            <!--        <span>(044) 044 04 04</span>-->
-        </div>
+        <div class="header-contact"></div>
         <div title="internet shop" class="logo">UBAY</div>
-        <div class="header-basket">
-            <!--         <a>cart<span class="front-cart">(0)</span></a>-->
-        </div>
+        <div class="header-basket"></div>
     </div>
 </header>
 
@@ -73,17 +69,13 @@
 </nav>
 
 <main class="page">
-    <!-- <div id="main-overlay"></div> -->
-
     <aside class="filters">
-
         <div class="sort">
             <p>Sort:</p>
             <select class="sort-select">
                 <option value="1">none</option>
                 <option value="2">cheap first</option>
                 <option value="3">expensive first</option>
-
             </select>
         </div>
 
@@ -148,7 +140,6 @@
                 <input class="button" type="button" value="Search" onclick="view.submitSearch()">
             </form>
         </div>
-        <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script> -->
     </aside>
     <div class="container"></div>
 </main>
@@ -166,8 +157,6 @@
     </div>
 </footer>
 
-<%--<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>--%>
-<%--<script src='http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js'></script>--%>
 </body>
 
 <script type="text/javascript">

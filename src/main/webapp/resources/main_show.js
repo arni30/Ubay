@@ -4,7 +4,7 @@ let products = {
   items: [
     { id: 0, title: '', category: 'other',
       startPrice: 0,  lastBidPrice: 0, lastBidder: '', active: true, description: 'NONE',
-      image: 'resources/favicon.ico'
+      image: 'resources/favicon.ico', bidderPrice: 0
     }
   ],
   sortCheap: false,
@@ -33,9 +33,9 @@ let products = {
         elem.removeChild(elem.lastChild);
 
     for (let i in this.items)
-      this.showItem(elem, this.items[i]);
+      this.showItem(elem, this.items[i], false);
   },
-  showItem: function(elem, item) {
+  showItem: function(elem, item, forProfile) {
     let node, shelf, p, p1;
 
     if (item.lastBidPrice) {
@@ -62,7 +62,6 @@ let products = {
       if (!item.active) {
         p = document.createElement('img');
         p.className = 'item_thumb closed-item';
-        // p.setAttribute('style', '')
         p.setAttribute('src', 'resources/closed-stamp.png');
         p1.appendChild(p);
       }
@@ -75,7 +74,15 @@ let products = {
 
     p = document.createElement('p');
     p.className = 'item_description';
-    p.innerHTML = item.description;
+    if (forProfile === true) {
+      p.innerHTML = `Your last bid = \$${item.bidderPrice}`;
+      if (item.bidderPrice < item.lastBidPrice) {
+        p.innerHTML += '. It\'s not final!';
+        p.setAttribute('style', 'color: red;');
+      }
+    } else {
+      p.innerHTML = item.description;
+    }
     shelf.appendChild(p);
 
     p = document.createElement('div');

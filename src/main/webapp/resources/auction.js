@@ -28,10 +28,6 @@ let auctions = {
     document.querySelector('#lotId').innerHTML = `Lot# ${this.lot.id}`;
     document.querySelector('#title').innerHTML = this.lot.title;
     document.querySelector('#price').innerHTML = '\$' + this.lot.startPrice;
-    // let lastBid = document.querySelector('#lastBid');
-    // if (this.lot.lastBidPrice !== 0) {
-    //   lastBid.innerHTML = '\$' + this.lot.lastBidPrice;
-    // }
     document.querySelector('#aboutProfile').innerHTML = this.lot.seller;
     document.querySelector('#rate').innerHTML = (this.lot.rate === 0) ? ' - ' : this.lot.rate;
     document.querySelector('#startTime').innerHTML = this.lot.startTime.replace('T', '&emsp;');
@@ -92,7 +88,6 @@ let auctions = {
     if (this.winner.feedback === '') {
       item.setAttribute('href',
           '/ubay/addFeedback?lotId=' + this.lot.id);
-
     }
   }
 }
@@ -103,7 +98,6 @@ let timer = setInterval(function () {
 
   if (time_left <= 0) {
     clearInterval(timer);
-    // auctions.addClosedContent();
   } else {
     let res = new Date(time_left);
 
@@ -125,7 +119,6 @@ let timer = setInterval(function () {
 
 let init = () => {
   auctions.show();
-  // timer();
 }
 
 window.onload = init;

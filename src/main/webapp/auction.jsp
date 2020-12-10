@@ -60,13 +60,9 @@
         </div>
 
         <div class="header-middle page">
-            <div class="header-contact">
-                <!--        <span>(044) 044 04 04</span>-->
-            </div>
+            <div class="header-contact"></div>
             <div title="internet shop" class="logo">UBAY</div>
-            <div class="header-basket">
-                <!--         <a>cart<span class="front-cart">(0)</span></a>-->
-            </div>
+            <div class="header-basket"></div>
         </div>
     </header>
 
@@ -164,8 +160,6 @@
         document.querySelector('#price').innerHTML = '\$' + newPrice.value;
 
         let formData = new FormData();
-        // if (!document.getElementById("newPrice").value)
-        //     return;
         formData.append('price', newPrice.value);
         formData.append('lotId', ${lot.id});
         let object = {};
@@ -184,12 +178,10 @@
             processData : false,  //To avoid making query String instead of JSON
             cache: false, //This will force requested pages not to be cached by the browser
             success : function(resposeJsonObject) {
-                auctions.hideElement('#newBit');
-                auctions.activateElement('#addBit-buttons');
+                location.reload();
             },
             error : function(err) {
                 alert("nope!");
-                // alert(err);
             }
         });
     }
