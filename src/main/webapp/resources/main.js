@@ -32,6 +32,7 @@ let view = {
   submitSearch: async function () {
     let title = document.querySelector('#searchByTitle');
     let price = document.querySelector('#searchByOpenPrice');
+    let rate = document.querySelector('#searchBySellersRate');
     let duration = document.querySelector('#searchByDuration');
     let startTime = document.querySelector('#searchByStartTime');
     let description = document.querySelector('#searchByDescription');
@@ -39,6 +40,7 @@ let view = {
     let formData = new FormData();
     formData.append('title', title.value);
     formData.append('price', price.value);
+    formData.append('rate', rate.value);
     formData.append('duration', duration.value);
     formData.append('startTime', startTime.value);
     formData.append('description', description.value);
