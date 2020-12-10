@@ -16,6 +16,6 @@ public class ForgotPasswordController {
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
     public String forgotPassword(@RequestParam("login") String login) throws UnknownHostException {
         sendMail.sendMailPassword(login);
-        return "authorization";
+        return "redirect:/authorization";
     }
 }
