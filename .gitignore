@@ -6,8 +6,6 @@
 /lib
 *tmp*
 *build*
-*.png
-*.jpg
 .idea
 /target
 .png
