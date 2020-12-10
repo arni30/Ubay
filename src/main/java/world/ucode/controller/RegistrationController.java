@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,17 +15,16 @@ import world.ucode.security.Token;
 import world.ucode.services.UserService;
 import world.ucode.utils.SendMail;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.UnknownHostException;
 import java.util.Collections;
 
 @Controller
 public class RegistrationController {
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    SendMail sendMail;
+    private SendMail sendMail;
+
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public RedirectView signup_post(User user, HttpServletResponse response) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
@@ -54,6 +52,7 @@ public class RegistrationController {
         rv.addStaticAttribute("user", json);
         return rv;
     }
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String signup() {
         return "/registration";
@@ -63,6 +62,7 @@ public class RegistrationController {
     public ModelAndView confirmation(@RequestParam("token") String token){
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.validateToken(token);
+
         user.setVerification("verificated");
         userService.updateUser(user);
         modelAndView.setViewName("redirect:/");

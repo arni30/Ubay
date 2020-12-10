@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import world.ucode.models.User;
-import world.ucode.security.AuthProvider;
 import world.ucode.services.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +16,8 @@ import java.io.IOException;
 @Controller
 public class ChangePasswordController {
     @Autowired
-    UserService userService;
-    @Autowired
-    AuthProvider authProvider;
+    private UserService userService;
+
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public String changePassword(@RequestBody JSONObject json,
                                  HttpServletRequest httpServletRequest,

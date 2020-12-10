@@ -15,7 +15,7 @@ import java.util.Map;
 public class AuthExceptions
             implements AuthenticationFailureHandler {
 
-        private ObjectMapper objectMapper = new ObjectMapper();
+        private final ObjectMapper objectMapper = new ObjectMapper();
 
         @Override
         public void onAuthenticationFailure(

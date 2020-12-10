@@ -170,21 +170,21 @@
         let jsonString = JSON.stringify(object);
         console.log(jsonString);
 
-        $.ajax({
-            url : 'newBit',
-            type : 'POST',
-            contentType : "application/json; charset=utf-8",
-            data : jsonString,
-            async: false, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
-            processData : false,  //To avoid making query String instead of JSON
-            cache: false, //This will force requested pages not to be cached by the browser
-            success : function(resposeJsonObject) {
-                location.reload();
+        let response = await fetch('newBit', {
+            method: 'POST',
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            headers: {
+                'Content-Type': 'application/json'
             },
-            error : function(err) {
-                alert("nope!");
-            }
+            async: true, //Cross-domain requests and dataType: "jsonp" requests do not support synchronous operation
+            processData: false,  //To avoid making query String instead of JSON
+            body: jsonString
         });
+        if (response.ok) {
+            location.reload();
+        } else {
+            alert("Can't add bid.");
+        }
     }
 </script>
 
