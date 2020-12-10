@@ -1,10 +1,7 @@
 package world.ucode.utils;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import world.ucode.models.Lot;
-import world.ucode.models.User;
 
 public class HibernateSessionFactoryUtil {
     private static SessionFactory sessionFactory;
@@ -15,10 +12,10 @@ public class HibernateSessionFactoryUtil {
         if (sessionFactory == null) {
             try {
                 Configuration config = new Configuration().configure();
-                config.configure(); // замість getProperties
+                config.configure();
                 sessionFactory = config.buildSessionFactory();
             } catch (Exception e) {
-                System.out.println("Исключение!" + e);
+                System.out.println("Exception! Start MySql server!");
             }
         }
         return sessionFactory;

@@ -1,4 +1,4 @@
-package world.ucode.security;//package world.ucode.security;
+package world.ucode.security;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,7 +15,7 @@ import java.util.Collection;
 
 @Component
 public class AuthProvider implements AuthenticationProvider {
-    final private UserService userService = new UserService();
+    private UserService userService = new UserService();
 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException
     {

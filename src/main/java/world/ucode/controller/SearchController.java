@@ -17,7 +17,7 @@ public class SearchController {
     @Autowired
     private LotService lotService;
     @Autowired
-    CreateJSON createJSON;
+    private CreateJSON createJSON;
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public void search_post(@RequestBody JSONObject json, HttpServletResponse response) {
@@ -25,6 +25,8 @@ public class SearchController {
                 json.get("title").toString() : null;
         double price = json.get("price") != "" ?
                 Double.parseDouble(json.get("price").toString()) : 0;
+        double rate = json.get("rate") != "" ?
+                Double.parseDouble(json.get("rate").toString()) : 0;
         int duration = json.get("duration") != "" ?
                 Integer.parseInt(json.get("duration").toString()) : 0;
         String startTime = json.get("startTime") != "" ?
@@ -43,6 +45,9 @@ public class SearchController {
             }
             if (isValid && price != 0) {
                 isValid = l.getStartPrice() == price;
+            }
+            if (isValid && rate != 0) {
+                isValid = l.getSeller().getAvarageRate() >= rate;
             }
             if (isValid && duration != 0) {
                 isValid = l.getDuration() == duration;
@@ -64,9 +69,7 @@ public class SearchController {
             PrintWriter writer = response.getWriter();
             writer.print(createJSON.mainShowLotsJSON(newList).toJSONString());
             writer.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
     }
 
 }

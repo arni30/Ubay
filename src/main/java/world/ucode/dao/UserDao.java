@@ -74,8 +74,7 @@ public class UserDao {
                 .setParameter("login", login).list();
         session.close();
         Collections.reverse(bids);
-        Set<Bid> uniqueLots = new HashSet<Bid>(bids);
-        return uniqueLots;
+        return new HashSet<Bid>(bids);
     }
 
     public List<User> findAll() {

@@ -107,7 +107,7 @@
             </label>
         </div>
 
-        <br><br><br><br>
+        <br><br>
 
         <div class="search">
             <p>Search:</p>
@@ -120,6 +120,11 @@
                 <input id="searchByOpenPrice" class="form-styling"
                        type="number" min=".01" step=".01"
                        name="startPrice"/>
+
+                <label for="searchBySellersRate">Sellers min rate</label>
+                <input id="searchBySellersRate" class="form-styling"
+                       type="number" min=".01" max="5" step=".01"
+                       name="sellersRate"/>
 
                 <label for="searchByDuration">Duration</label>
                 <input id="searchByDuration" class="form-styling"
